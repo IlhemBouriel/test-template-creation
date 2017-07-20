@@ -9,21 +9,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var task_service_1 = require('./services/task.service');
-var test_service_1 = require('./services/test.service');
-var AppComponent = (function () {
-    function AppComponent() {
+var http_1 = require('@angular/http');
+require('rxjs/add/operator/map');
+var TestService = (function () {
+    function TestService(http) {
+        this.http = http;
+        console.log('Test Service Initialized...');
     }
-    AppComponent = __decorate([
-        core_1.Component({
-            moduleId: module.id,
-            selector: 'my-app',
-            templateUrl: 'app.component.html',
-            providers: [task_service_1.TaskService, test_service_1.TestService]
-        }), 
-        __metadata('design:paramtypes', [])
-    ], AppComponent);
-    return AppComponent;
+    TestService.prototype.getDefVars = function () {
+        return this.http.get('/def')
+            .map(function (res) { return res.json(); });
+    };
+    TestService.prototype.getUnDefVars = function () {
+        return this.http.get('/undef')
+            .map(function (res) { return res.json(); });
+    };
+    TestService = __decorate([
+        core_1.Injectable(), 
+        __metadata('design:paramtypes', [http_1.Http])
+    ], TestService);
+    return TestService;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.TestService = TestService;
+//# sourceMappingURL=test.service.js.map

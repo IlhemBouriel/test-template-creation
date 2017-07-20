@@ -7,7 +7,6 @@
 
 <div class="task-list">
     <div *ngFor="let task of tasks">
-   <button (click)="methode(task.name)">click</button>
         <div class="col-md-1">
             <input type="checkbox" (click)="updateStatus(task)">
         </div>

@@ -9,7 +9,6 @@ export class TaskService{
     }
     
     getTasks(){
-    console.log(" before tasks");
         return this.http.get('/api/tasks')
             .map(res => res.json());
 

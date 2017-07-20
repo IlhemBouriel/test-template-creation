@@ -1,0 +1,85 @@
+<!--  Undef Variables  -->
+<!--
+<label>UnDef:
+<input list="browsers" class="form-control" name="myBrowser" [(ngModel)]="filterargs.name"/></label>
+<datalist id="browsers">
+ <div *ngFor="let undefVar of undefVars | myfilter:filterargs">
+       <option value="{{undefVar.name}}">
+</div>
+</datalist>
+
+
+<!--  Def Variables  -->
+
+<label>DefVar:
+<input list="browsers" class="form-control" name="myBrowser" [(ngModel)]="filterargs.name"/></label>
+<datalist id="browsers">
+ <div *ngFor="let defVar of defVars | myfilter:filterargs">
+       <option value="{{defVar.name}}">
+</div>
+</datalist>
+
+<!--
+<label>Values Of DefVar:
+<div *ngFor="let defVar of defVars">
+    <label>{{defVar.name}}:
+<input list="browsers" class="form-control" name="myBrowser" [(ngModel)]="filterargs.name"/></label>
+<datalist id="browsers">
+ <div *ngFor="let val of defVar.values | myfilter:filterargs">
+       <option value="{{val}}">
+</div>
+</datalist>   
+</div>
+-->
+
+<label>Host:
+<input list="browsers" class="form-control" name="myBrowser" [(ngModel)]="filterargs.name"/></label>
+<datalist id="browsers" *ngFor="let undefVar of undefVars | myfilter:filterargs">
+ <div *ngFor="let undefVar of undefVars | myfilter:filterargs">
+       <option value="{{undefVar.name}}">
+</div>
+</datalist>
+
+
+<form>
+  <div class="form-group">
+    <label for="exampleInputEmail1">host</label>
+    <input type="email" class="form-control" sid="exampleInputEmail1" placeholder="host">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">path</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="path">
+  </div>
+ 
+  <button type="submit" class="btn btn-default">Submit</button>
+</form>
+
+
+    <h2>DefVar</h2>
+<div *ngFor="let defVar of defVars">
+        <div class="col-md-1">
+            <input type="checkbox">
+        </div>
+        <div class="col-md-7">
+            {{defVar.name}}    
+        </div> 
+        <div class="col-md-4">
+          {{defVar.values}}
+        </div>
+        <br><br>
+    </div>
+
+
+
+    <h2>UndefVar</h2>
+    <div *ngFor="let undefVar of undefVars">
+        <div class="col-md-1">
+            <input type="checkbox">
+        </div>
+        <div class="col-md-7">
+            {{undefVar.name}}    
+        </div> 
+       
+        <br><br>
+    </div>
+

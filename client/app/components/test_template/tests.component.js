@@ -9,21 +9,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var task_service_1 = require('./services/task.service');
-var test_service_1 = require('./services/test.service');
-var AppComponent = (function () {
-    function AppComponent() {
+var test_service_1 = require('../../services/test.service');
+var TestsComponent = (function () {
+    function TestsComponent(testService) {
+        var _this = this;
+        this.testService = testService;
+        this.filterargs = { name: '' };
+        this.testService.getDefVars()
+            .subscribe(function (vars) {
+            _this.defVars = vars.data;
+        });
+        this.testService.getUnDefVars()
+            .subscribe(function (vars) {
+            _this.undefVars = vars.data;
+        });
     }
-    AppComponent = __decorate([
+    TestsComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
-            selector: 'my-app',
-            templateUrl: 'app.component.html',
-            providers: [task_service_1.TaskService, test_service_1.TestService]
+            selector: 'tests',
+            templateUrl: 'tests.component.html',
         }), 
-        __metadata('design:paramtypes', [])
-    ], AppComponent);
-    return AppComponent;
+        __metadata('design:paramtypes', [test_service_1.TestService])
+    ], TestsComponent);
+    return TestsComponent;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.TestsComponent = TestsComponent;
+//# sourceMappingURL=tests.component.js.map

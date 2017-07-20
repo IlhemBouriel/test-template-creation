@@ -9,21 +9,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var task_service_1 = require('./services/task.service');
-var test_service_1 = require('./services/test.service');
-var AppComponent = (function () {
-    function AppComponent() {
+var FilterValues = (function () {
+    function FilterValues() {
     }
-    AppComponent = __decorate([
-        core_1.Component({
-            moduleId: module.id,
-            selector: 'my-app',
-            templateUrl: 'app.component.html',
-            providers: [task_service_1.TaskService, test_service_1.TestService]
+    FilterValues.prototype.transform = function (items, filter) {
+        if (!items || !filter) {
+            return items;
+        }
+        // filter items array, items which match and return true will be kept, false will be filtered out
+        return items.filter(function (item) { return item.value.indexOf(filter.name) !== -1; });
+    };
+    FilterValues = __decorate([
+        core_1.Pipe({
+            name: 'filterValues',
+            pure: false
         }), 
         __metadata('design:paramtypes', [])
-    ], AppComponent);
-    return AppComponent;
+    ], FilterValues);
+    return FilterValues;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.FilterValues = FilterValues;
+//# sourceMappingURL=filter-values.js.map

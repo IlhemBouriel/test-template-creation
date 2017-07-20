@@ -1,10 +1,11 @@
 "use strict";
+
 var rethinkdb = require('rethinkdb');
-var db = require('../utils/db');
+var db = require('../utils/db')
 var async = require('async');
 
-class servers {
-    addNewServer(varData, callback) {
+class undefVar {
+    addNewUnDef(varData, callback) {
         async.waterfall([
             function(callback) {
                 var db_instance = new db();
@@ -16,13 +17,12 @@ class servers {
                 });
             },
             function(connection, callback) {
-                rethinkdb.table('servers').insert({
-                    "server": varData.server,
-                    "variables": varData.variables
+                rethinkdb.table('undefined_variables').insert({
+                    "name": varData.name
                 }).run(connection, function(err, result) {
                     connection.close();
                     if (err) {
-                        return callback(true, "Error happens while adding new polls");
+                        return callback(true, "Error happens while adding new variables");
                     }
                     callback(null, result);
                 });
@@ -33,7 +33,7 @@ class servers {
     }
 
 
-    getAllServer(callback) {
+    getAllUnDef(callback) {
         async.waterfall([
             function(callback) {
                 var db_instance = new db();
@@ -45,10 +45,10 @@ class servers {
                 });
             },
             function(connection, callback) {
-                rethinkdb.table('servers').run(connection, function(err, cursor) {
+                rethinkdb.table('undefined_variables').run(connection, function(err, cursor) {
                     connection.close();
                     if (err) {
-                        return callback(true, "Error fetching polls to database");
+                        return callback(true, "Error fetching variables to database");
                     }
                     cursor.toArray(function(err, result) {
                         if (err) {
@@ -63,8 +63,7 @@ class servers {
         });
     }
 
-
-    getVarsOfServer(id, callback) {
+    DeleteOneUnDef(id, callback) {
         async.waterfall([
             function(callback) {
                 var db_instance = new db();
@@ -76,12 +75,12 @@ class servers {
                 });
             },
             function(connection, callback) {
-                rethinkdb.table('servers').get(id).run(connection, function(err, result) {
+                console.log(id);
+                rethinkdb.table('undefined_variables').get(id).delete().run(connection, function(err, result) {
                     connection.close();
                     if (err) {
-                        return callback(true, "Error happens while adding new polls");
+                        return callback(true, "Error happens while deleting variables");
                     }
-
                     callback(null, result);
                 });
             }
@@ -91,4 +90,4 @@ class servers {
     }
 }
 
-module.exports = servers;
+module.exports = undefVar;

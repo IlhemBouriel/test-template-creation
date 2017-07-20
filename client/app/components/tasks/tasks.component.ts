@@ -5,7 +5,9 @@ import {Task} from '../../../Task';
 @Component({
   moduleId: module.id,
   selector: 'tasks',
-  templateUrl: 'tasks.component.html'
+  templateUrl: 'tasks.component.html',
+  styleUrls: ['tasks.component.css']
+
 })
 
 export class TasksComponent { 
@@ -15,8 +17,9 @@ export class TasksComponent {
     constructor(private taskService:TaskService){
         this.taskService.getTasks()
             .subscribe(tasks => {
-                this.tasks = tasks;
+                this.tasks = tasks.data;
             });
+
     }
     
     addTask(event){

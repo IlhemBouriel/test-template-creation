@@ -4,8 +4,6 @@ var db = require('../utils/db');
 var async = require('async');
 
 class task {
-
-
     addNewTask(varData, callback) {
         async.waterfall([
             function(callback) {
@@ -64,7 +62,6 @@ class task {
             callback(err === null ? false : true, data);
         });
     }
-
 }
 
 module.exports = task;

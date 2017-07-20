@@ -7,9 +7,16 @@ module.exports.get = function(req, res) {
     // Calling our model function.
     varsObject.getAllVars(function(err, varResponse) {
         if (err) {
-            return res.json({"responseCode": 1, "responseDesc": varResponse});
+            return res.json({
+                "responseCode": 500,
+                "responseDesc": varResponse
+            });
         }
-        res.json({"responseCode": 0, "responseDesc": "Success", "data": varResponse});
+        res.json({
+            "responseCode": 200,
+            "responseDesc": "Success",
+            "data": varResponse
+        });
     });
 };
 
@@ -20,9 +27,16 @@ module.exports.post = function(req, res) {
     // We nee to validate our payload here.
     varsObject.addNewVars(req.body, function(err, varResponse) {
         if (err) {
-            return res.json({"responseCode": 1, "responseDesc": varResponse});
+            return res.json({
+                "responseCode": 500,
+                "responseDesc": varResponse
+            });
         }
-        res.json({"responseCode": 0, "responseDesc": "Success", "data": varResponse});
+        res.json({
+            "responseCode": 200,
+            "responseDesc": "Success",
+            "data": varResponse
+        });
     });
 };
 
