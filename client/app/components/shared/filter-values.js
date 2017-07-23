@@ -9,24 +9,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var FilterValues = (function () {
-    function FilterValues() {
+var ValFilterPipe = (function () {
+    function ValFilterPipe() {
     }
-    FilterValues.prototype.transform = function (items, filter) {
+    ValFilterPipe.prototype.transform = function (items, filter) {
         if (!items || !filter) {
             return items;
         }
         // filter items array, items which match and return true will be kept, false will be filtered out
-        return items.filter(function (item) { return item.value.indexOf(filter.name) !== -1; });
+        return items.filter(function (item) { return item.indexOf(filter) == 0; });
     };
-    FilterValues = __decorate([
+    ValFilterPipe = __decorate([
         core_1.Pipe({
-            name: 'filterValues',
+            name: 'valfilter',
             pure: false
         }), 
         __metadata('design:paramtypes', [])
-    ], FilterValues);
-    return FilterValues;
+    ], ValFilterPipe);
+    return ValFilterPipe;
 }());
-exports.FilterValues = FilterValues;
+exports.ValFilterPipe = ValFilterPipe;
 //# sourceMappingURL=filter-values.js.map

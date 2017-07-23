@@ -18,6 +18,12 @@ export class TestService{
         return this.http.get('/undef')
             .map(res => res.json());        
     }
+
+    getOneDefVar(name)
+    {
+         return this.http.get('/def/one/'+name)
+            .map(res => res.json());
+    }
     
     
 }

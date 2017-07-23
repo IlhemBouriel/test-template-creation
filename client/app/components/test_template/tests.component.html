@@ -1,6 +1,6 @@
 <!--  Undef Variables  -->
 <!--
-<label>UnDef:
+<label>UnDefVar:
 <input list="browsers" class="form-control" name="myBrowser" [(ngModel)]="filterargs.name"/></label>
 <datalist id="browsers">
  <div *ngFor="let undefVar of undefVars | myfilter:filterargs">
@@ -8,53 +8,21 @@
 </div>
 </datalist>
 
-
 <!--  Def Variables  -->
-
-<label>DefVar:
-<input list="browsers" class="form-control" name="myBrowser" [(ngModel)]="filterargs.name"/></label>
-<datalist id="browsers">
- <div *ngFor="let defVar of defVars | myfilter:filterargs">
-       <option value="{{defVar.name}}">
-</div>
-</datalist>
-
 <!--
-<label>Values Of DefVar:
+<label>DefVar:
 <div *ngFor="let defVar of defVars">
     <label>{{defVar.name}}:
-<input list="browsers" class="form-control" name="myBrowser" [(ngModel)]="filterargs.name"/></label>
+<input list="browsers" class="form-control" name="{{defVar.name}}" [(ngModel)]="filterargs_val"/></label>
+
 <datalist id="browsers">
- <div *ngFor="let val of defVar.values | myfilter:filterargs">
+ <div *ngFor="let val of defVar.values | valfilter:filterargs_val">
        <option value="{{val}}">
 </div>
 </datalist>   
 </div>
 -->
-
-<label>Host:
-<input list="browsers" class="form-control" name="myBrowser" [(ngModel)]="filterargs.name"/></label>
-<datalist id="browsers" *ngFor="let undefVar of undefVars | myfilter:filterargs">
- <div *ngFor="let undefVar of undefVars | myfilter:filterargs">
-       <option value="{{undefVar.name}}">
-</div>
-</datalist>
-
-
-<form>
-  <div class="form-group">
-    <label for="exampleInputEmail1">host</label>
-    <input type="email" class="form-control" sid="exampleInputEmail1" placeholder="host">
-  </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">path</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="path">
-  </div>
- 
-  <button type="submit" class="btn btn-default">Submit</button>
-</form>
-
-
+<!--
     <h2>DefVar</h2>
 <div *ngFor="let defVar of defVars">
         <div class="col-md-1">
@@ -83,3 +51,138 @@
         <br><br>
     </div>
 
+    -->
+
+
+
+<!-- FORM BEGIN -->
+<!--
+<form>
+  <div class="form-group">
+    <label for="filename">Nom du fichier</label>
+    <input type="text" class="form-control" id="filename" placeholder="FileName" [(ngModel)]="filename" >
+  </div>
+  {{filename}}
+  <div class="form-group">
+    <label for="testname">Nom du test</label>
+    <input type="text" class="form-control" id="testname" placeholder="TestName" value="{{filename}}">
+  </div>
+ 
+  <button type="submit" class="btn btn-default">Submit</button>
+</form>
+
+-->
+
+
+
+{{ qtd | json}}
+
+
+  <div class="form-group">
+    <label for="testname">Nom du test</label>
+    <input type="text" [(ngModel)]="qtd['TestName']" class="form-control" id="testname" placeholder="TestName">
+  </div>
+
+  <label>URL de test</label>
+  <div class="row">
+  <div class="col-xs-6">
+    <input type="text" [(ngModel)]="qtd['serveur']" class="form-control" placeholder="Serveur">
+  </div>
+
+  <div class="col-xs-1">
+    <input type="text" [(ngModel)]="qtd['port']" class="form-control" placeholder="Port">
+  </div>
+  </div>
+  <div class="form-group">
+    <label for="dn">SN</label>
+    <input type="text" [(ngModel)]="qtd['sn']" class="form-control" id="sn" placeholder="#SN#">
+  </div>
+  <div class="form-group">
+    <label for="dn">DN</label>
+    <input type="text" [(ngModel)]="qtd['dn']" class="form-control" id="dn" placeholder="#DN#">
+  </div>
+  <div class="form-group">
+    <label for="ed">ED</label>
+    <input type="text" [(ngModel)]="qtd['ed']" class="form-control" id="ed" placeholder="#ED#">
+  </div>
+  <label>Request</label>
+  <div class="row">
+  <div class="col-xs-2">
+  <select class="form-control" [(ngModel)]="qtd['type']" placeholder="GET/POST">
+      <option>GET</option>
+      <option>POST</option>
+  </select>
+  </div>
+  <div class="col-xs-3">
+    <input type="text" [(ngModel)]="qtd['Path']" class="form-control" placeholder="Path">
+  </div>
+  <div class="col-xs-7">
+    <input type="text" [(ngModel)]="qtd['params']" class="form-control" placeholder="Parameters">
+  </div>
+  </div>
+  <div class="form-group">
+    <label for="host">Host</label>
+    <input type="text" [(ngModel)]="qtd['host']" class="form-control" id="host" placeholder="HOST">
+  </div>
+  
+  <h4>Autres headers:</h4>
+  <div class="form-group">
+   <fieldset  *ngFor="let choice of choices">
+   <div class="row">
+  <div class="col-xs-3">
+
+<!-- Il faut que les id "list" et "id" soient uniques pour chaque variables-->
+    <input  [attr.list]=choice.id class="form-control"  id="{{choice.id}" (change)="changeStatus(choice)" [(ngModel)]="choice.name"/>
+    <datalist id="{{choice.id}}">
+    <div *ngFor="let defVar of defVars | myfilter:choice">
+       <option value="{{defVar.name}}">
+    </div>
+    </datalist>
+
+  </div>
+  <div class="col-xs-9">
+  <!--
+  <input  [attr.list]=choice.name class="form-control" [(ngModel)]="qtd[choice.name]" placeholder="Enter le TAG correspondant"/>
+    <datalist id="{{choice.name}}">
+    <div *ngFor="let val of choice.var.values | valfilter:qtd[choice.name]">
+       <option value="{{val}}">
+    </div>
+    </datalist>
+
+
+  -->
+
+  <div *ngIf="choice.var">
+    <input [attr.list]=choice.name class="form-control" id="{{qtd[choice.name]}}" [disabled]=choice.is_edit [(ngModel)]="qtd[choice.name]"/>
+        <datalist id="{{choice.name}}">
+              <div *ngFor="let v of choice.var[0].values">
+                    <option value="{{v}}">
+              </div>
+        </datalist>
+  </div>
+
+
+  <div *ngIf="!choice.var"> 
+    <input class="form-control" id="{{qtd[choice.name]}}" [disabled]=choice.is_edit [(ngModel)]="qtd[choice.name]"/>
+  </div>
+
+
+
+
+
+  </div>
+  </div>
+  
+
+   </fieldset>
+   <button type="button" class="btn btn-success addfields" (click)="addNewChoice()">
+   <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+   </button>
+
+   <button type="button" class="btn btn-danger addfields" (click)="removeChoice()">
+   <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+   </button>
+</div>
+
+
+  <button type="submit" class="btn btn-default">Submit</button>

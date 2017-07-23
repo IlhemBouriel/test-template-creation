@@ -13,6 +13,7 @@ router.get('/def', defVarController.get)
     .post('/def', defVarController.post)
     .put('/def/:id', defVarController.put)
     .delete('/def/:id', defVarController.delete);
+router.get('/def/one/:name',defVarController.getByName);
 router.get('/def/:id', defVarController.getById);
 
 router.get('/undef', unDefVarController.get)

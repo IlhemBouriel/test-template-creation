@@ -17,7 +17,7 @@ var MyFilterPipe = (function () {
             return items;
         }
         // filter items array, items which match and return true will be kept, false will be filtered out
-        return items.filter(function (item) { return item.name.indexOf(filter.name) !== -1; });
+        return items.filter(function (item) { return item.name.startsWith(filter.name) == true; });
     };
     MyFilterPipe = __decorate([
         core_1.Pipe({

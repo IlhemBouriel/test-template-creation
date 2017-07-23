@@ -15,6 +15,8 @@ var TestsComponent = (function () {
         var _this = this;
         this.testService = testService;
         this.filterargs = { name: '' };
+        this.filterargs_val = '';
+        this.qtd = {};
         this.testService.getDefVars()
             .subscribe(function (vars) {
             _this.defVars = vars.data;
@@ -23,7 +25,30 @@ var TestsComponent = (function () {
             .subscribe(function (vars) {
             _this.undefVars = vars.data;
         });
+        this.choices = [{ id: 'choice1', 'name': '', 'var': this.defVar, 'is_edit': true }];
     }
+    TestsComponent.prototype.addNewChoice = function () {
+        var newItemNo = this.choices.length + 1;
+        this.choices.push({ 'id': 'choice' + newItemNo, 'name': '', 'var': null, 'is_edit': true });
+    };
+    TestsComponent.prototype.removeChoice = function () {
+        var lastItem = this.choices.length - 1;
+        this.choices.splice(lastItem);
+    };
+    TestsComponent.prototype.changeStatus = function (choice) {
+        choice.is_edit = false;
+        this.testService.getOneDefVar(choice.name)
+            .subscribe(function (vars) {
+            console.log(vars.data.length);
+            if (vars.data.length == 1) {
+                console.log("object: %O", vars.data);
+                choice.var = vars.data;
+            }
+            else {
+                choice.var = null;
+            }
+        });
+    };
     TestsComponent = __decorate([
         core_1.Component({
             moduleId: module.id,

@@ -93,3 +93,22 @@ module.exports.getById = function(req, res) {
         });
     });
 };
+
+
+module.exports.getByName = function(req, res) {
+    var varsObject = new varModel();
+   
+    varsObject.getOneDefVar(req.params.name, function(err, varResponse) {
+        if (err) {
+            return res.json({
+                "responseCode": 500,
+                "responseDesc": varResponse
+            });
+        }
+        res.json({
+            "responseCode": 200,
+            "responseDesc": "Success",
+            "data": varResponse
+        });
+    });
+};

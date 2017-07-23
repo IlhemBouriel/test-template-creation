@@ -139,6 +139,44 @@ class defVar {
             callback(err === null ? false : true, data);
         });
     }
+
+
+
+    getOneDefVar(name, callback) {
+         async.waterfall([
+            function(callback) {
+                var db_instance = new db();
+                db_instance.connectToDb(function(err, connection) {
+                    if (err) {
+                        return callback(true, "Error connecting to database");
+                    }
+                    callback(null, connection);
+                });
+            },
+            function(connection, callback) {
+                rethinkdb.table('defined_variables').filter(
+                        {
+                            "name":name
+                        }
+                    ).run(connection, function(err, cursor) {
+                    connection.close();
+                    if (err) {
+                        return callback(true, "Error fetching variables to database");
+                    }
+                    cursor.toArray(function(err, result) {
+                        if (err) {
+                            return callback(true, "Error reading cursor");
+                        }
+                        callback(null, result);
+                    });
+                });
+            }
+        ], function(err, data) {
+            callback(err === null ? false : true, data);
+        });
+
+    }
+
 }
 
 module.exports = defVar;
