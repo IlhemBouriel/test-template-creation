@@ -2,6 +2,10 @@
 var rethinkdb = require('rethinkdb');
 var db = require('../utils/db')
 var async = require('async');
+//Fro executing script shell from nodejs
+var exec = require('child_process').exec;
+var script_path = "/home/ubuntu/Desktop/script/script.sh";
+
 
 class defVar {
     addNewDef(varData, callback) {
@@ -116,6 +120,7 @@ class defVar {
     }
 
     getAllValuesOfOneDef(id, callback) {
+        console.log('here');
         async.waterfall([
             function(callback) {
                 var db_instance = new db();
@@ -174,6 +179,34 @@ class defVar {
         ], function(err, data) {
             callback(err === null ? false : true, data);
         });
+
+    }
+
+    /* ------------------------------- Create Template section --------------------------- */
+
+
+
+    execute(command, callback){
+        exec(command, function(error, stdout, stderr){ callback(stdout); });
+    };
+    createTemplate(callback)
+    {
+
+                this.execute(script_path, function(e, stdout){
+                     callback(stdout);
+      
+    });
+
+              /*  exec('/home/ubuntu/Desktop/script/script.sh',
+                function (error, stdout, stderr) {
+                console.log('stdout: ' + stdout);
+                console.log('stderr: ' + stderr);
+                if (error !== null) {
+                    console.log('exec error: ' + error);
+                    return callback(true, "Error while executing template script");
+                }
+                 callback(null, stdout);
+        });*/
 
     }
 

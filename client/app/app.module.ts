@@ -9,7 +9,6 @@ import {MyFilterPipe} from './components/shared/my-filter.pipe';
 import {ValFilterPipe} from './components/shared/filter-values';
 
 
-
 @NgModule({
   imports:      [ BrowserModule, HttpModule, FormsModule ],
   declarations: [AppComponent, TasksComponent, TestsComponent,MyFilterPipe, ValFilterPipe],

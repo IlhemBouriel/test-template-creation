@@ -25,13 +25,39 @@ var TestsComponent = (function () {
             .subscribe(function (vars) {
             _this.undefVars = vars.data;
         });
-        this.choices = [{ id: 'choice1', 'name': '', 'var': this.defVar, 'is_edit': true }];
+        this.testService.getOneDefVar('url')
+            .subscribe(function (vars) {
+            _this.urlValues = vars.data[0].values;
+        });
+        this.testService.getOneDefVar('sn')
+            .subscribe(function (vars) {
+            _this.snValues = vars.data[0].values;
+        });
+        this.testService.getOneDefVar('dn')
+            .subscribe(function (vars) {
+            _this.dnValues = vars.data[0].values;
+        });
+        this.testService.getOneDefVar('ed')
+            .subscribe(function (vars) {
+            _this.edValues = vars.data[0].values;
+        });
+        this.testService.getOneDefVar('path')
+            .subscribe(function (vars) {
+            _this.pathValues = vars.data[0].values;
+        });
+        this.testService.getOneDefVar('host')
+            .subscribe(function (vars) {
+            _this.hostValues = vars.data[0].values;
+        });
+        this.choices = [{ id: 'choice1', 'name': '', 'var': null, 'is_edit': true }];
+        this.toShow = '';
     }
     TestsComponent.prototype.addNewChoice = function () {
         var newItemNo = this.choices.length + 1;
         this.choices.push({ 'id': 'choice' + newItemNo, 'name': '', 'var': null, 'is_edit': true });
     };
     TestsComponent.prototype.removeChoice = function () {
+        //remove from qtd (to implement)
         var lastItem = this.choices.length - 1;
         this.choices.splice(lastItem);
     };
@@ -48,6 +74,16 @@ var TestsComponent = (function () {
                 choice.var = null;
             }
         });
+    };
+    TestsComponent.prototype.createTemplate = function () {
+        var _this = this;
+        this.testService.createTemplate()
+            .subscribe(function (res) {
+            _this.res = res;
+        });
+    };
+    TestsComponent.prototype.addToSHow = function (key, value) {
+        this.toShow = this.toShow + key + ": " + value + "\n";
     };
     TestsComponent = __decorate([
         core_1.Component({

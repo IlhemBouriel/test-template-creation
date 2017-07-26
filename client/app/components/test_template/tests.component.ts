@@ -20,7 +20,14 @@ export class TestsComponent {
   	filterargs_val: string = '';
   	qtd:any[] = {};
   	choices : Choice[];
-    defVar: DefVar;
+    urlValues:string[];
+    snValues:string[];
+    dnValues:string[];
+    edValues:string[];
+    pathValues:string[];
+    hostValues:string[];
+    res:string;
+    toShow:string;
 
 
 
@@ -35,7 +42,39 @@ export class TestsComponent {
             .subscribe(vars => {
                 this.undefVars = vars.data;
             });
-        this.choices =[{id: 'choice1','name':'','var':this.defVar,'is_edit':true}];
+
+        this.testService.getOneDefVar('url')
+            .subscribe(vars => {
+            this.urlValues = vars.data[0].values;
+         });
+
+         this.testService.getOneDefVar('sn')
+            .subscribe(vars => {
+            this.snValues = vars.data[0].values;
+         });
+
+         this.testService.getOneDefVar('dn')
+            .subscribe(vars => {
+            this.dnValues = vars.data[0].values;
+         });
+
+         this.testService.getOneDefVar('ed')
+            .subscribe(vars => {
+            this.edValues = vars.data[0].values;
+         });
+
+          this.testService.getOneDefVar('path')
+            .subscribe(vars => {
+            this.pathValues = vars.data[0].values;
+         });
+
+         this.testService.getOneDefVar('host')
+            .subscribe(vars => {
+            this.hostValues = vars.data[0].values;
+         });
+
+        this.choices =[{id: 'choice1','name':'','var':null,'is_edit':true}];
+        this.toShow = '';
     }
 
     addNewChoice()
@@ -46,6 +85,7 @@ export class TestsComponent {
 
     removeChoice()
     {
+    //remove from qtd (to implement)
     var lastItem = this.choices.length-1;
     this.choices.splice(lastItem);
     }
@@ -68,6 +108,19 @@ export class TestsComponent {
     });
 
 
+    }
+
+    createTemplate()
+    {
+    this.testService.createTemplate()
+            .subscribe(res => {
+             this.res = res;
+         });
+    }
+
+    addToSHow(key,value)
+    {
+    this.toShow = this.toShow +key+": "+value+"\n";
     }
 
 

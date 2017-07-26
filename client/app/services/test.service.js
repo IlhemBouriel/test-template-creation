@@ -28,6 +28,10 @@ var TestService = (function () {
         return this.http.get('/def/one/' + name)
             .map(function (res) { return res.json(); });
     };
+    TestService.prototype.createTemplate = function () {
+        return this.http.get('/def/template')
+            .map(function (res) { return res.json(); });
+    };
     TestService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])

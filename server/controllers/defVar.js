@@ -2,6 +2,7 @@
 var varModel = require('../models/defVar');
 
 module.exports.get = function(req, res) {
+
     var varsObject = new varModel();
     // Calling our model function.
     varsObject.getAllDef(function(err, varResponse) {
@@ -111,4 +112,25 @@ module.exports.getByName = function(req, res) {
             "data": varResponse
         });
     });
+};
+
+
+module.exports.createTemplate = function(req, res) {
+    var varsObject = new varModel();
+   
+    varsObject.createTemplate(function(err, varResponse) {
+         console.log('returned result => '+varResponse);
+        if (err) {
+            return res.json({
+                "responseCode": 500,
+                "responseDesc": varResponse
+            });
+        }
+        res.json({
+            "responseCode": 200,
+            "responseDesc": "Success",
+            "data": varResponse
+        });
+    });
+
 };

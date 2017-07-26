@@ -1,109 +1,52 @@
-<!--  Undef Variables  -->
-<!--
-<label>UnDefVar:
-<input list="browsers" class="form-control" name="myBrowser" [(ngModel)]="filterargs.name"/></label>
-<datalist id="browsers">
- <div *ngFor="let undefVar of undefVars | myfilter:filterargs">
-       <option value="{{undefVar.name}}">
-</div>
-</datalist>
-
-<!--  Def Variables  -->
-<!--
-<label>DefVar:
-<div *ngFor="let defVar of defVars">
-    <label>{{defVar.name}}:
-<input list="browsers" class="form-control" name="{{defVar.name}}" [(ngModel)]="filterargs_val"/></label>
-
-<datalist id="browsers">
- <div *ngFor="let val of defVar.values | valfilter:filterargs_val">
-       <option value="{{val}}">
-</div>
-</datalist>   
-</div>
--->
-<!--
-    <h2>DefVar</h2>
-<div *ngFor="let defVar of defVars">
-        <div class="col-md-1">
-            <input type="checkbox">
-        </div>
-        <div class="col-md-7">
-            {{defVar.name}}    
-        </div> 
-        <div class="col-md-4">
-          {{defVar.values}}
-        </div>
-        <br><br>
-    </div>
-
-
-
-    <h2>UndefVar</h2>
-    <div *ngFor="let undefVar of undefVars">
-        <div class="col-md-1">
-            <input type="checkbox">
-        </div>
-        <div class="col-md-7">
-            {{undefVar.name}}    
-        </div> 
-       
-        <br><br>
-    </div>
-
-    -->
-
-
-
-<!-- FORM BEGIN -->
-<!--
-<form>
-  <div class="form-group">
-    <label for="filename">Nom du fichier</label>
-    <input type="text" class="form-control" id="filename" placeholder="FileName" [(ngModel)]="filename" >
-  </div>
-  {{filename}}
-  <div class="form-group">
-    <label for="testname">Nom du test</label>
-    <input type="text" class="form-control" id="testname" placeholder="TestName" value="{{filename}}">
-  </div>
- 
-  <button type="submit" class="btn btn-default">Submit</button>
-</form>
-
--->
-
-
-
-{{ qtd | json}}
-
-
-  <div class="form-group">
+<div class="row">
+  <div class="col-md-8" style="margin-left: -140px;">
+    <div class="form-group">
     <label for="testname">Nom du test</label>
     <input type="text" [(ngModel)]="qtd['TestName']" class="form-control" id="testname" placeholder="TestName">
+
   </div>
 
   <label>URL de test</label>
   <div class="row">
   <div class="col-xs-6">
-    <input type="text" [(ngModel)]="qtd['serveur']" class="form-control" placeholder="Serveur">
+    <input list="url" class="form-control" name="url" placeholder="URL" [(ngModel)]="qtd['serveur']"/>
+          <datalist id="url">
+              <div *ngFor="let url of urlValues | valfilter:qtd['serveur']">
+              <option value="{{url}}">
+              </div>
+          </datalist>
   </div>
 
-  <div class="col-xs-1">
+  <div class="col-xs-2">
     <input type="text" [(ngModel)]="qtd['port']" class="form-control" placeholder="Port">
   </div>
   </div>
   <div class="form-group">
     <label for="dn">SN</label>
-    <input type="text" [(ngModel)]="qtd['sn']" class="form-control" id="sn" placeholder="#SN#">
+    <input list="sn" class="form-control" name="sn" placeholder="#SN#" [(ngModel)]="qtd['sn']"/>
+          <datalist id="sn">
+              <div *ngFor="let sn of snValues | valfilter:qtd['sn']">
+              <option value="{{sn}}">
+              </div>
+          </datalist>
   </div>
   <div class="form-group">
     <label for="dn">DN</label>
-    <input type="text" [(ngModel)]="qtd['dn']" class="form-control" id="dn" placeholder="#DN#">
+     <input list="dn" class="form-control" name="dn" placeholder="#DN#" [(ngModel)]="qtd['dn']"/>
+          <datalist id="dn">
+              <div *ngFor="let dn of dnValues | valfilter:qtd['dn']">
+              <option value="{{dn}}">
+              </div>
+          </datalist>
   </div>
   <div class="form-group">
     <label for="ed">ED</label>
-    <input type="text" [(ngModel)]="qtd['ed']" class="form-control" id="ed" placeholder="#ED#">
+    <input list="ed" class="form-control" name="ed" placeholder="#ED#" [(ngModel)]="qtd['ed']"/>
+          <datalist id="edn">
+              <div *ngFor="let ed of edValues | valfilter:qtd['ed']">
+              <option value="{{ed}}">
+              </div>
+          </datalist>
   </div>
   <label>Request</label>
   <div class="row">
@@ -114,7 +57,12 @@
   </select>
   </div>
   <div class="col-xs-3">
-    <input type="text" [(ngModel)]="qtd['Path']" class="form-control" placeholder="Path">
+    <input list="dn" class="form-control" name="path" placeholder="Path" [(ngModel)]="qtd['path']"/>
+          <datalist id="path">
+              <div *ngFor="let path of pathValues | valfilter:qtd['path']">
+              <option value="{{path}}">
+              </div>
+          </datalist>
   </div>
   <div class="col-xs-7">
     <input type="text" [(ngModel)]="qtd['params']" class="form-control" placeholder="Parameters">
@@ -122,7 +70,12 @@
   </div>
   <div class="form-group">
     <label for="host">Host</label>
-    <input type="text" [(ngModel)]="qtd['host']" class="form-control" id="host" placeholder="HOST">
+      <input list="host" class="form-control" name="host" placeholder="Host" [(ngModel)]="qtd['host']"/>
+          <datalist id="host">
+              <div *ngFor="let host of hostValues | valfilter:qtd['host']">
+              <option value="{{host}}">
+              </div>
+          </datalist>
   </div>
   
   <h4>Autres headers:</h4>
@@ -153,9 +106,9 @@
   -->
 
   <div *ngIf="choice.var">
-    <input [attr.list]=choice.name class="form-control" id="{{qtd[choice.name]}}" [disabled]=choice.is_edit [(ngModel)]="qtd[choice.name]"/>
+    <input [attr.list]=choice.name class="form-control" id="{{qtd[choice.name]}}" [disabled]=choice.is_edit [(ngModel)]="qtd[choice.name]" (change)="addToSHow(choice.name,qtd[choice.name])"/>
         <datalist id="{{choice.name}}">
-              <div *ngFor="let v of choice.var[0].values">
+              <div *ngFor="let v of choice.var[0].values | valfilter:qtd[choice.name]">
                     <option value="{{v}}">
               </div>
         </datalist>
@@ -163,7 +116,7 @@
 
 
   <div *ngIf="!choice.var"> 
-    <input class="form-control" id="{{qtd[choice.name]}}" [disabled]=choice.is_edit [(ngModel)]="qtd[choice.name]"/>
+    <input class="form-control" id="{{qtd[choice.name]}}" [disabled]=choice.is_edit [(ngModel)]="qtd[choice.name]" (change)="addToSHow(choice.name,qtd[choice.name])"/>
   </div>
 
 
@@ -183,6 +136,32 @@
    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
    </button>
 </div>
+<label for="result">Result</label>
+<textarea class="form-control" name="result" rows="6" style="resize: none;" placeholder="Result" [(ngModel)]="qtd['result']">
+</textarea>
+
+  <button type="submit" class="btn btn-default" (click)="createTemplate()">Submit</button>
 
 
-  <button type="submit" class="btn btn-default">Submit</button>
+  </div>
+
+  <!-- Real time creationg template -->
+  <div class="col-md-4">
+    <textarea class="form-control" rows="6" style="margin: 0px -422px 0px 0px; width: 783px; height: 706px;resize: none;">
+    {{'#############################################################################################\n'+'#\n'+'#TestName# '+qtd['TestName']+'\n'+'#\n'+'#############################################################################################\n'+'#URLTEST '+qtd['serveur']+':'+qtd['port']+'\n'+'#############################################################################################\n'+'#SN# '+qtd['sn']+'\n#DN# '+qtd['dn']+'\n#ED# '+qtd['ed']+'\n'+qtd['type']+' '+qtd['path']+'?'+qtd['params']+'&'+qtd['TestName']+'_'+qtd['sn']+' '+'HTTP/1.1\n'+'Host: '+qtd['host']+'\n'+toShow
+    +'---\n'+qtd['result']+'\n--------------------'}}
+
+   
+
+    
+</textarea>
+  </div>
+</div>
+
+
+<!--
+For Test
+
+{{ qtd | json}}
+
+-->

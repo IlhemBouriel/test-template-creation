@@ -21,9 +21,17 @@ export class TestService{
 
     getOneDefVar(name)
     {
-         return this.http.get('/def/one/'+name)
+        return this.http.get('/def/one/'+name)
             .map(res => res.json());
     }
+
+    createTemplate()
+    {
+        return this.http.get('/def/template')
+            .map(res => res.json());
+    }
+
+   
     
     
 }
