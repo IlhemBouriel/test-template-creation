@@ -21,13 +21,14 @@ export class TestsComponent {
   	qtd:any[] = {};
   	choices : Choice[];
     urlValues:string[];
-    snValues:string[];
     dnValues:string[];
     edValues:string[];
     pathValues:string[];
     hostValues:string[];
     res:string;
     toShow:string;
+    stepNum:number ;
+    
 
 
 
@@ -46,11 +47,6 @@ export class TestsComponent {
         this.testService.getOneDefVar('url')
             .subscribe(vars => {
             this.urlValues = vars.data[0].values;
-         });
-
-         this.testService.getOneDefVar('sn')
-            .subscribe(vars => {
-            this.snValues = vars.data[0].values;
          });
 
          this.testService.getOneDefVar('dn')
@@ -72,7 +68,8 @@ export class TestsComponent {
             .subscribe(vars => {
             this.hostValues = vars.data[0].values;
          });
-
+        this.stepNum =1;
+        this.qtd['sn']="Step 1";
         this.choices =[{id: 'choice1','name':'','var':null,'is_edit':true}];
         this.toShow = '';
     }
@@ -110,17 +107,26 @@ export class TestsComponent {
 
     }
 
-    createTemplate()
+    createTemplate(doc)
     {
-    this.testService.createTemplate()
+    var content = "'"+document.getElementById("textArea").value+"'";
+    content = content.replace(/\n/g, '\r');
+    this.testService.createTemplate(doc,content)
             .subscribe(res => {
-             this.res = res;
+            this.res = res;
+
          });
+    }
+
+    getNextStep()
+    {
+    this.stepNum ++;
+    this.qtd['sn']="Step "+this.stepNum;
     }
 
     addToSHow(key,value)
     {
-    this.toShow = this.toShow +key+": "+value+"\n";
+    this.toShow = this.toShow +" "+key+": "+value+"\n";
     }
 
 

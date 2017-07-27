@@ -4,7 +4,7 @@ var db = require('../utils/db')
 var async = require('async');
 //Fro executing script shell from nodejs
 var exec = require('child_process').exec;
-var script_path = "/home/ubuntu/Desktop/script/script.sh";
+var script_path = "/home/ubuntu/Desktop/sofrecom_qualif/script/script.sh";
 
 
 class defVar {
@@ -120,7 +120,6 @@ class defVar {
     }
 
     getAllValuesOfOneDef(id, callback) {
-        console.log('here');
         async.waterfall([
             function(callback) {
                 var db_instance = new db();
@@ -189,10 +188,11 @@ class defVar {
     execute(command, callback){
         exec(command, function(error, stdout, stderr){ callback(stdout); });
     };
-    createTemplate(callback)
+    createTemplate(data,callback)
     {
-
-                this.execute(script_path, function(e, stdout){
+        var docName = data.fileName;
+        var content = data.content;
+                this.execute(script_path+' '+docName+' '+content, function(e, stdout){
                      callback(stdout);
       
     });

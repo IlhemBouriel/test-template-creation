@@ -25,10 +25,17 @@ export class TestService{
             .map(res => res.json());
     }
 
-    createTemplate()
+    createTemplate(file,content)
     {
-        return this.http.get('/def/template')
-            .map(res => res.json());
+        var newFile = {
+        fileName:file,
+        content:content
+        };
+
+        var headers = new Headers();
+        headers.append('Content-Type','application/json');
+        return this.http.post('/def/template',JSON.stringify(newFile),{headers})
+        .map(res => res.json());
     }
 
    

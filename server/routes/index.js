@@ -14,7 +14,7 @@ router.get('/def', defVarController.get)
     .put('/def/:id', defVarController.put)
     .delete('/def/:id', defVarController.delete);
 router.get('/def/one/:name',defVarController.getByName);
-router.get('/def/template',defVarController.createTemplate);
+router.post('/def/template',defVarController.createTemplate);
 router.get('/def/:id', defVarController.getById);
 
 

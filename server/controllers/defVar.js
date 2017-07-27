@@ -118,8 +118,7 @@ module.exports.getByName = function(req, res) {
 module.exports.createTemplate = function(req, res) {
     var varsObject = new varModel();
    
-    varsObject.createTemplate(function(err, varResponse) {
-         console.log('returned result => '+varResponse);
+    varsObject.createTemplate(req.body,function(err, varResponse) {
         if (err) {
             return res.json({
                 "responseCode": 500,

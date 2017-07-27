@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {TaskService} from './services/task.service';
 import {TestService} from './services/test.service';
 
 
@@ -7,7 +6,7 @@ import {TestService} from './services/test.service';
   moduleId: module.id,
   selector: 'my-app',
   templateUrl: 'app.component.html',
-  providers:[TaskService, TestService]
+  providers:[TestService]
 })
 
 export class AppComponent { }

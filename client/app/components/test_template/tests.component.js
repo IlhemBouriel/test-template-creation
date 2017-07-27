@@ -29,10 +29,6 @@ var TestsComponent = (function () {
             .subscribe(function (vars) {
             _this.urlValues = vars.data[0].values;
         });
-        this.testService.getOneDefVar('sn')
-            .subscribe(function (vars) {
-            _this.snValues = vars.data[0].values;
-        });
         this.testService.getOneDefVar('dn')
             .subscribe(function (vars) {
             _this.dnValues = vars.data[0].values;
@@ -49,6 +45,8 @@ var TestsComponent = (function () {
             .subscribe(function (vars) {
             _this.hostValues = vars.data[0].values;
         });
+        this.stepNum = 1;
+        this.qtd['sn'] = "Step 1";
         this.choices = [{ id: 'choice1', 'name': '', 'var': null, 'is_edit': true }];
         this.toShow = '';
     }
@@ -75,15 +73,21 @@ var TestsComponent = (function () {
             }
         });
     };
-    TestsComponent.prototype.createTemplate = function () {
+    TestsComponent.prototype.createTemplate = function (doc) {
         var _this = this;
-        this.testService.createTemplate()
+        var content = "'" + document.getElementById("textArea").value + "'";
+        content = content.replace(/\n/g, '\r');
+        this.testService.createTemplate(doc, content)
             .subscribe(function (res) {
             _this.res = res;
         });
     };
+    TestsComponent.prototype.getNextStep = function () {
+        this.stepNum++;
+        this.qtd['sn'] = "Step " + this.stepNum;
+    };
     TestsComponent.prototype.addToSHow = function (key, value) {
-        this.toShow = this.toShow + key + ": " + value + "\n";
+        this.toShow = this.toShow + " " + key + ": " + value + "\n";
     };
     TestsComponent = __decorate([
         core_1.Component({

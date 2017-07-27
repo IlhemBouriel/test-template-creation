@@ -28,8 +28,14 @@ var TestService = (function () {
         return this.http.get('/def/one/' + name)
             .map(function (res) { return res.json(); });
     };
-    TestService.prototype.createTemplate = function () {
-        return this.http.get('/def/template')
+    TestService.prototype.createTemplate = function (file, content) {
+        var newFile = {
+            fileName: file,
+            content: content
+        };
+        var headers = new http_1.Headers();
+        headers.append('Content-Type', 'application/json');
+        return this.http.post('/def/template', JSON.stringify(newFile), { headers: headers })
             .map(function (res) { return res.json(); });
     };
     TestService = __decorate([
