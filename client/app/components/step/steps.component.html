@@ -1,0 +1,220 @@
+<!-- Debut Step -->
+<div class="row">
+  <div class="col-md-7">
+  <div *ngIf="numStep == 1">
+    <div class="form-group">
+    <label for="testname">Nom du test</label>
+    <input type="text" [(ngModel)]="qtd['TestName']" class="form-control" id="testname" placeholder="TestName" required>
+    </div>
+
+    <div class="form-group">
+    <label for="url">URL de test</label>
+    <input list="url" class="form-control" name="url" placeholder="URL" [(ngModel)]="qtd['serveur']" required/>
+          <datalist id="url">
+              <div *ngFor="let url of urlValues | valfilter:qtd['serveur']">
+              <option value="{{url}}">
+              </div>
+          </datalist>
+    </div>
+</div>
+
+<div *ngIf="numStep > 1">
+  <div class="form-group">
+    <label for="url">URL de test (champ optionnel** )</label>
+    <input list="url" class="form-control" name="url" placeholder="URL" [(ngModel)]="qtd['serveur']"/>
+          <datalist id="url">
+              <div *ngFor="let url of urlValues | valfilter:qtd['serveur']">
+              <option value="{{url}}">
+              </div>
+          </datalist>
+  </div>
+</div>
+
+  <div class="form-group">
+    <label for="sn">SN</label>
+    <input class="form-control" name="sn" readonly="readonly" [(ngModel)]="'Step'+numStep"/>
+  </div>
+
+  <div class="form-group">
+    <label for="dn">DN</label>
+     <input list="dn" class="form-control" name="dn" placeholder="#DN#" [(ngModel)]="qtd['dn']" required/>
+          <datalist id="dn">
+              <div *ngFor="let dn of dnValues | valfilter:qtd['dn']">
+              <option value="{{dn}}">
+              </div>
+          </datalist>
+  </div>
+
+  <div class="form-group">
+    <label for="ed">ED</label>
+    <input list="ed" class="form-control" name="ed" placeholder="#ED#" [(ngModel)]="qtd['ed']" required (change)="createResult()"/>
+          <datalist id="ed">
+              <div *ngFor="let ed of edValues | valfilter:qtd['ed']">
+              <option value="{{ed}}">
+              </div>
+          </datalist>
+  </div>
+
+  <label>Request</label>
+  <div class="row">
+  <div class="col-xs-2">
+  <select class="form-control" [(ngModel)]="qtd['type']" (blur)="selectedOption()" placeholder="GET/POST" required>
+      <option>GET</option>
+      <option>POST</option>
+  </select>
+  </div>
+  
+  <div class="col-xs-3">
+    <input list="path" class="form-control" name="path" placeholder="Path" [(ngModel)]="qtd['path']" required/>
+          <datalist id="path">
+              <div *ngFor="let path of pathValues | valfilter:qtd['path']">
+              <option value="{{path}}">
+              </div>
+          </datalist>
+  </div>
+  <div class="col-xs-7">
+    <input type="text" [(ngModel)]="qtd['params']" class="form-control" placeholder="Parameters" required>
+  </div>
+
+  <div class="col-xs-12" [style.display]="displayPostArea">
+    <!-- Only for POST request -->
+     <label for="body">Body</label>
+    <textarea name="body" placeholder="POST body..." class="form-control" rows="6" style="resize: none" required [(ngModel)]="qtd['body']" (blur)="addToSHow()"></textarea>
+  </div>
+  </div>
+
+  <div class="form-group">
+    <label for="host">Host</label>
+      <input list="host" class="form-control" name="host" required placeholder="Host" [(ngModel)]="qtd['host']"/>
+          <datalist id="host">
+              <div *ngFor="let host of hostValues | valfilter:qtd['host']">
+              <option value="{{host}}">
+              </div>
+          </datalist>
+  </div>
+  
+  <h4>Autres headers:</h4>
+  <div class="form-group">
+   <fieldset  *ngFor="let choice of choices">
+   <div class="row">
+  <div class="col-xs-3">
+
+<!-- Il faut que les id "list" et "id" soient uniques pour chaque variables-->
+    <input  [attr.list]=choice.id class="form-control"  id="{{choice.id}" (change)="changeStatus(choice)" [(ngModel)]="choice.name"/>
+    <datalist id="{{choice.id}}">
+    <div *ngFor="let defVar of defVars | myfilter:choice">
+       <option value="{{defVar.name}}">
+    </div>
+    </datalist>
+
+  </div>
+  <div class="col-xs-9">
+  <div *ngIf="choice.var">
+    <input [attr.list]=choice.name class="form-control" id="{{qtd[choice.name]}}" [disabled]=choice.is_edit [(ngModel)]="qtd[choice.name]" (change)="addToSHow()"/>
+        <datalist id="{{choice.name}}">
+              <div *ngFor="let v of choice.var[0].values | valfilter:qtd[choice.name]">
+                    <option value="{{v}}">
+              </div>
+        </datalist>
+  </div>
+
+  <div *ngIf="!choice.var"> 
+    <input class="form-control" id="{{qtd[choice.name]}}" [disabled]=choice.is_edit [(ngModel)]="qtd[choice.name]" (change)="addToSHow()"/>
+  </div>
+  </div>
+  </div>
+  
+
+   </fieldset>
+   <button type="button" class="btn btn-success addfields" (click)="addNewChoice()">
+   <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+   </button>
+
+   <button type="button" class="btn btn-danger addfields" (click)="removeChoice()">
+   <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+   </button>
+</div>
+<!--
+<label for="result">Result</label>
+<textarea class="form-control" name="result" rows="6" style="resize: none;" placeholder="Result" [(ngModel)]="qtd['result']">
+</textarea>
+ -->
+  <button type="submit" class="btn btn-primary"  style="float: right;" (click)="getNextStep(qtd['TestName'])"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span><b>Step{{numStep + 1}}</b></button>
+
+  <button type="submit" class="btn btn-success" style="float: right;" (click)="createTemplate()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><b>Valider</b></button>
+
+
+  </div>
+
+ 
+<!-- Fin Step -->
+
+
+
+  <!-- Real time creationg template -->
+ {{"\n\n"}}
+  <div class="col-md-5" *ngIf="numStep == 1">
+
+    <textarea class="form-control" id="textArea" rows="6" style="resize: none;height: 88%;">
+    {{template+
+    '#############################################################################################
+    #
+    #TestName# '+qtd['TestName']+'
+    #
+    #############################################################################################
+    #URLTEST '+qtd['serveur']+'
+    #############################################################################################
+    #SN# '+'Step'+numStep+'
+    #DN# '+qtd['dn']+'
+    #ED# '+qtd['ed']}}
+    {{qtd['type']+' '+qtd['path']+'?'+qtd['params']+'&'+qtd['TestName']+'_'+qtd['sn']+' '+'HTTP/1.1
+    Host: '+qtd['host']}}
+    {{toShow
+    +'
+    ---
+    '+qtd['result']+'
+    --------------------'}}
+
+
+</textarea>
+  </div>
+<div class="col-md-5" *ngIf="numStep > 1 && (qtd['serveur'] == null || qtd['serveur'] == '')">
+    <textarea class="form-control" id="textArea" rows="6" style="resize: none;height: 88%;">
+    {{template+
+    '#############################################################################################
+    #SN# '+'Step'+numStep+'
+    #DN# '+qtd['dn']+'
+    #ED# '+qtd['ed']}}
+    {{qtd['type']+' '+qtd['path']+'?'+qtd['params']+'&'+qtd['TestName']+'_'+qtd['sn']+' '+'HTTP/1.1
+    Host: '+qtd['host']}}
+    {{toShow
+    +'
+    ---
+    '+qtd['result']+'
+    --------------------'}}
+    </textarea>
+</div>
+<div class="col-md-5" *ngIf="numStep > 1 && qtd['serveur'] != null && qtd['serveur'] != ''">
+    <textarea class="form-control" id="textArea" rows="6" style="resize: none;height: 88%;">
+    {{template+
+    '#############################################################################################
+    #URLTEST '+qtd['serveur']+'
+    #############################################################################################
+    #SN# '+'Step'+numStep+'
+    #DN# '+qtd['dn']+'
+    #ED# '+qtd['ed']}}
+    {{qtd['type']+' '+qtd['path']+'?'+qtd['params']+'&'+qtd['TestName']+'_'+qtd['sn']+' '+'HTTP/1.1
+    Host: '+qtd['host']}}
+    {{toShow
+    +'
+    ---
+    '+qtd['result']+'
+    --------------------'}}
+    </textarea>
+</div>
+
+</div>
+
+<!--
+{{ qtd | json}}
+-->

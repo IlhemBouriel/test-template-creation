@@ -1,283 +1,44 @@
-<!-- Debut Step1 -->
-<div class="row">
-  <div class="col-md-7" *ngIf="stepNum == 1">
-    <div class="form-group">
-    <label for="testname">Nom du test</label>
-    <input type="text" [(ngModel)]="qtd['TestName']" class="form-control" id="testname" placeholder="TestName">
-    </div>
-
-  <div class="form-group">
-    <label for="url">URL de test</label>
-    <input list="url" class="form-control" nname="url" placeholder="URL" [(ngModel)]="qtd['serveur']"/>
-          <datalist id="url">
-              <div *ngFor="let url of urlValues | valfilter:qtd['serveur']">
-              <option value="{{url}}">
-              </div>
-          </datalist>
-  </div>
-
-
-
-  <div class="form-group">
-    <label for="sn">SN</label>
-    <input class="form-control" name="sn" [(ngModel)]="qtd['sn']"/>
-  </div>
-
-  <div class="form-group">
-    <label for="dn">DN</label>
-     <input list="dn" class="form-control" name="dn" placeholder="#DN#" [(ngModel)]="qtd['dn']"/>
-          <datalist id="dn">
-              <div *ngFor="let dn of dnValues | valfilter:qtd['dn']">
-              <option value="{{dn}}">
-              </div>
-          </datalist>
-  </div>
-  <div class="form-group">
-    <label for="ed">ED</label>
-    <input list="ed" class="form-control" name="ed" placeholder="#ED#" [(ngModel)]="qtd['ed']"/>
-          <datalist id="ed">
-              <div *ngFor="let ed of edValues | valfilter:qtd['ed']">
-              <option value="{{ed}}">
-              </div>
-          </datalist>
-  </div>
-  <label>Request</label>
-  <div class="row">
-  <div class="col-xs-2">
-  <select class="form-control" [(ngModel)]="qtd['type']" placeholder="GET/POST">
-      <option>GET</option>
-      <option>POST</option>
-  </select>
-  </div>
-  <div class="col-xs-3">
-    <input list="path" class="form-control" name="path" placeholder="Path" [(ngModel)]="qtd['path']"/>
-          <datalist id="path">
-              <div *ngFor="let path of pathValues | valfilter:qtd['path']">
-              <option value="{{path}}">
-              </div>
-          </datalist>
-  </div>
-  <div class="col-xs-7">
-    <input type="text" [(ngModel)]="qtd['params']" class="form-control" placeholder="Parameters">
-  </div>
-  </div>
-  <div class="form-group">
-    <label for="host">Host</label>
-      <input list="host" class="form-control" name="host" placeholder="Host" [(ngModel)]="qtd['host']"/>
-          <datalist id="host">
-              <div *ngFor="let host of hostValues | valfilter:qtd['host']">
-              <option value="{{host}}">
-              </div>
-          </datalist>
-  </div>
-  
-  <h4>Autres headers:</h4>
-  <div class="form-group">
-   <fieldset  *ngFor="let choice of choices">
-   <div class="row">
-  <div class="col-xs-3">
-
-<!-- Il faut que les id "list" et "id" soient uniques pour chaque variables-->
-    <input  [attr.list]=choice.id class="form-control"  id="{{choice.id}" (change)="changeStatus(choice)" [(ngModel)]="choice.name"/>
-    <datalist id="{{choice.id}}">
-    <div *ngFor="let defVar of defVars | myfilter:choice">
-       <option value="{{defVar.name}}">
-    </div>
-    </datalist>
-
-  </div>
-  <div class="col-xs-9">
-  <div *ngIf="choice.var">
-    <input [attr.list]=choice.name class="form-control" id="{{qtd[choice.name]}}" [disabled]=choice.is_edit [(ngModel)]="qtd[choice.name]" (change)="addToSHow(choice.name,qtd[choice.name])"/>
-        <datalist id="{{choice.name}}">
-              <div *ngFor="let v of choice.var[0].values | valfilter:qtd[choice.name]">
-                    <option value="{{v}}">
-              </div>
-        </datalist>
-  </div>
-
-
-  <div *ngIf="!choice.var"> 
-    <input class="form-control" id="{{qtd[choice.name]}}" [disabled]=choice.is_edit [(ngModel)]="qtd[choice.name]" (change)="addToSHow(choice.name,qtd[choice.name])"/>
-  </div>
-
-
-
-
-
-  </div>
-  </div>
-  
-
-   </fieldset>
-   <button type="button" class="btn btn-success addfields" (click)="addNewChoice()">
-   <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-   </button>
-
-   <button type="button" class="btn btn-danger addfields" (click)="removeChoice()">
-   <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-   </button>
+ <div *ngIf="stepNum == 1">
+ <step (onValidateStep)="buildTemplate($event)" (onValidateTemplate)="createTemplateFile($event)" [numStep]="stepNum" [template]="templateString">
+</step>
 </div>
-<label for="result">Result</label>
-<textarea class="form-control" name="result" rows="6" style="resize: none;" placeholder="Result" [(ngModel)]="qtd['result']">
-</textarea>
- 
-  <button type="submit" class="btn btn-primary"  (click)="getNextStep(qtd['TestName'])"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span><b>Step2</b></button>
 
-  <button type="submit" class="btn btn-success" (click)="createTemplate(qtd['TestName'])"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><b>Valider</b></button>
-
-
-
-  </div>
-<!-- Fin Step1 -->
-
-<!-- Debut Step2 -->
-   <div class="col-md-7" *ngIf="stepNum == 2">
-  <div class="form-group">
-    <label for="url">URL de test</label>
-    <input list="url" class="form-control" nname="url" placeholder="URL" [(ngModel)]="qtd['serveur']"/>
-          <datalist id="url">
-              <div *ngFor="let url of urlValues | valfilter:qtd['serveur']">
-              <option value="{{url}}">
-              </div>
-          </datalist>
-  </div>
-
-
-
-  <div class="form-group">
-    <label for="sn">SN</label>
-    <input class="form-control" name="sn" [(ngModel)]="qtd['sn']"/>
-  </div>
-
-  <div class="form-group">
-    <label for="dn">DN</label>
-     <input list="dn" class="form-control" name="dn" placeholder="#DN#" [(ngModel)]="qtd['dn']"/>
-          <datalist id="dn">
-              <div *ngFor="let dn of dnValues | valfilter:qtd['dn']">
-              <option value="{{dn}}">
-              </div>
-          </datalist>
-  </div>
-  <div class="form-group">
-    <label for="ed">ED</label>
-    <input list="ed" class="form-control" name="ed" placeholder="#ED#" [(ngModel)]="qtd['ed']"/>
-          <datalist id="ed">
-              <div *ngFor="let ed of edValues | valfilter:qtd['ed']">
-              <option value="{{ed}}">
-              </div>
-          </datalist>
-  </div>
-  <label>Request</label>
-  <div class="row">
-  <div class="col-xs-2">
-  <select class="form-control" [(ngModel)]="qtd['type']" placeholder="GET/POST">
-      <option>GET</option>
-      <option>POST</option>
-  </select>
-  </div>
-  <div class="col-xs-3">
-    <input list="path" class="form-control" name="path" placeholder="Path" [(ngModel)]="qtd['path']"/>
-          <datalist id="path">
-              <div *ngFor="let path of pathValues | valfilter:qtd['path']">
-              <option value="{{path}}">
-              </div>
-          </datalist>
-  </div>
-  <div class="col-xs-7">
-    <input type="text" [(ngModel)]="qtd['params']" class="form-control" placeholder="Parameters">
-  </div>
-  </div>
-  <div class="form-group">
-    <label for="host">Host</label>
-      <input list="host" class="form-control" name="host" placeholder="Host" [(ngModel)]="qtd['host']"/>
-          <datalist id="host">
-              <div *ngFor="let host of hostValues | valfilter:qtd['host']">
-              <option value="{{host}}">
-              </div>
-          </datalist>
-  </div>
-  
-  <h4>Autres headers:</h4>
-  <div class="form-group">
-   <fieldset  *ngFor="let choice of choices">
-   <div class="row">
-  <div class="col-xs-3">
-
-<!-- Il faut que les id "list" et "id" soient uniques pour chaque variables-->
-    <input  [attr.list]=choice.id class="form-control"  id="{{choice.id}" (change)="changeStatus(choice)" [(ngModel)]="choice.name"/>
-    <datalist id="{{choice.id}}">
-    <div *ngFor="let defVar of defVars | myfilter:choice">
-       <option value="{{defVar.name}}">
-    </div>
-    </datalist>
-
-  </div>
-  <div class="col-xs-9">
-  <div *ngIf="choice.var">
-    <input [attr.list]=choice.name class="form-control" id="{{qtd[choice.name]}}" [disabled]=choice.is_edit [(ngModel)]="qtd[choice.name]" (change)="addToSHow(choice.name,qtd[choice.name])"/>
-        <datalist id="{{choice.name}}">
-              <div *ngFor="let v of choice.var[0].values | valfilter:qtd[choice.name]">
-                    <option value="{{v}}">
-              </div>
-        </datalist>
-  </div>
-
-
-  <div *ngIf="!choice.var"> 
-    <input class="form-control" id="{{qtd[choice.name]}}" [disabled]=choice.is_edit [(ngModel)]="qtd[choice.name]" (change)="addToSHow(choice.name,qtd[choice.name])"/>
-  </div>
-
-  </div>
-  </div>
-  
-
-   </fieldset>
-   <button type="button" class="btn btn-success addfields" (click)="addNewChoice()">
-   <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-   </button>
-
-   <button type="button" class="btn btn-danger addfields" (click)="removeChoice()">
-   <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-   </button>
-</div>
-<label for="result">Result</label>
-<textarea class="form-control" name="result" rows="6" style="resize: none;" placeholder="Result" [(ngModel)]="qtd['result']">
-</textarea>
- 
-  <button type="submit" class="btn btn-primary"  (click)="getNextStep()"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span><b>Step2</b></button>
-
-  <button type="submit" class="btn btn-success" (click)="createTemplate(qtd['TestName'])"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><b>Valider</b></button>
-   </div>
-<!-- Fin Step2 -->
-
-  <!-- Real time creationg template -->
- {{"\n\n"}}
-  <div class="col-md-5">
-    <textarea class="form-control" id="textArea" rows="6" style="resize: none;height: 88%;">
-    {{'#############################################################################################
-    #
-    #TestName# '+qtd['TestName']+'
-    #
-    #############################################################################################
-    #URLTEST '+qtd['serveur']+'
-    #############################################################################################
-    #SN# '+qtd['sn']+'
-    #DN# '+qtd['dn']+'
-    #ED# '+qtd['ed']}}
-    {{qtd['type']+' '+qtd['path']+'?'+qtd['params']+'&'+qtd['TestName']+'_'+qtd['sn']+' '+'HTTP/1.1
-    Host: '+qtd['host']}}
-    {{toShow
-    +'---
-    '+qtd['result']+'
-    --------------------'}}
-
-
-</textarea>
-  </div>
+ <div *ngIf="stepNum == 2">
+ <step (onValidateStep)="buildTemplate($event)" (onValidateTemplate)="createTemplateFile($event)" [numStep]="stepNum" [template]="templateString">
+</step>
 </div>
 
 
-<!--
-{{ qtd | json}}
--->
+ <div *ngIf="stepNum == 3">
+ <step (onValidateStep)="buildTemplate($event)" (onValidateTemplate)="createTemplateFile($event)" [numStep]="stepNum" [template]="templateString">
+</step>
+</div>
+
+
+ <div *ngIf="stepNum == 4">
+ <step (onValidateStep)="buildTemplate($event)" (onValidateTemplate)="createTemplateFile($event)" [numStep]="stepNum" [template]="templateString">
+</step>
+</div>
+
+
+ <div *ngIf="stepNum == 5">
+ <step (onValidateStep)="buildTemplate($event)" (onValidateTemplate)="createTemplateFile($event)" [numStep]="stepNum" [template]="templateString">
+</step>
+</div>
+
+
+ <div *ngIf="stepNum == 6">
+ <step (onValidateStep)="buildTemplate($event)" (onValidateTemplate)="createTemplateFile($event)" [numStep]="stepNum" [template]="templateString">
+</step>
+</div>
+
+
+
+ <div *ngIf="stepNum == 7">
+ <step (onValidateStep)="buildTemplate($event)" (onValidateTemplate)="createTemplateFile($event)" [numStep]="stepNum" [template]="templateString">
+</step>
+</div>
+
+ <div *ngIf="stepNum > 7">
+Component for launching TestConf File in the server and "getting the result"
+</div>
