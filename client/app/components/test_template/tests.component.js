@@ -34,6 +34,22 @@ var TestsComponent = (function () {
             _this.res = res;
         });
     };
+    TestsComponent.prototype.lauchTestScript = function (template) {
+        var _this = this;
+        this.templateString = template.content;
+        var content = "'" + this.templateString + "'";
+        content = content.replace(/\n/g, '\r');
+        this.testService.launchTemplateTest(this.templateFile, content)
+            .subscribe(function (res) {
+            _this.res = res.data;
+            console.log('from client >> ' + res.data);
+        });
+    };
+    TestsComponent.prototype.validateSteps = function (step) {
+        this.templateString = step.content;
+        this.stepNum = 8;
+        this.templateString = step.content;
+    };
     TestsComponent = __decorate([
         core_1.Component({
             moduleId: module.id,

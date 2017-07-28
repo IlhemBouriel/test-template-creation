@@ -38,6 +38,19 @@ export class TestService{
         .map(res => res.json());
     }
 
+    launchTemplateTest(file,content)
+    {
+        var newFile = {
+        fileName:file,
+        content:content
+        };
+
+        var headers = new Headers();
+        headers.append('Content-Type','application/json');
+        return this.http.post('/def/launch',JSON.stringify(newFile),{headers})
+        .map(res => res.json());
+    }
+
    
     
     

@@ -133,3 +133,16 @@ module.exports.createTemplate = function(req, res) {
     });
 
 };
+
+module.exports.launchTest = function(req, res) {
+    var varsObject = new varModel();
+   
+    varsObject.launchTemplate(req.body,function(varResponse) {
+        res.json({
+            "responseCode": 200,
+            "responseDesc": "Success",
+            "data": varResponse
+        });
+    });
+
+};

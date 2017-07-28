@@ -4,8 +4,8 @@ var db = require('../utils/db')
 var async = require('async');
 //Fro executing script shell from nodejs
 var exec = require('child_process').exec;
-var script_path = "/home/ubuntu/Desktop/sofrecom_qualif/script/script.sh";
-
+var script_path_create = "/home/ubuntu/Desktop/sofrecom_qualif/script/script_create_template.sh";
+var script_path_launch = "/home/ubuntu/Desktop/sofrecom_qualif/script/script_launch_test.sh";
 
 class defVar {
     addNewDef(varData, callback) {
@@ -192,23 +192,23 @@ class defVar {
     {
         var docName = data.fileName;
         var content = data.content;
-                this.execute(script_path+' '+docName+' '+content, function(e, stdout){
+                this.execute(script_path_create+' '+docName+' '+content, function(e, stdout){
                      callback(stdout);
       
     });
 
-              /*  exec('/home/ubuntu/Desktop/script/script.sh',
-                function (error, stdout, stderr) {
-                console.log('stdout: ' + stdout);
-                console.log('stderr: ' + stderr);
-                if (error !== null) {
-                    console.log('exec error: ' + error);
-                    return callback(true, "Error while executing template script");
-                }
-                 callback(null, stdout);
-        });*/
-
     }
+
+    launchTemplate(data,callback)
+    {
+        var docName = data.fileName;
+        var content = data.content;
+                this.execute(script_path_launch+' '+docName+' '+content, function(stdout){
+                     callback(stdout);
+      
+    });
+    }
+
 
 }
 

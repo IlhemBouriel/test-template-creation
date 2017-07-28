@@ -1,5 +1,5 @@
 <!-- Debut Step -->
-<div class="row">
+<div class="row" *ngIf="numStep < 8">
   <div class="col-md-7">
   <div *ngIf="numStep == 1">
     <div class="form-group">
@@ -139,10 +139,12 @@
 <textarea class="form-control" name="result" rows="6" style="resize: none;" placeholder="Result" [(ngModel)]="qtd['result']">
 </textarea>
  -->
-  <button type="submit" class="btn btn-primary"  style="float: right;" (click)="getNextStep(qtd['TestName'])"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span><b>Step{{numStep + 1}}</b></button>
+  <button type="submit" *ngIf="numStep < 7 " class="btn btn-primary"  style="float: right;" (click)="getNextStep(qtd['TestName'])"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span><b>Step{{numStep + 1}}</b></button>
 
+  <button type="submit" class="btn btn-success" style="float: right;" (click)="validateTemplate()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><b>Valider</b></button>
+<!--
   <button type="submit" class="btn btn-success" style="float: right;" (click)="createTemplate()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><b>Valider</b></button>
-
+-->
 
   </div>
 
@@ -152,7 +154,7 @@
 
 
   <!-- Real time creationg template -->
- {{"\n\n"}}
+
   <div class="col-md-5" *ngIf="numStep == 1">
 
     <textarea class="form-control" id="textArea" rows="6" style="resize: none;height: 88%;">
@@ -162,7 +164,7 @@
     #TestName# '+qtd['TestName']+'
     #
     #############################################################################################
-    #URLTEST '+qtd['serveur']+'
+    ##URLTEST=ub'+qtd['serveur']+'
     #############################################################################################
     #SN# '+'Step'+numStep+'
     #DN# '+qtd['dn']+'
@@ -214,6 +216,23 @@
 </div>
 
 </div>
+
+<div class="row" *ngIf="numStep == 8">
+ <textarea class="form-control" id="textArea" rows="6" style="resize: none;height: 88%;">
+    {{template}}
+  </textarea>
+  <button type="submit" class="btn btn-warning" style="float: right;" (click)="launchTest()"><span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span><b>Lancer le test</b></button>
+  <button type="submit" class="btn btn-info" style="float: right;" (click)="createTemplate()"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span><b>Sauvegarder le fichier</b></button>
+</div>
+
+
+
+
+
+
+
+
+
 
 <!--
 {{ qtd | json}}

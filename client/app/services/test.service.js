@@ -38,6 +38,16 @@ var TestService = (function () {
         return this.http.post('/def/template', JSON.stringify(newFile), { headers: headers })
             .map(function (res) { return res.json(); });
     };
+    TestService.prototype.launchTemplateTest = function (file, content) {
+        var newFile = {
+            fileName: file,
+            content: content
+        };
+        var headers = new http_1.Headers();
+        headers.append('Content-Type', 'application/json');
+        return this.http.post('/def/launch', JSON.stringify(newFile), { headers: headers })
+            .map(function (res) { return res.json(); });
+    };
     TestService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])

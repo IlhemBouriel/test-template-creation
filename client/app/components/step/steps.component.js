@@ -16,6 +16,8 @@ var StepsComponent = (function () {
         this.testService = testService;
         this.onValidateStep = new core_1.EventEmitter();
         this.onValidateTemplate = new core_1.EventEmitter();
+        this.onlaunchTest = new core_1.EventEmitter();
+        this.onvalidateSteps = new core_1.EventEmitter();
         this.filterargs = { name: '' };
         this.filterargs_val = '';
         this.qtd = {};
@@ -114,6 +116,20 @@ var StepsComponent = (function () {
             ;
         }
     };
+    StepsComponent.prototype.launchTest = function () {
+        var content = document.getElementById("textArea").value;
+        var res = {
+            "content": content
+        };
+        this.onlaunchTest.emit(res);
+    };
+    StepsComponent.prototype.validateTemplate = function () {
+        var content = document.getElementById("textArea").value;
+        var res = {
+            "content": content
+        };
+        this.onvalidateSteps.emit(res);
+    };
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Number)
@@ -130,11 +146,20 @@ var StepsComponent = (function () {
         core_1.Output(), 
         __metadata('design:type', core_1.EventEmitter)
     ], StepsComponent.prototype, "onValidateTemplate", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', core_1.EventEmitter)
+    ], StepsComponent.prototype, "onlaunchTest", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', core_1.EventEmitter)
+    ], StepsComponent.prototype, "onvalidateSteps", void 0);
     StepsComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
             selector: 'step',
             templateUrl: 'steps.component.html',
+            styleUrls: ['steps.component.css'],
         }), 
         __metadata('design:paramtypes', [test_service_1.TestService])
     ], StepsComponent);

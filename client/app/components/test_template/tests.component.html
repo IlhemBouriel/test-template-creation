@@ -1,44 +1,47 @@
  <div *ngIf="stepNum == 1">
- <step (onValidateStep)="buildTemplate($event)" (onValidateTemplate)="createTemplateFile($event)" [numStep]="stepNum" [template]="templateString">
+ <step (onValidateStep)="buildTemplate($event)" (onvalidateSteps)="validateSteps($event)" (onlaunchTest)="lauchTestScript($event)" (onValidateTemplate)="createTemplateFile($event)" [numStep]="stepNum" [template]="templateString">
 </step>
 </div>
 
  <div *ngIf="stepNum == 2">
- <step (onValidateStep)="buildTemplate($event)" (onValidateTemplate)="createTemplateFile($event)" [numStep]="stepNum" [template]="templateString">
+ <step (onValidateStep)="buildTemplate($event)" (onvalidateSteps)="validateSteps($event)" (onlaunchTest)="lauchTestScript($event)" (onValidateTemplate)="createTemplateFile($event)" [numStep]="stepNum" [template]="templateString">
 </step>
 </div>
 
 
  <div *ngIf="stepNum == 3">
- <step (onValidateStep)="buildTemplate($event)" (onValidateTemplate)="createTemplateFile($event)" [numStep]="stepNum" [template]="templateString">
+ <step (onValidateStep)="buildTemplate($event)" (onvalidateSteps)="validateSteps($event)" (onlaunchTest)="lauchTestScript($event)" (onValidateTemplate)="createTemplateFile($event)" [numStep]="stepNum" [template]="templateString">
 </step>
 </div>
 
 
  <div *ngIf="stepNum == 4">
- <step (onValidateStep)="buildTemplate($event)" (onValidateTemplate)="createTemplateFile($event)" [numStep]="stepNum" [template]="templateString">
+ <step (onValidateStep)="buildTemplate($event)" (onvalidateSteps)="validateSteps($event)" (onlaunchTest)="lauchTestScript($event)" (onValidateTemplate)="createTemplateFile($event)" [numStep]="stepNum" [template]="templateString">
 </step>
 </div>
 
 
  <div *ngIf="stepNum == 5">
- <step (onValidateStep)="buildTemplate($event)" (onValidateTemplate)="createTemplateFile($event)" [numStep]="stepNum" [template]="templateString">
+ <step (onValidateStep)="buildTemplate($event)" (onvalidateSteps)="validateSteps($event)" (onlaunchTest)="lauchTestScript($event)" (onValidateTemplate)="createTemplateFile($event)" [numStep]="stepNum" [template]="templateString">
 </step>
 </div>
 
 
  <div *ngIf="stepNum == 6">
- <step (onValidateStep)="buildTemplate($event)" (onValidateTemplate)="createTemplateFile($event)" [numStep]="stepNum" [template]="templateString">
+ <step (onValidateStep)="buildTemplate($event)" (onvalidateSteps)="validateSteps($event)" (onlaunchTest)="lauchTestScript($event)" (onValidateTemplate)="createTemplateFile($event)" [numStep]="stepNum" [template]="templateString">
 </step>
 </div>
 
 
 
  <div *ngIf="stepNum == 7">
- <step (onValidateStep)="buildTemplate($event)" (onValidateTemplate)="createTemplateFile($event)" [numStep]="stepNum" [template]="templateString">
+ <step (onValidateStep)="buildTemplate($event)" (onvalidateSteps)="validateSteps($event)" (onlaunchTest)="lauchTestScript($event)" (onValidateTemplate)="createTemplateFile($event)" [numStep]="stepNum" [template]="templateString">
 </step>
 </div>
 
- <div *ngIf="stepNum > 7">
-Component for launching TestConf File in the server and "getting the result"
+ <div *ngIf="stepNum == 8">
+ <step (onValidateStep)="buildTemplate($event)" (onvalidateSteps)="validateSteps($event)" (onlaunchTest)="lauchTestScript($event)" (onValidateTemplate)="createTemplateFile($event)" [numStep]="stepNum" [template]="templateString">
+</step>
 </div>
+
+

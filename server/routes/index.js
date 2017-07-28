@@ -16,7 +16,7 @@ router.get('/def', defVarController.get)
 router.get('/def/one/:name',defVarController.getByName);
 router.post('/def/template',defVarController.createTemplate);
 router.get('/def/:id', defVarController.getById);
-
+router.post('/def/launch',defVarController.launchTest);
 
 router.get('/undef', unDefVarController.get)
     .post('/undef', unDefVarController.post)

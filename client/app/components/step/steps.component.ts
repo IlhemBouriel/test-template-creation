@@ -8,6 +8,7 @@ import {Choice} from '../../../Choice';
   moduleId: module.id,
   selector: 'step',
   templateUrl: 'steps.component.html',
+  styleUrls: ['steps.component.css'],
 
 })
 
@@ -17,6 +18,8 @@ export class StepsComponent {
     @Input() template:string;
     @Output() onValidateStep: EventEmitter<any> = new EventEmitter<any>();
     @Output() onValidateTemplate: EventEmitter<any> = new EventEmitter<any>();
+    @Output() onlaunchTest: EventEmitter<any> = new EventEmitter<any>();
+    @Output() onvalidateSteps: EventEmitter<any> = new EventEmitter<any>();
   	defVars: DefVar[];
   	filterargs = {name: ''};
   	filterargs_val: string = '';
@@ -167,6 +170,24 @@ export class StepsComponent {
     var index = this.qtd['ed'].indexOf( "+" );
     this.qtd['result'] = this.qtd['ed'].substring(0,index));
     }
+    }
+
+    launchTest()
+    {
+    var content = document.getElementById("textArea").value;
+    var res = {
+        "content":content
+    }
+    this.onlaunchTest.emit(res);
+    }
+
+    validateTemplate()
+    {
+    var content = document.getElementById("textArea").value;
+    var res = {
+        "content":content
+    }
+    this.onvalidateSteps.emit(res);
     }
 
    
