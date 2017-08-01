@@ -1,0 +1,16 @@
+<select class="form-control" [(ngModel)]="selectedTagFile" (ngModelChange)="onSelectTagFile($event)">
+<option></option>
+  <option [value]="file.name" *ngFor="let file of tagFiles">{{file.name}}</option>
+</select>
+
+
+ <textarea class="form-control" id="textArea" rows="6" style="resize: none;height: 80%;">
+    {{contentTagFile}}
+
+  </textarea>
+
+  <div *ngIf="selectedTagFile.length > 0">
+    <button type="submit" class="btn btn-danger" style="float: right;" (click)="onSelectTagFile(selectedTagFile)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span><b>Réinitialiser
+</b></button>
+  <button type="submit" class="btn btn-success" style="float: right;" (click)="saveTagFile()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><b>Sauvegarder le fichier</b></button>	
+  </div>

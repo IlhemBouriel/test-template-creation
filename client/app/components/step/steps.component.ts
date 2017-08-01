@@ -23,16 +23,14 @@ export class StepsComponent {
   	defVars: DefVar[];
   	filterargs = {name: ''};
   	filterargs_val: string = '';
-  	qtd:any[] = {};
+  	qtd: any[] = [{}];
   	choices : Choice[];
     urlValues:string[];
     dnValues:string[];
     edValues:string[];
     pathValues:string[];
     hostValues:string[];
-    res:string;
     toShow:string;
-    selectedOption:string;
 
     
 
@@ -70,7 +68,6 @@ export class StepsComponent {
             .subscribe(vars => {
             this.hostValues = vars.data[0].values;
          });
-        this.qtd['sn']="Step 1";
         this.choices =[{id: 'choice1','name':'','var':null,'is_edit':true}];
         this.toShow = '';
         this.displayPostArea='none';
@@ -95,7 +92,6 @@ export class StepsComponent {
     choice.is_edit = false;
     this.testService.getOneDefVar(choice.name)
             .subscribe(vars => {
-            console.log(vars.data.length);
             if(vars.data.length == 1)
             {
                 console.log("object: %O", vars.data);
@@ -112,7 +108,7 @@ export class StepsComponent {
 
     createTemplate()
     {
-    var content = document.getElementById("textArea").value;
+    var content = (<HTMLInputElement>document.getElementById("textArea")).value;
     var res = {
         "content":content
     }
@@ -121,7 +117,7 @@ export class StepsComponent {
 
     getNextStep(doc)
     {
-    var content = document.getElementById("textArea").value;
+    var content = (<HTMLInputElement>document.getElementById("textArea")).value;
     var res = {
         "doc":doc,
         "content":content
@@ -174,19 +170,40 @@ export class StepsComponent {
 
     launchTest()
     {
-    var content = document.getElementById("textArea").value;
-    var res = {
+    var content = (<HTMLInputElement>document.getElementById("textArea")).value;
+    if (this.numStep == 1)
+    {
+        var res = {
+        "doc":this.qtd['TestName'],
         "content":content
+        }
+    }
+    else
+    {
+        var res = {
+        "content":content
+        }
     }
     this.onlaunchTest.emit(res);
     }
 
     validateTemplate()
     {
-    var content = document.getElementById("textArea").value;
-    var res = {
+    var content = (<HTMLInputElement>document.getElementById("textArea")).value;
+    if (this.numStep == 1)
+    {
+        var res = {
+        "doc":this.qtd['TestName'],
         "content":content
+        }
     }
+    else
+    {
+        var res = {
+        "content":content
+        }
+    }
+    
     this.onvalidateSteps.emit(res);
     }
 

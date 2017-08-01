@@ -26,6 +26,9 @@ var TestsComponent = (function () {
     };
     TestsComponent.prototype.createTemplateFile = function (step) {
         var _this = this;
+        if (this.stepNum == 1) {
+            this.templateFile = step.doc + '.conf';
+        }
         this.templateString = step.content;
         var content = "'" + this.templateString + "'";
         content = content.replace(/\n/g, '\r');
@@ -36,16 +39,21 @@ var TestsComponent = (function () {
     };
     TestsComponent.prototype.lauchTestScript = function (template) {
         var _this = this;
+        if (this.stepNum == 1) {
+            this.templateFile = step.doc + '.conf';
+        }
         this.templateString = template.content;
         var content = "'" + this.templateString + "'";
         content = content.replace(/\n/g, '\r');
         this.testService.launchTemplateTest(this.templateFile, content)
             .subscribe(function (res) {
             _this.res = res.data;
-            console.log('from client >> ' + res.data);
         });
     };
     TestsComponent.prototype.validateSteps = function (step) {
+        if (this.stepNum == 1) {
+            this.templateFile = step.doc + '.conf';
+        }
         this.templateString = step.content;
         this.stepNum = 8;
         this.templateString = step.content;

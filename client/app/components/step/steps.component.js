@@ -20,7 +20,7 @@ var StepsComponent = (function () {
         this.onvalidateSteps = new core_1.EventEmitter();
         this.filterargs = { name: '' };
         this.filterargs_val = '';
-        this.qtd = {};
+        this.qtd = [{}];
         this.testService.getDefVars()
             .subscribe(function (vars) {
             _this.defVars = vars.data;
@@ -45,7 +45,6 @@ var StepsComponent = (function () {
             .subscribe(function (vars) {
             _this.hostValues = vars.data[0].values;
         });
-        this.qtd['sn'] = "Step 1";
         this.choices = [{ id: 'choice1', 'name': '', 'var': null, 'is_edit': true }];
         this.toShow = '';
         this.displayPostArea = 'none';
@@ -64,7 +63,6 @@ var StepsComponent = (function () {
         choice.is_edit = false;
         this.testService.getOneDefVar(choice.name)
             .subscribe(function (vars) {
-            console.log(vars.data.length);
             if (vars.data.length == 1) {
                 console.log("object: %O", vars.data);
                 choice.var = vars.data;
@@ -118,16 +116,32 @@ var StepsComponent = (function () {
     };
     StepsComponent.prototype.launchTest = function () {
         var content = document.getElementById("textArea").value;
-        var res = {
-            "content": content
-        };
+        if (this.numStep == 1) {
+            var res = {
+                "doc": this.qtd['TestName'],
+                "content": content
+            };
+        }
+        else {
+            var res = {
+                "content": content
+            };
+        }
         this.onlaunchTest.emit(res);
     };
     StepsComponent.prototype.validateTemplate = function () {
         var content = document.getElementById("textArea").value;
-        var res = {
-            "content": content
-        };
+        if (this.numStep == 1) {
+            var res = {
+                "doc": this.qtd['TestName'],
+                "content": content
+            };
+        }
+        else {
+            var res = {
+                "content": content
+            };
+        }
         this.onvalidateSteps.emit(res);
     };
     __decorate([
