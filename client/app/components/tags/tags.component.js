@@ -42,9 +42,6 @@ var TagsComponent = (function () {
             _this.contentTagFile = vars.data;
         });
     };
-    TagsComponent.prototype.reloadTagFile = function () {
-        //reload file
-    };
     TagsComponent = __decorate([
         core_1.Component({
             moduleId: module.id,

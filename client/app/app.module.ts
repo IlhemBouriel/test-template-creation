@@ -5,14 +5,16 @@ import {FormsModule} from '@angular/forms';
 import {AppComponent} from './app.component';
 import {TestsComponent} from './components/test_template/tests.component';
 import {StepsComponent} from './components/step/steps.component';
+import {PlanTestComponent} from './components/plan_test/plan.component'
 import {TagsComponent}  from './components/tags/tags.component';
 import {MyFilterPipe} from './components/shared/my-filter.pipe';
 import {ValFilterPipe} from './components/shared/filter-values';
+import {HighlightSearch } from './components/shared/high-filter';
 
 
 @NgModule({
   imports:      [ BrowserModule, HttpModule, FormsModule ],
-  declarations: [AppComponent, TestsComponent,StepsComponent,TagsComponent,MyFilterPipe,ValFilterPipe],
+  declarations: [AppComponent, TestsComponent,StepsComponent,TagsComponent,PlanTestComponent,MyFilterPipe,ValFilterPipe,HighlightSearch],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

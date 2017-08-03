@@ -6,11 +6,22 @@
 
  <textarea class="form-control" id="textArea" rows="6" style="resize: none;height: 80%;">
     {{contentTagFile}}
-
-  </textarea>
+ </textarea>
 
   <div *ngIf="selectedTagFile.length > 0">
-    <button type="submit" class="btn btn-danger" style="float: right;" (click)="onSelectTagFile(selectedTagFile)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span><b>Réinitialiser
-</b></button>
-  <button type="submit" class="btn btn-success" style="float: right;" (click)="saveTagFile()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><b>Sauvegarder le fichier</b></button>	
+  <!--
+  <div innerHTML="{{ '<FSI_HOST_COM>=tb1n.orange.com
+<FSI_HOST_OPL>=tb1n.orange.pl
+<FSI_HOST_COM_HTTPS>=ssl-tb1n.orange.com
+<FSI_HOST_OFR_HTTPS>=ssl-tb1n.orange.fr' | highligh : 'orange'}}"></div>
+
+-->
+    <button type="submit" class="btn btn-danger" style="float: right;" (click)="onSelectTagFile(selectedTagFile)">
+    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+    <b>Réinitialiser</b>
+    </button>
+  <button type="submit" class="btn btn-success" style="float: right;" (click)="saveTagFile()">
+  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+  <b>Sauvegarder le fichier</b>
+  </button>	
   </div>

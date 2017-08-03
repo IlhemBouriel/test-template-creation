@@ -53,10 +53,7 @@ export class TagsComponent {
             });
     }
 
-    reloadTagFile()
-    {
-        //reload file
-    }
+    
 
 
 }

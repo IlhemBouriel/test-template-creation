@@ -1,0 +1,163 @@
+<!--
+<div class="row">
+
+<div class="col-md-5">
+<div class="form-group">
+    <label for="evol">Evol&Version</label>
+    <input type="text" [(ngModel)]="evol" class="form-control" id="evol" placeholder="Version:Evol" required>
+</div>
+
+<div class="form-group">
+    <label for="testname">TestCase</label>
+    <input type="text" [(ngModel)]="testCase" class="form-control" id="testCase" placeholder="TestCase..." required>
+</div>
+
+<div class="form-group">
+<label for="desc">Description</label>
+    <textarea name="desc" placeholder="Plan description..." class="form-control" rows="3" style="resize: none" required [(ngModel)]="description"></textarea>
+</div>
+
+<div class="form-group">
+    <label for="sn">Step number</label>
+    <input class="form-control" name="sn" readonly="readonly" [(ngModel)]="'Step'+stepNum"/>
+</div>
+
+<div class="form-group">
+    <label for="dn">Details</label>
+     <input class="form-control" name="dn" placeholder="Detail of Step{{stepNum}}" [(ngModel)]="detail['Step'+stepNum]" required/>
+</div>
+
+<div class="form-group">
+    <label for="ed">Expected result</label>
+    <input class="form-control" name="ed" placeholder="Expected result of Step{{stepNum}}" [(ngModel)]="expected['Step'+stepNum]" required/>
+</div>
+
+<button type="submit" class="btn btn-success"  (click)="validateTemplate()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><b>Valider</b></button>
+
+<button type="submit" *ngIf="stepNum < 7 " class="btn btn-primary"  (click)="getNextStep()"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span><b>Step{{stepNum + 1}}</b></button>
+
+
+
+
+
+</div>
+
+
+<div class="col-md-7">
+<h2>{{evol}}</h2>
+<div class="table-responsive">
+  <table class="table table-bordered" id="POITable">
+    <tr>
+    	<th>TestCase</th>
+   		<th>Description</th>
+   		<th>N° Step</th>
+   		<th>Details</th>
+   		<th>Expected Result</th>
+    </tr>
+
+    <div *ngFor="let key of [1,2,3,4,5,6,7]">
+    	<tr *ngIf="key == stepNum || key < stepNum">
+    	<td>{{testCase}}</td>
+   		<td>{{description}}</td>
+   		<td>Step{{key}}</td>
+   		<td>{{detail['Step'+key]}}</td>
+   		<td>{{expected['Step'+key]}}</td>
+    	</tr>
+    </div>
+   
+  </table>
+</div>
+
+</div>
+
+</div>
+
+-->
+
+ <div class="row">
+    <div class="col-md-12" *ngIf="stepNum < 8">
+            <div class="form-group">
+    			<label for="evol">Evol&Version</label>
+    			<input type="text" [(ngModel)]="evol" class="form-control" id="evol" placeholder="Version:Evol" required>
+			</div>
+
+			<div class="form-group">
+    			<label for="testname">TestCase</label>
+    			<input type="text" [(ngModel)]="testCase" class="form-control" id="testCase" placeholder="TestCase..." required>
+			</div>
+
+<div class="form-group">
+<label for="desc">Description</label>
+    <textarea name="desc" placeholder="Plan description..." class="form-control" rows="3" style="resize: none" required [(ngModel)]="description"></textarea>
+</div>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form>
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>N° Step</th>
+                                        <th>Description</th>
+                                        <th>Expected Result</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let step of steps">
+                                        <td>
+                                            <input type="text" readonly="readonly" value="Step{{step.num}}" class="form-control" /></td>
+                                        <td>
+                                            <input type="text" [(ngModel)]=step.dn placeholder="{{step.dn}}" name="dn" class="form-control" required /></td>
+                                        <td>
+                                            <input type="text" [(ngModel)]=step.ed name="ed" placeholder="{{step.ed}}" class="form-control" required/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+
+
+            <button type="submit" *ngIf="stepNum > 1 " class="btn btn-danger"  (click)="RemoveStep()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span><b>Remove Step</b></button>
+
+
+            <button type="submit" class="btn btn-success"  (click)="validateTemplate()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><b>Validate</b></button>
+
+			<button type="submit" *ngIf="stepNum < 7 " class="btn btn-primary"  (click)="getNextStep()"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span><b>Add Step</b></button>
+
+	</div>
+
+	<div class="col-md-12" *ngIf="stepNum == 8">
+
+
+
+	<h1 style="color: #FF1493">Test Plan : {{evol}}</h1>
+	<table class="table table-bordered table-striped" id="POITable">
+    <tr class="danger">
+    	<th>TestCase</th>
+   		<th>Description</th>
+   		<th>N° Step</th>
+   		<th>Details</th>
+   		<th>Expected Result</th>
+    </tr>
+
+    	<tr *ngFor="let step of steps">
+    	<td *ngIf="step.num == 1" [attr.rowspan]="steps.length">{{testCase}}</td>
+   		<td *ngIf="step.num == 1" [attr.rowspan]="steps.length">{{description}}</td>
+   		<td>Step{{step.num}}</td>
+   		<td>{{step.dn}}</td>
+   		<td>{{step.ed}}</td>
+    	</tr>
+   
+  </table>
+
+<! Pass data to server as a json -->
+    <textarea  class="form-control" id="textArea" rows="6" style="resize: none;height: 85%;">
+    {{evol +'\n'+testCase+'\n'+description+'\n'+template}}
+    
+    </textarea>
+    
+    </div>
+
+            
+
+</div>
