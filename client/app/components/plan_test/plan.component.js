@@ -13,36 +13,76 @@ var test_service_1 = require('../../services/test.service');
 var PlanTestComponent = (function () {
     function PlanTestComponent(testService) {
         this.testService = testService;
-        this.steps = [{}];
+        this.testCases = [{}];
         console.log('PlanComponent created');
-        this.stepNum = 1;
-        this.testCase = '';
-        this.description = '';
+        this.testCaseNum = 1;
+        this.currentTestCase = 0;
         this.template = '';
-        this.steps = [
+        var steps = [
             {
-                'num': 1,
                 'dn': '',
                 'ed': ''
             }];
+        this.testCases = [{
+                'name': '',
+                'description': '',
+                'stepNum': 1,
+                'steps': steps
+            }];
     }
-    PlanTestComponent.prototype.getNextStep = function () {
-        this.stepNum++;
-        this.steps.push({
-            'num': this.stepNum,
+    PlanTestComponent.prototype.removeTestCase = function () {
+        this.testCaseNum--;
+        this.testCases.splice(this.currentTestCase, 1);
+        if (this.currentTestCase == 0) {
+            this.currentTestCase++;
+        }
+        else {
+            this.currentTestCase--;
+        }
+    };
+    PlanTestComponent.prototype.getNextStep = function (testCase) {
+        this.testCases[this.currentTestCase].stepNum++;
+        this.testCases[this.currentTestCase].steps.push({
             'dn': "",
             'ed': "",
         });
+        if (this.testCases[this.currentTestCase].stepNum == 8) {
+            this.nextTestCase();
+        }
     };
-    PlanTestComponent.prototype.RemoveStep = function () {
-        this.stepNum--;
-        this.steps.splice(this.steps.length - 1, 1);
+    PlanTestComponent.prototype.RemoveStep = function (index) {
+        this.testCases[this.currentTestCase].steps.splice(index, 1);
+        this.testCases[this.currentTestCase].stepNum--;
     };
     PlanTestComponent.prototype.validateTemplate = function () {
-        this.stepNum = 8;
-        for (var _i = 0, _a = this.steps; _i < _a.length; _i++) {
-            var step = _a[_i];
-            this.template = this.template + 'Step' + step.num + '\t' + step.dn + '\t' + step.ed + '\n';
+        this.testCaseNum = 11;
+        /* for (let step of this.steps)
+         {
+           this.template = this.template + 'Step'+step.num+'\t'+step.dn+'\t'+step.ed+'\n';
+         }*/
+    };
+    PlanTestComponent.prototype.nextTestCase = function () {
+        if (this.currentTestCase + 1 == this.testCases.length) {
+            this.testCaseNum++;
+            var steps = [
+                {
+                    'num': 1,
+                    'dn': '',
+                    'ed': ''
+                }];
+            this.testCases.push({
+                'name': '',
+                'description': '',
+                'stepNum': 1,
+                'steps': steps
+            });
+        }
+        this.currentTestCase++;
+    };
+    PlanTestComponent.prototype.previousTestCase = function () {
+        this.currentTestCase = 0;
+        if (this.testCaseNum == 11) {
+            this.testCaseNum = this.testCases.length;
         }
     };
     PlanTestComponent = __decorate([

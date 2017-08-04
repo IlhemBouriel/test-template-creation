@@ -1,78 +1,146 @@
-<!--
 <div class="row">
+<div class="col-md-12" *ngIf="testCaseNum < 10">
 
-<div class="col-md-5">
-<div class="form-group">
-    <label for="evol">Evol&Version</label>
-    <input type="text" [(ngModel)]="evol" class="form-control" id="evol" placeholder="Version:Evol" required>
-</div>
+<h1>{{evol}}</h1>
+  <div class="form-group">
+    <button type="button" style="float: right;background-color: #e67e22" *ngIf="testCaseNum < 10 " class="btn btn-default addfields" (click)="nextTestCase()">
+         Next<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+    </button>
+    <button type="button" style="float: left;background-color: #e67e22" class="btn btn-default addfields" *ngIf="testCaseNum > 1 && currentTestCase > 0" (click)="previousTestCase()">
+          <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>Previous
+    </button>
+  </div>
 
-<div class="form-group">
-    <label for="testname">TestCase</label>
-    <input type="text" [(ngModel)]="testCase" class="form-control" id="testCase" placeholder="TestCase..." required>
-</div>
+
+<br><br>
+
+          <div class="form-group" *ngIf="currentTestCase == 0">
+          <label for="evol">Evol&Version</label>
+          <input type="text" [(ngModel)]="evol" class="form-control" id="evol" placeholder="Version:Evol" required>
+          </div>
+
+
+
+      <div class="form-group">
+          <label for="testname">TestCase{{currentTestCase + 1}}</label>
+          <input type="text" [(ngModel)]="testCases[currentTestCase].name" class="form-control" id="testCase" placeholder="TestCase..." required>   
+      </div>
 
 <div class="form-group">
 <label for="desc">Description</label>
-    <textarea name="desc" placeholder="Plan description..." class="form-control" rows="3" style="resize: none" required [(ngModel)]="description"></textarea>
+    <textarea name="desc" placeholder="Plan description..." class="form-control" rows="3" style="resize: none" required [(ngModel)]="testCases[currentTestCase].description"></textarea>
+</div>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form>
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th><button type="submit" *ngIf="testCases[currentTestCase].steps.length < 7 " class="btn btn-success addfields"  (click)="getNextStep()">
+                                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                        </button></th>
+                                        <th>N° Step</th>
+                                        <th>Description</th>
+                                        <th>Expected Result</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let step of testCases[currentTestCase].steps">
+                                        <td style="width: 2%;">
+                                            <button type="button" class="btn btn-danger addfields" *ngIf="testCases[currentTestCase].steps.length > 1 " (click)="RemoveStep(testCases[currentTestCase].steps.indexOf(step))">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
+                                        <td>
+                                            <input type="text" readonly="readonly" value="Step {{testCases[currentTestCase].steps.indexOf(step) + 1}}" class="form-control" /></td>
+                                        <td>
+                                            <input type="text" [(ngModel)]=step.dn placeholder="{{step.dn}}" name="dn" class="form-control" /></td>
+                                        <td>
+                                            <input type="text" [(ngModel)]=step.ed name="ed" placeholder="{{step.ed}}" class="form-control"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+
+
+<button type="button" class="btn btn-danger " style="float: right;font-size: 15px;" *ngIf="testCaseNum > 1 "(click)="removeTestCase()"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span><b>Remove TestCase</b></button>
+<button type="submit" class="btn btn-success" style="float: right;font-size: 15px;" (click)="validateTemplate()"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span><b>Validate</b></button>
+
+
 </div>
 
-<div class="form-group">
-    <label for="sn">Step number</label>
-    <input class="form-control" name="sn" readonly="readonly" [(ngModel)]="'Step'+stepNum"/>
-</div>
 
-<div class="form-group">
-    <label for="dn">Details</label>
-     <input class="form-control" name="dn" placeholder="Detail of Step{{stepNum}}" [(ngModel)]="detail['Step'+stepNum]" required/>
-</div>
-
-<div class="form-group">
-    <label for="ed">Expected result</label>
-    <input class="form-control" name="ed" placeholder="Expected result of Step{{stepNum}}" [(ngModel)]="expected['Step'+stepNum]" required/>
-</div>
-
-<button type="submit" class="btn btn-success"  (click)="validateTemplate()"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span><b>Valider</b></button>
-
-<button type="submit" *ngIf="stepNum < 7 " class="btn btn-primary"  (click)="getNextStep()"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span><b>Step{{stepNum + 1}}</b></button>
+<div class="col-md-12" *ngIf="testCaseNum == 11">
 
 
+<button type="button" style="float: left;background-color: #e67e22" class="btn btn-default addfields" (click)="previousTestCase()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>Previous
+</button>
+<br><br>
 
-
-
-</div>
-
-
-<div class="col-md-7">
-<h2>{{evol}}</h2>
-<div class="table-responsive">
-  <table class="table table-bordered" id="POITable">
-    <tr>
-    	<th>TestCase</th>
-   		<th>Description</th>
-   		<th>N° Step</th>
-   		<th>Details</th>
-   		<th>Expected Result</th>
+<h1>Test Plan : {{evol}}</h1>
+  <table class="table table-bordered table-striped">
+    <tr style="background-color: #f39c12">
+      <th>TestCase</th>
+      <th>Description</th>
+      <th>N° Step</th>
+      <th>Details</th>
+      <th>Expected Result</th>
     </tr>
 
-    <div *ngFor="let key of [1,2,3,4,5,6,7]">
-    	<tr *ngIf="key == stepNum || key < stepNum">
-    	<td>{{testCase}}</td>
-   		<td>{{description}}</td>
-   		<td>Step{{key}}</td>
-   		<td>{{detail['Step'+key]}}</td>
-   		<td>{{expected['Step'+key]}}</td>
-    	</tr>
-    </div>
-   
+    <tr *ngFor="let testCase of testCases">
+     
+      <td>{{testCase.name}}</td>
+      <td>{{testCase.description}}</td>
+      <td>
+        <p *ngFor="let step of testCase.steps">Step{{testCase.steps.indexOf(step) + 1}}</p>
+        <br>
+      </td>
+      <td>
+
+        <p *ngFor="let step of testCase.steps">{{step.dn}}</p>
+      </td>
+      <td>
+      <p *ngFor="let step of testCase.steps">{{step.ed}}</p>
+      </td>
+
+    </tr>
+      
   </table>
-</div>
+
+<button type="button" style="float: right;" class="btn btn-warning"><span class="glyphicon glyphicon-send" aria-hidden="true"></span><b>Save&Send</b></button>
+<button style="background-color: black;float: right;" type="button" class="btn btn-warning"><span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span><b>Save</b></button>
 
 </div>
 
-</div>
 
--->
+ </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+
 
  <div class="row">
     <div class="col-md-12" *ngIf="stepNum < 8">
@@ -150,7 +218,7 @@
    
   </table>
 
-<! Pass data to server as a json -->
+
     <textarea  class="form-control" id="textArea" rows="6" style="resize: none;height: 85%;">
     {{evol +'\n'+testCase+'\n'+description+'\n'+template}}
     
@@ -161,3 +229,5 @@
             
 
 </div>
+
+-->
