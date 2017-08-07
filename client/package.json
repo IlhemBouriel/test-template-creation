@@ -1,5 +1,5 @@
 {
-  "name": "mytasklist",
+  "name": "sofrecom_qualif",
   "version": "1.0.0",
   "scripts": {
     "start": "concurrently \"tsc -w\" \"lite-server\" ",

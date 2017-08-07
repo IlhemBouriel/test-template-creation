@@ -3,10 +3,10 @@
 
 <h1>{{evol}}</h1>
   <div class="form-group">
-    <button type="button" style="float: right;background-color: #e67e22" *ngIf="testCaseNum < 10 " class="btn btn-default addfields" (click)="nextTestCase()">
+    <button type="submit" style="float: right;background-color: #e67e22" *ngIf="testCaseNum < 10 " class="btn btn-default addfields" (click)="nextTestCase()">
          Next<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
     </button>
-    <button type="button" style="float: left;background-color: #e67e22" class="btn btn-default addfields" *ngIf="testCaseNum > 1 && currentTestCase > 0" (click)="previousTestCase()">
+    <button type="submit" style="float: left;background-color: #e67e22" class="btn btn-default addfields" *ngIf="testCaseNum > 1 && currentTestCase > 0" (click)="previousTestCase()">
           <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>Previous
     </button>
   </div>
@@ -107,14 +107,23 @@
       
   </table>
 
-<button type="button" style="float: right;" class="btn btn-warning"><span class="glyphicon glyphicon-send" aria-hidden="true"></span><b>Save&Send</b></button>
-<button style="background-color: black;float: right;" type="button" class="btn btn-warning"><span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span><b>Save</b></button>
+<button type="button" style="float: right;" class="btn btn-warning"><span class="glyphicon glyphicon-send" aria-hidden="true" (click)="sendAndSaveTestPlan()"></span><b>Save&Send</b></button>
+<button style="background-color: black;float: right;" type="button" class="btn btn-warning"><span class="glyphicon glyphicon-floppy-saved" aria-hidden="true" (click)="pushFileToRep()"></span><b>Save</b></button>
+
+
+ <textarea class="form-control" id="textArea" rows="6" style="resize: none;height: 80%;">
+    {{contentTestPlan}}
+ </textarea>
+
+
 
 </div>
 
 
  </div>
 
+
+ 
 
 
 

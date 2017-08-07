@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {StepsComponent}from '../step/steps.component';
 import {TestService} from '../../services/test.service';
+import {PlanService} from '../../services/plan.service';
 
 @Component({
   moduleId: module.id,
@@ -17,15 +18,15 @@ export class PlanTestComponent {
     testCase:string;
     description:string;
     evol:string;
-    template:string;
     testCases: any[] = [{}];
+    contentTestPlan: string;
 
 
-    constructor(private testService:TestService){
+    constructor(private planService:PlanService){
         console.log('PlanComponent created');
+        this.contentTestPlan = '';
         this.testCaseNum = 1;
         this.currentTestCase = 0;
-        this.template = '';
         let steps = [
         {
             'dn':'',
@@ -80,10 +81,18 @@ export class PlanTestComponent {
     validateTemplate()
     {
       this.testCaseNum = 11;
-     /* for (let step of this.steps) 
+      this.contentTestPlan='';
+      let sum = 0;
+      for (let testCase of this.testCases) 
       {
-        this.template = this.template + 'Step'+step.num+'\t'+step.dn+'\t'+step.ed+'\n';
-      }*/
+        this.contentTestPlan =this.contentTestPlan+"TestPlan:\t"+this.evol+ "\n#####################################################################################################################\nTestCase:\t"+testCase.name+"\n Description:\t"+testCase.description+"\n";
+        for(let step of testCase.steps)
+        {
+        sum = testCase.steps.indexOf(step)+1;
+          this.contentTestPlan = this.contentTestPlan + "\t\tStep"+sum+"\t\t"+step.dn+"\t\t"+step.ed+"\n";
+        }
+        this.contentTestPlan=this.contentTestPlan + "#####################################################################################################################\n";
+      }
 
     }
 
@@ -91,7 +100,15 @@ export class PlanTestComponent {
 
     nextTestCase()
     {
-      if (this.currentTestCase + 1 == this.testCases.length)
+      if (this.testCaseNum == 9)
+      {
+        this.validateTemplate();
+      }
+      else
+      {
+        if (this.evol != null && this.testCases[this.currentTestCase].steps[0].ed != "" &&  this.testCases[this.currentTestCase].steps[0].dn != "" && this.testCases[this.currentTestCase].name != "")
+      {
+        if (this.currentTestCase + 1 == this.testCases.length)
       {
       this.testCaseNum ++;
       let steps = [
@@ -108,17 +125,50 @@ export class PlanTestComponent {
       });
       }
       this.currentTestCase ++;
-
+      
+      }
+      }
+      
+      
     }
 
 
     previousTestCase()
     {
-      this.currentTestCase = 0 ;
       if(this.testCaseNum == 11)
       {
+      this.currentTestCase = this.testCases.length - 1 ;
       this.testCaseNum = this.testCases.length  ;
+      console.log("go to "+this.testCases.length);
+      console.log('nombre = '+this.testCaseNum);
       }
+      else
+      {
+      this.currentTestCase -- ;
+      console.log('nombre = '+this.testCaseNum);
+      }
+    }
+
+
+    pushFileToRep()
+    {
+      var content = "'"+this.contentTestPlan+"'";
+      content = content.replace(/\n/g, '\r');
+      this.planService.saveTestPlan(this.evol,content)
+            .subscribe(res => {
+           
+    });
+    }
+
+    sendAndSaveTestPlan()
+    {
+      var content = "'"+this.contentTestPlan+"'";
+      content = content.replace(/\n/g, '\r');
+      this.planService.sendEmailAndSave(this.evol,content)
+            .subscribe(res => {
+            this.res = res.data;
+
+         });
     }
 
 

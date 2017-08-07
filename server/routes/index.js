@@ -5,6 +5,7 @@ var defVarController = require('../controllers/defVar');
 var unDefVarController = require('../controllers/unDefVar');
 var indexController = require('../controllers/index');
 var tagController = require('../controllers/tags');
+var testPlanController = require('../controllers/testplan');
 
 router.get('/', indexController.index);
 
@@ -19,9 +20,8 @@ router.post('/def/launch',defVarController.launchTest);
 router.get('/edit/tags',tagController.getAllTagFiles);
 router.get('/edit/tag/:file',tagController.getFileContent);
 router.post('/change/tag',tagController.changeTagFileContent);
+router.post('/testplan/push',testPlanController.pushTestPlan);
+router.post('/testplan/send',testPlanController.sendAndSaveFile);
 
-router.get('/undef', unDefVarController.get)
-    .post('/undef', unDefVarController.post)
-    .delete('/undef/:id', unDefVarController.delete);
 
 module.exports = router;

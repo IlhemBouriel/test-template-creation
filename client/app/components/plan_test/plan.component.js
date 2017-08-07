@@ -9,15 +9,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var test_service_1 = require('../../services/test.service');
+var plan_service_1 = require('../../services/plan.service');
 var PlanTestComponent = (function () {
-    function PlanTestComponent(testService) {
-        this.testService = testService;
+    function PlanTestComponent(planService) {
+        this.planService = planService;
         this.testCases = [{}];
         console.log('PlanComponent created');
+        this.contentTestPlan = '';
         this.testCaseNum = 1;
         this.currentTestCase = 0;
-        this.template = '';
         var steps = [
             {
                 'dn': '',
@@ -56,34 +56,71 @@ var PlanTestComponent = (function () {
     };
     PlanTestComponent.prototype.validateTemplate = function () {
         this.testCaseNum = 11;
-        /* for (let step of this.steps)
-         {
-           this.template = this.template + 'Step'+step.num+'\t'+step.dn+'\t'+step.ed+'\n';
-         }*/
+        this.contentTestPlan = '';
+        var sum = 0;
+        for (var _i = 0, _a = this.testCases; _i < _a.length; _i++) {
+            var testCase = _a[_i];
+            this.contentTestPlan = this.contentTestPlan + "TestPlan:\t" + this.evol + "\n#####################################################################################################################\nTestCase:\t" + testCase.name + "\n Description:\t" + testCase.description + "\n";
+            for (var _b = 0, _c = testCase.steps; _b < _c.length; _b++) {
+                var step = _c[_b];
+                sum = testCase.steps.indexOf(step) + 1;
+                this.contentTestPlan = this.contentTestPlan + "\t\tStep" + sum + "\t\t" + step.dn + "\t\t" + step.ed + "\n";
+            }
+            this.contentTestPlan = this.contentTestPlan + "#####################################################################################################################\n";
+        }
     };
     PlanTestComponent.prototype.nextTestCase = function () {
-        if (this.currentTestCase + 1 == this.testCases.length) {
-            this.testCaseNum++;
-            var steps = [
-                {
-                    'num': 1,
-                    'dn': '',
-                    'ed': ''
-                }];
-            this.testCases.push({
-                'name': '',
-                'description': '',
-                'stepNum': 1,
-                'steps': steps
-            });
+        if (this.testCaseNum == 9) {
+            this.validateTemplate();
         }
-        this.currentTestCase++;
+        else {
+            if (this.evol != null && this.testCases[this.currentTestCase].steps[0].ed != "" && this.testCases[this.currentTestCase].steps[0].dn != "" && this.testCases[this.currentTestCase].name != "") {
+                if (this.currentTestCase + 1 == this.testCases.length) {
+                    this.testCaseNum++;
+                    var steps = [
+                        {
+                            'num': 1,
+                            'dn': '',
+                            'ed': ''
+                        }];
+                    this.testCases.push({
+                        'name': '',
+                        'description': '',
+                        'stepNum': 1,
+                        'steps': steps
+                    });
+                }
+                this.currentTestCase++;
+            }
+        }
     };
     PlanTestComponent.prototype.previousTestCase = function () {
-        this.currentTestCase = 0;
         if (this.testCaseNum == 11) {
+            this.currentTestCase = this.testCases.length - 1;
             this.testCaseNum = this.testCases.length;
+            console.log("go to " + this.testCases.length);
+            console.log('nombre = ' + this.testCaseNum);
         }
+        else {
+            this.currentTestCase--;
+            console.log('nombre = ' + this.testCaseNum);
+        }
+    };
+    PlanTestComponent.prototype.pushFileToRep = function () {
+        var content = "'" + this.contentTestPlan + "'";
+        content = content.replace(/\n/g, '\r');
+        this.planService.saveTestPlan(this.evol, content)
+            .subscribe(function (res) {
+        });
+    };
+    PlanTestComponent.prototype.sendAndSaveTestPlan = function () {
+        var _this = this;
+        var content = "'" + this.contentTestPlan + "'";
+        content = content.replace(/\n/g, '\r');
+        this.planService.sendEmailAndSave(this.evol, content)
+            .subscribe(function (res) {
+            _this.res = res.data;
+        });
     };
     PlanTestComponent = __decorate([
         core_1.Component({
@@ -91,7 +128,7 @@ var PlanTestComponent = (function () {
             selector: 'plan',
             templateUrl: 'plan.component.html'
         }), 
-        __metadata('design:paramtypes', [test_service_1.TestService])
+        __metadata('design:paramtypes', [plan_service_1.PlanService])
     ], PlanTestComponent);
     return PlanTestComponent;
 }());
