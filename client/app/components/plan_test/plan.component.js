@@ -16,6 +16,7 @@ var PlanTestComponent = (function () {
         this.testCases = [{}];
         console.log('PlanComponent created');
         this.contentTestPlan = '';
+        this.message = '';
         this.testCaseNum = 1;
         this.currentTestCase = 0;
         var steps = [
@@ -29,6 +30,8 @@ var PlanTestComponent = (function () {
                 'stepNum': 1,
                 'steps': steps
             }];
+        this.fullPath = __dirname + '/../src/images/loading.gif';
+        console.log(this.fullPath);
     }
     PlanTestComponent.prototype.removeTestCase = function () {
         this.testCaseNum--;
@@ -115,6 +118,7 @@ var PlanTestComponent = (function () {
     };
     PlanTestComponent.prototype.sendAndSaveTestPlan = function () {
         var _this = this;
+        this.message = 'sending in progress';
         var content = "'" + this.contentTestPlan + "'";
         content = content.replace(/\n/g, '\r');
         this.planService.sendEmailAndSave(this.evol, content)
@@ -122,11 +126,24 @@ var PlanTestComponent = (function () {
             _this.res = res.data;
         });
     };
+    PlanTestComponent.prototype.openModal = function () {
+        var modal = document.getElementById('myModal');
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+        modal.style.display = "block";
+    };
+    PlanTestComponent.prototype.closeModal = function () {
+        var modal = document.getElementById('myModal');
+        modal.style.display = "none";
+    };
     PlanTestComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
             selector: 'plan',
-            templateUrl: 'plan.component.html'
+            templateUrl: 'plan.component.html',
+            styleUrls: ['plan.component.css'],
         }), 
         __metadata('design:paramtypes', [plan_service_1.PlanService])
     ], PlanTestComponent);

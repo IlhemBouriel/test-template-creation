@@ -6,7 +6,9 @@ import {PlanService} from '../../services/plan.service';
 @Component({
   moduleId: module.id,
   selector: 'plan',
-  templateUrl: 'plan.component.html'
+  templateUrl: 'plan.component.html',
+  styleUrls: ['plan.component.css'],
+
 
 })
 
@@ -20,11 +22,14 @@ export class PlanTestComponent {
     evol:string;
     testCases: any[] = [{}];
     contentTestPlan: string;
+    message: string;
+    fullPath: string;
 
 
     constructor(private planService:PlanService){
         console.log('PlanComponent created');
         this.contentTestPlan = '';
+        this.message = '';
         this.testCaseNum = 1;
         this.currentTestCase = 0;
         let steps = [
@@ -38,7 +43,12 @@ export class PlanTestComponent {
         'stepNum':1,
         'steps':steps
         }];
+
+        this.fullPath = __dirname+'/../src/images/loading.gif';
+        console.log(this.fullPath);
    }
+
+
 
 
     removeTestCase()
@@ -162,6 +172,7 @@ export class PlanTestComponent {
 
     sendAndSaveTestPlan()
     {
+      this.message = 'sending in progress';
       var content = "'"+this.contentTestPlan+"'";
       content = content.replace(/\n/g, '\r');
       this.planService.sendEmailAndSave(this.evol,content)
@@ -169,6 +180,27 @@ export class PlanTestComponent {
             this.res = res.data;
 
          });
+    }
+
+
+    openModal()
+    {
+      var modal = document.getElementById('myModal');
+
+      // Get the button that opens the modal
+      var btn = document.getElementById("myBtn");
+
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close")[0];
+
+      modal.style.display = "block";
+      }
+
+
+    closeModal()
+    {
+      var modal = document.getElementById('myModal');
+      modal.style.display = "none";
     }
 
 

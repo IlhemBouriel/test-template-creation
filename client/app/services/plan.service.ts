@@ -26,6 +26,7 @@ export class PlanService{
 
     sendEmailAndSave(file,content)
     {
+    console.log('service');
         var newFile = {
         fileName:file,
         content:content

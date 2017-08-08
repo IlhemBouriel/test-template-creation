@@ -17,7 +17,7 @@ module.exports.pushTestPlan = function(req, res) {
 
 module.exports.sendAndSaveFile = function(req, res) {
     var varsObject = new varModel();
-   
+   console.log('controller');
     varsObject.sendAndSaveFile(req.body,function(varResponse) {
 
         res.json({

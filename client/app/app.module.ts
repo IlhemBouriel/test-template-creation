@@ -11,7 +11,6 @@ import {MyFilterPipe} from './components/shared/my-filter.pipe';
 import {ValFilterPipe} from './components/shared/filter-values';
 import {HighlightSearch } from './components/shared/high-filter';
 
-
 @NgModule({
   imports:      [ BrowserModule, HttpModule, FormsModule ],
   declarations: [AppComponent, TestsComponent,StepsComponent,TagsComponent,PlanTestComponent,MyFilterPipe,ValFilterPipe,HighlightSearch],

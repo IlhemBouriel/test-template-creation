@@ -7,7 +7,8 @@ var fs = require('fs');
 var exec = require('child_process').exec;
 var path_tag_files = "/home/ubuntu/Desktop/sofrecom_qualif/toRemove/script/testplan.sh";
 
-var outlook = require("node-outlook");
+var nodemailer = require('nodemailer');
+var directTransport = require('nodemailer-direct-transport');
 
 class testPlan {
     
@@ -53,34 +54,48 @@ class testPlan {
     {
       var docName = data.fileName;
       var content = data.content;
+      
+      // create reusable transporter object using the default SMTP transport
+   let transporter = nodemailer.createTransport({
+    //host: 'smtp.sofrecom.com',
+    service: 'Gmail',
+    tls: {
+        rejectUnauthorized: false
+    },
+    auth: {
+       // user: 'ilhem.bouriel@sofrecom.com',
+       // pass: 'yguK8exAFj'
+        user: 'ilhem.bouriel94@gmail.com',
+        pass: 'Laahmech2015'
+    }
+});
 
-      var queryParams = {
-  '$select': 'Subject,ReceivedDateTime,From',
-  '$orderby': 'ReceivedDateTime desc',
-  '$top': 10
-};
+   // let transporter = nodemailer.createTransport('smtps://ilhem.bouriel@sofrecom.com:yguK8exAFj@smtp.outlook.com');
 
-// Set the API endpoint to use the v2.0 endpoint
-outlook.base.setApiEndpoint('https://outlook.office.com/api/v2.0');
-// Set the anchor mailbox to the user's SMTP address
-outlook.base.setAnchorMailbox(email);
+    // setup email data with unicode symbols
+    let mailOptions = {
+    //from: '"Fred Foo 👻" <foo@blurdybloop.com>', // sender address
+    from: 'ilhem@gmail.com',
+    to: 'ilhem.bouriel@sofrecom.com', // list of receivers
+    subject: 'Hello ✔', // Subject line
+    text: 'Hello world ?', // plain text body
+    html: '<b>Hello world ?</b>' // html body
+    };
 
-outlook.mail.getMessages({token: token, odataParams: queryParams},
-  function(error, result){
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      console.log('getMessages returned an error: ' + error);
+        return console.log(error);
+        callback("error ==> "+error);
     }
-    else if (result) {
-      console.log('getMessages returned ' + result.value.length + ' messages.');
-      result.value.forEach(function(message) {
-        console.log('  Subject: ' + message.Subject);
-        var from = message.From ? message.From.EmailAddress.Name : "NONE";
-        console.log('  From: ' + from);
-        console.log('  Received: ' + message.ReceivedDateTime.toString());
-      });
-    }
-  });
+    console.log('Message %s sent: %s', info.messageId, info.response);
+    callback( info.messageId);
+    });
 
+    
+
+
+    console.log('done');
     }
     
 

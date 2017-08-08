@@ -27,6 +27,7 @@ var PlanService = (function () {
             .map(function (res) { return res.json(); });
     };
     PlanService.prototype.sendEmailAndSave = function (file, content) {
+        console.log('service');
         var newFile = {
             fileName: file,
             content: content
