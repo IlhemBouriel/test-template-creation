@@ -16,7 +16,7 @@
 <FSI_HOST_OFR_HTTPS>=ssl-tb1n.orange.fr' | highligh : 'orange'}}"></div>
 
 -->
-    <button type="submit" class="btn btn-danger" style="float: right;" (click)="onSelectTagFile(selectedTagFile)">
+    <button type="submit" class="btn btn-danger" style="float: right;" (click)="reloadTagFile(selectedTagFile)">
     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
     <b>Réinitialiser</b>
     </button>
@@ -25,3 +25,23 @@
   <b>Sauvegarder le fichier</b>
   </button>	
   </div>
+
+
+<!-- The Modal -->
+<div id="ModalTag" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content" style="width: 50%;margin: 20% 20% 30%">
+    <div class="modal-header">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <h2 style="color: black;">{{message}}</h2>
+    </div>
+    <div class="modal-body">
+      <img style="display: block;margin: 0 auto;height: 150px;" [src]="fullPath">
+    </div>
+    <div class="modal-footer">
+     <!-- <h3>Modal Footer</h3> -->
+    </div>
+  </div>
+
+</div>

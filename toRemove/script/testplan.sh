@@ -1,16 +1,21 @@
 #!/bin/bash
-path='/home/ubuntu/Desktop/sofrecom_qualif/toRemove/testPlan/';
+path='/home/ubuntu/Desktop/testPlanGitLab/';
 fileNmae=$1;
 content=$2;
-echo $fileName;
-echo $content;
+d=$(date +%H:%M-%d-%b);
+message="New TestPlan ${1} added ${d}";
+
+
 newFile=$path$fileNmae;
+(cd /home/ubuntu/Desktop/testPlanGitLab/;git config --global credential.helper cache;git pull origin master);
+
 if [ ! -f $newFile ]; then
-    echo "File not found!"
+    echo "File not found!";
     echo $content > $newFile;
 else
 	echo "file already exist";
 fi
  pwd
-git --version
+
+(cd /home/ubuntu/Desktop/testPlanGitLab/;git add --all ;git commit -m "${message}";git push origin master)
 exit 0

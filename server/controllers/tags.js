@@ -40,6 +40,25 @@ module.exports.changeTagFileContent = function(req, res) {
      var varsObject = new varModel();
    
     varsObject.changeTagContent(req.body,function(varResponse) {
+
+        //push to git
+    //varsObject.pushTagContent(req.body,function(varResponse)
+    //{
+         res.json({
+            "responseCode": 200,
+            "responseDesc": "Success",
+            "data": varResponse
+        });
+    // });
+       
+    });
+};
+
+module.exports.reloadTagFileContent = function(req, res) {
+
+    var varsObject = new varModel();
+    // Calling our model function.
+    varsObject.reloadFileTagContent(req.params.file,function(varResponse) {
         res.json({
             "responseCode": 200,
             "responseDesc": "Success",

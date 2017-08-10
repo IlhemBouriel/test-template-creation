@@ -17,36 +17,17 @@ class testPlan {
 
 	execute(command, callback){
         exec(command, function(error, stdout, stderr){ callback(stdout); });
-    };
-    pushTestPlan(data,callback)
+  };
+
+  pushTestPlan(data,callback)
     {
-        /*var docName = data.fileName;
-        var content = data.content;
-               this.execute(path_tag_files+' '+docName+' '+content, function(stdout){
-                  callback(stdout);
-      
-    });*/
-    const USER = 'ilhem.bouriel94@gmail.com';
-    const PASS = 'Laahmech2015';
-    const REPO = 'github.com/IlhemBouriel/test_push';
 
-    const git = require('simple-git/promise');
-    const remote = `https://${USER}:${PASS}@${REPO}`;
-
-    git().silent(true)
-  .clone(remote)
-  .then(() => console.log('finished'))
-  .catch((err) => console.error('failed: ', err));
-
-
-
-   require('simple-git')()
-         .init()
-         .add('./*')
-         .commit("first commit!")
-         .addRemote('origin', 'https://github.com/IlhemBouriel/test_push.git')
-         .push('origin', 'master');
-  callback('done');
+    var docName = data.fileName;
+    var content = data.content;
+    this.execute(path_tag_files+' '+docName+'.txt '+content, function(e, stdout)
+          {
+            callback(stdout);
+          });
 
     }
 
@@ -55,8 +36,8 @@ class testPlan {
       var docName = data.fileName;
       var content = data.content;
       
-      // create reusable transporter object using the default SMTP transport
-   let transporter = nodemailer.createTransport({
+    // create reusable transporter object using the default SMTP transport
+    let transporter = nodemailer.createTransport({
     //host: 'smtp.sofrecom.com',
     service: 'Gmail',
     tls: {
@@ -65,21 +46,17 @@ class testPlan {
     auth: {
        // user: 'ilhem.bouriel@sofrecom.com',
        // pass: 'yguK8exAFj'
-        user: 'ilhem.bouriel94@gmail.com',
-        pass: 'Laahmech2015'
+        user: 'stage.sofr@gmail.com',
+        pass: 'Sofrecom123'
     }
-});
-
-   // let transporter = nodemailer.createTransport('smtps://ilhem.bouriel@sofrecom.com:yguK8exAFj@smtp.outlook.com');
-
-    // setup email data with unicode symbols
+    });
+    
     let mailOptions = {
-    //from: '"Fred Foo 👻" <foo@blurdybloop.com>', // sender address
-    from: 'ilhem@gmail.com',
-    to: 'ilhem.bouriel@sofrecom.com', // list of receivers
-    subject: 'Hello ✔', // Subject line
-    text: 'Hello world ?', // plain text body
-    html: '<b>Hello world ?</b>' // html body
+    from: 'testPlan@gmail.com',
+    to: 'bouriel.ilh@gmail.com', // list of receivers
+    subject: 'TestPlan : '+docName, // Subject line
+    text: 'vous trouverez ci-joint le testplan '+docName, // plain text body
+     attachments: [{'filename': docName+'.txt', 'content': content}] // html body
     };
 
     // send mail with defined transport object
@@ -92,10 +69,6 @@ class testPlan {
     callback( info.messageId);
     });
 
-    
-
-
-    console.log('done');
     }
     
 

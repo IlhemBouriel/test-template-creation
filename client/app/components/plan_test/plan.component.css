@@ -29,9 +29,9 @@
 
 /* The Close Button */
 .close {
-    color: white;
+    color: black;
     float: right;
-    font-size: 28px;
+    font-size: 60px;
     font-weight: bold;
 }
 
@@ -44,7 +44,7 @@
 
 .modal-header {
     padding: 2px 16px;
-    background-color: #5cb85c;
+    background-color: #ecf0f1;
     color: white;
 }
 
@@ -52,7 +52,7 @@
 
 .modal-footer {
     padding: 2px 16px;
-    background-color: #5cb85c;
+    background-color: #ecf0f1;
     color: white;
 }
 

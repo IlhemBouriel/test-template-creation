@@ -13,12 +13,15 @@ router.get('/def', defVarController.get)
     .post('/def', defVarController.post)
     .put('/def/:id', defVarController.put)
     .delete('/def/:id', defVarController.delete);
+
+    
 router.get('/def/one/:name',defVarController.getByName);
 router.post('/def/template',defVarController.createTemplate);
 router.get('/def/:id', defVarController.getById);
 router.post('/def/launch',defVarController.launchTest);
 router.get('/edit/tags',tagController.getAllTagFiles);
 router.get('/edit/tag/:file',tagController.getFileContent);
+router.get('/reload/tag/:file',tagController.reloadTagFileContent);
 router.post('/change/tag',tagController.changeTagFileContent);
 router.post('/testplan/push',testPlanController.pushTestPlan);
 router.post('/testplan/send',testPlanController.sendAndSaveFile);

@@ -30,8 +30,10 @@ var PlanTestComponent = (function () {
                 'stepNum': 1,
                 'steps': steps
             }];
-        this.fullPath = __dirname + '/../src/images/loading.gif';
-        console.log(this.fullPath);
+        this.load = __dirname + '/../src/images/loading.gif';
+        this.done = __dirname + '/../src/images/spin.gif';
+        this.finalTask = __dirname + '/../src/images/check-animation.gif';
+        this.fullPath = '';
     }
     PlanTestComponent.prototype.removeTestCase = function () {
         this.testCaseNum--;
@@ -58,18 +60,20 @@ var PlanTestComponent = (function () {
         this.testCases[this.currentTestCase].stepNum--;
     };
     PlanTestComponent.prototype.validateTemplate = function () {
-        this.testCaseNum = 11;
-        this.contentTestPlan = '';
-        var sum = 0;
-        for (var _i = 0, _a = this.testCases; _i < _a.length; _i++) {
-            var testCase = _a[_i];
-            this.contentTestPlan = this.contentTestPlan + "TestPlan:\t" + this.evol + "\n#####################################################################################################################\nTestCase:\t" + testCase.name + "\n Description:\t" + testCase.description + "\n";
-            for (var _b = 0, _c = testCase.steps; _b < _c.length; _b++) {
-                var step = _c[_b];
-                sum = testCase.steps.indexOf(step) + 1;
-                this.contentTestPlan = this.contentTestPlan + "\t\tStep" + sum + "\t\t" + step.dn + "\t\t" + step.ed + "\n";
+        if (this.evol != null && this.testCases[this.currentTestCase].steps[0].ed != "" && this.testCases[this.currentTestCase].steps[0].dn != "" && this.testCases[this.currentTestCase].name != "") {
+            this.testCaseNum = 11;
+            this.contentTestPlan = '';
+            var sum = 0;
+            for (var _i = 0, _a = this.testCases; _i < _a.length; _i++) {
+                var testCase = _a[_i];
+                this.contentTestPlan = this.contentTestPlan + "TestPlan:\t" + this.evol + "\n#####################################################################################################################\nTestCase:\t" + testCase.name + "\n Description:\t" + testCase.description + "\n";
+                for (var _b = 0, _c = testCase.steps; _b < _c.length; _b++) {
+                    var step = _c[_b];
+                    sum = testCase.steps.indexOf(step) + 1;
+                    this.contentTestPlan = this.contentTestPlan + "\t\tStep" + sum + "\t\t" + step.dn + "\t\t" + step.ed + "\n";
+                }
+                this.contentTestPlan = this.contentTestPlan + "#####################################################################################################################\n";
             }
-            this.contentTestPlan = this.contentTestPlan + "#####################################################################################################################\n";
         }
     };
     PlanTestComponent.prototype.nextTestCase = function () {
@@ -110,20 +114,39 @@ var PlanTestComponent = (function () {
         }
     };
     PlanTestComponent.prototype.pushFileToRep = function () {
+        var _this = this;
+        this.fullPath = this.load;
+        this.message = 'Saving is in progress';
+        this.openModal();
+        console.log('push called');
         var content = "'" + this.contentTestPlan + "'";
         content = content.replace(/\n/g, '\r');
         this.planService.saveTestPlan(this.evol, content)
             .subscribe(function (res) {
+            _this.message = 'TestPlan file saved successfully';
+            _this.fullPath = _this.done;
+            setTimeout(function () {
+                _this.closeModal();
+            }, 1800);
         });
     };
     PlanTestComponent.prototype.sendAndSaveTestPlan = function () {
         var _this = this;
-        this.message = 'sending in progress';
-        var content = "'" + this.contentTestPlan + "'";
+        this.fullPath = this.load;
+        this.message = 'sending is in progress';
+        this.openModal();
+        var content = this.contentTestPlan;
         content = content.replace(/\n/g, '\r');
         this.planService.sendEmailAndSave(this.evol, content)
             .subscribe(function (res) {
             _this.res = res.data;
+            _this.message = 'email was sent successfully';
+            _this.fullPath = _this.done;
+            //setTimeout(this.closeModal(), 100000000000);
+            setTimeout(function () {
+                _this.closeModal();
+            }, 1500);
+            _this.pushFileToRep();
         });
     };
     PlanTestComponent.prototype.openModal = function () {

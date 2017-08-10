@@ -108,7 +108,8 @@
   </table>
 
 <button type="button" style="float: right;" class="btn btn-warning" (click)="sendAndSaveTestPlan()"><span class="glyphicon glyphicon-send" aria-hidden="true" ></span><b>Save&Send</b></button>
-<button style="background-color: black;float: right;" type="button" class="btn btn-warning"><span class="glyphicon glyphicon-floppy-saved" aria-hidden="true" (click)="pushFileToRep()"></span><b>Save</b></button>
+<button type="button" style="background-color: black;float: right;" class="btn btn-warning" (click)="pushFileToRep()"><span class="glyphicon glyphicon-floppy-saved" aria-hidden="true" ></span><b>Save</b></button>
+
 
 
  <textarea class="form-control" id="textArea" rows="6" style="resize: none;height: 80%;">
@@ -124,9 +125,6 @@
 
 
 
-
-<button id="myBtn" (click)="openModal()">Open Modal</button>
-
 <!-- The Modal -->
 <div id="myModal" class="modal">
 
@@ -134,14 +132,15 @@
   <div class="modal-content" style="width: 50%;margin: 20% 20% 30%">
     <div class="modal-header">
       <span class="close" (click)="closeModal()">&times;</span>
-      <h2>{{message}}</h2>
+      <h2 style="color: black;">{{message}}</h2>
     </div>
     <div class="modal-body">
-      <img [src]="fullPath">
+      <img style="display: block;margin: 0 auto;height: 150px;" [src]="fullPath">
     </div>
     <div class="modal-footer">
-      <h3>Modal Footer</h3>
+     <!-- <h3>Modal Footer</h3> -->
     </div>
   </div>
 
 </div>
+

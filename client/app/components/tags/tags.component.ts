@@ -16,6 +16,11 @@ export class TagsComponent {
     tagFiles: TagFile[];
     selectedTagFile:string;
     contentTagFile:string;
+    message: string;
+    load: string;
+    done: string;
+    fullPath: string;
+    finalTask: string;
 
 
     constructor(private tagService:TagService){
@@ -23,11 +28,19 @@ export class TagsComponent {
             .subscribe(vars => {
                 this.tagFiles = vars.data;
             });
-        this.selectedTagFile = '';    
+        this.selectedTagFile = '';   
+        this.load= __dirname+'/../src/images/loading.gif';
+        this.done= __dirname+'/../src/images/spin.gif';
+        this.finalTask= __dirname+'/../src/images/check-animation.gif';
+        this.fullPath =''; 
+        this.message='';
     }
 
     onSelectTagFile(newFile)
     {
+    this.message="File "+this.selectedFile+" is loading " ;
+    this.fullPath=this.load;
+    this.openModal();
     if (newFile.length > 0)
     {
         this.tagService.getTagFileContent(this.selectedTagFile)
@@ -40,17 +53,84 @@ export class TagsComponent {
     {
     this.contentTagFile = '';
     }
+    this.message = 'File has fully loaded';
+    this.fullPath=this.finalTask;
+    setTimeout(() => 
+          {
+          this.closeModal();
+          },
+          2000);
+           
+    }
+
+
+    reloadTagFile(newFile)
+    {
+    this.message="File "+this.selectedFile+" is loading " ;
+    this.fullPath=this.load;
+    this.openModal();
+        if (newFile.length > 0)
+    {
+        this.tagService.reloadTagFileContent(this.selectedTagFile)
+            .subscribe(vars => {
+                this.contentTagFile = vars.data;
+                document.getElementById("textArea").value=this.contentTagFile;
+            });
+    }
+    else
+    {
+    this.contentTagFile = '';
+    }
+
+    this.message = 'File has fully reloaded';
+    this.fullPath=this.finalTask;
+    setTimeout(() => 
+          {
+          this.closeModal();
+          },
+          2000);
+           
     }
 
 
     saveTagFile()
     {
+        this.message="File "+this.selectedFile+" is loading " ;
+        this.fullPath=this.load;
+        this.openModal();
         var content = (<HTMLInputElement>document.getElementById("textArea")).value;
         this.tagService.editTagFile(this.selectedTagFile,content)
             .subscribe(vars => {
            // console.log("object: %O", vars);
             this.contentTagFile = vars.data;
             });
+        this.message = 'file saved successfully';
+        this.fullPath=this.finalTask;
+        setTimeout(() => 
+          {
+          this.closeModal();
+          },
+          2000);
+           
+    }
+
+
+    openModal()
+    {
+      var modal = document.getElementById('ModalTag');
+
+
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close")[0];
+
+      modal.style.display = "block";
+      }
+
+
+    closeModal()
+    {
+      var modal = document.getElementById('ModalTag');
+      modal.style.display = "none";
     }
 
     

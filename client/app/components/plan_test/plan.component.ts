@@ -23,7 +23,10 @@ export class PlanTestComponent {
     testCases: any[] = [{}];
     contentTestPlan: string;
     message: string;
+    load: string;
+    done: string;
     fullPath: string;
+    finalTask: string;
 
 
     constructor(private planService:PlanService){
@@ -43,9 +46,11 @@ export class PlanTestComponent {
         'stepNum':1,
         'steps':steps
         }];
-
-        this.fullPath = __dirname+'/../src/images/loading.gif';
-        console.log(this.fullPath);
+        this.load= __dirname+'/../src/images/loading.gif';
+        this.done= __dirname+'/../src/images/spin.gif';
+        this.finalTask= __dirname+'/../src/images/check-animation.gif';
+        this.fullPath ='';
+      
    }
 
 
@@ -90,11 +95,13 @@ export class PlanTestComponent {
 
     validateTemplate()
     {
-      this.testCaseNum = 11;
-      this.contentTestPlan='';
-      let sum = 0;
-      for (let testCase of this.testCases) 
+      if (this.evol != null && this.testCases[this.currentTestCase].steps[0].ed != "" &&  this.testCases[this.currentTestCase].steps[0].dn != "" && this.testCases[this.currentTestCase].name != "")
       {
+        this.testCaseNum = 11;
+        this.contentTestPlan='';
+        let sum = 0;
+        for (let testCase of this.testCases) 
+        {
         this.contentTestPlan =this.contentTestPlan+"TestPlan:\t"+this.evol+ "\n#####################################################################################################################\nTestCase:\t"+testCase.name+"\n Description:\t"+testCase.description+"\n";
         for(let step of testCase.steps)
         {
@@ -102,7 +109,10 @@ export class PlanTestComponent {
           this.contentTestPlan = this.contentTestPlan + "\t\tStep"+sum+"\t\t"+step.dn+"\t\t"+step.ed+"\n";
         }
         this.contentTestPlan=this.contentTestPlan + "#####################################################################################################################\n";
+        }
+
       }
+      
 
     }
 
@@ -162,22 +172,45 @@ export class PlanTestComponent {
 
     pushFileToRep()
     {
-      var content = "'"+this.contentTestPlan+"'";
+      this.fullPath = this.load;
+      this.message = 'Saving is in progress';
+      this.openModal();
+      console.log('push called');
+     var content = "'"+this.contentTestPlan+"'";
       content = content.replace(/\n/g, '\r');
       this.planService.saveTestPlan(this.evol,content)
             .subscribe(res => {
+            this.message = 'TestPlan file saved successfully';
+            this.fullPath=this.done;
+            setTimeout(() => 
+          {
+          this.closeModal();
+          },
+          1800);
            
     });
     }
 
     sendAndSaveTestPlan()
-    {
-      this.message = 'sending in progress';
-      var content = "'"+this.contentTestPlan+"'";
+    { 
+      this.fullPath = this.load;
+      this.message = 'sending is in progress';
+      this.openModal();
+      var content = this.contentTestPlan;
       content = content.replace(/\n/g, '\r');
       this.planService.sendEmailAndSave(this.evol,content)
             .subscribe(res => {
             this.res = res.data;
+            this.message = 'email was sent successfully';
+            this.fullPath=this.done;
+            //setTimeout(this.closeModal(), 100000000000);
+           setTimeout(() => 
+          {
+          this.closeModal();
+          },
+          1500);
+          this.pushFileToRep();
+            
 
          });
     }

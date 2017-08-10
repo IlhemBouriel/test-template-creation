@@ -6,8 +6,9 @@ var fs = require('fs');
 //Fro executing script shell from nodejs
 var exec = require('child_process').exec;
 //To modify with the real path of TAG files
-var path_tag_files = "/home/ubuntu/Desktop/sofrecom_qualif/toRemove/tags/";
-
+var path_pull_tag_files = "/home/ubuntu/Desktop/sofrecom_qualif/toRemove/script/script_tag_files.sh";
+var path_push_tag_files = "/home/ubuntu/Desktop/sofrecom_qualif/toRemove/script/script_push_tag_files.sh";
+var path_tag_files = "/home/ubuntu/Desktop/tagFilesGitLab/";
 
 class tagFile {
     getAllTagFiles(callback) {
@@ -40,13 +41,18 @@ class tagFile {
         });
     }
 
-
+    execute(command, callback){
+        exec(command, function(error, stdout, stderr){ callback(stdout); });
+    };
 
     getFileTagContent(file,callback)
     {
+        this.execute(path_pull_tag_files, function(e, stdout)
+        {
             fs.readFile(path_tag_files+file, 'utf8', function(err, data) {
             callback(data);
             });
+        });
     }
 
 
@@ -56,15 +62,38 @@ class tagFile {
         var content = data.content;
 
         fs.writeFile(path_tag_files+docName, content, function(error) {
-        fs.readFile(path_tag_files+docName, 'utf8', function(err, data) {
+            exec(path_push_tag_files, function(e, stdout)
+        {
+            fs.readFile(path_tag_files+data.fileName, 'utf8', function(err, data) {
             callback(data);
+            });
         });
-    });
+        });
+
     }
 
 
+    reloadFileTagContent(file,callback)
+    {
+        fs.readFile(path_tag_files+file, 'utf8', function(err, data) 
+        {
+            callback(data);
+        });
+    }
+
+
+    pushTagContent(data,callback)
+    {
+        this.execute(path_push_tag_files, function(e, stdout)
+        {
+            fs.readFile(path_tag_files+data.fileName, 'utf8', function(err, data) {
+            callback(data);
+            });
+        });
+    }
 
 
 }
 
 module.exports = tagFile;
+

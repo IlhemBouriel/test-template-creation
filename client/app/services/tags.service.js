@@ -24,6 +24,10 @@ var TagService = (function () {
         return this.http.get('/edit/tag/' + fileName)
             .map(function (res) { return res.json(); });
     };
+    TagService.prototype.reloadTagFileContent = function (file) {
+        return this.http.get('/reload/tag/' + file)
+            .map(function (res) { return res.json(); });
+    };
     TagService.prototype.editTagFile = function (fileName, content) {
         var newFile = {
             fileName: fileName,

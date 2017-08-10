@@ -19,9 +19,17 @@ var TagsComponent = (function () {
             _this.tagFiles = vars.data;
         });
         this.selectedTagFile = '';
+        this.load = __dirname + '/../src/images/loading.gif';
+        this.done = __dirname + '/../src/images/spin.gif';
+        this.finalTask = __dirname + '/../src/images/check-animation.gif';
+        this.fullPath = '';
+        this.message = '';
     }
     TagsComponent.prototype.onSelectTagFile = function (newFile) {
         var _this = this;
+        this.message = "File " + this.selectedFile + " is loading ";
+        this.fullPath = this.load;
+        this.openModal();
         if (newFile.length > 0) {
             this.tagService.getTagFileContent(this.selectedTagFile)
                 .subscribe(function (vars) {
@@ -32,15 +40,59 @@ var TagsComponent = (function () {
         else {
             this.contentTagFile = '';
         }
+        this.message = 'File has fully loaded';
+        this.fullPath = this.finalTask;
+        setTimeout(function () {
+            _this.closeModal();
+        }, 2000);
+    };
+    TagsComponent.prototype.reloadTagFile = function (newFile) {
+        var _this = this;
+        this.message = "File " + this.selectedFile + " is loading ";
+        this.fullPath = this.load;
+        this.openModal();
+        if (newFile.length > 0) {
+            this.tagService.reloadTagFileContent(this.selectedTagFile)
+                .subscribe(function (vars) {
+                _this.contentTagFile = vars.data;
+                document.getElementById("textArea").value = _this.contentTagFile;
+            });
+        }
+        else {
+            this.contentTagFile = '';
+        }
+        this.message = 'File has fully reloaded';
+        this.fullPath = this.finalTask;
+        setTimeout(function () {
+            _this.closeModal();
+        }, 2000);
     };
     TagsComponent.prototype.saveTagFile = function () {
         var _this = this;
+        this.message = "File " + this.selectedFile + " is loading ";
+        this.fullPath = this.load;
+        this.openModal();
         var content = document.getElementById("textArea").value;
         this.tagService.editTagFile(this.selectedTagFile, content)
             .subscribe(function (vars) {
             // console.log("object: %O", vars);
             _this.contentTagFile = vars.data;
         });
+        this.message = 'file saved successfully';
+        this.fullPath = this.finalTask;
+        setTimeout(function () {
+            _this.closeModal();
+        }, 2000);
+    };
+    TagsComponent.prototype.openModal = function () {
+        var modal = document.getElementById('ModalTag');
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+        modal.style.display = "block";
+    };
+    TagsComponent.prototype.closeModal = function () {
+        var modal = document.getElementById('ModalTag');
+        modal.style.display = "none";
     };
     TagsComponent = __decorate([
         core_1.Component({

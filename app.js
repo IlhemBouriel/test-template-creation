@@ -5,7 +5,8 @@ var app = express();
 var logger = require('morgan');
 var http = require('http').Server(app);
 var db = require('./server/utils/db');
-
+app.use(bodyParser.json({limit:'50mb'}));
+app.use(bodyParser.urlencoded({extended:true, limit:'50mb'}));
 
 
 /**

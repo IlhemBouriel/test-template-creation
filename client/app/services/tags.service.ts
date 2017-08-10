@@ -19,6 +19,11 @@ export class TagService{
             .map(res => res.json()); 
     }
     
+    reloadTagFileContent(file)
+    {
+        return this.http.get('/reload/tag/'+file)
+            .map(res => res.json()); 
+    }
 
     editTagFile(fileName,content)
     {
