@@ -38,35 +38,36 @@ export class TagsComponent {
 
     onSelectTagFile(newFile)
     {
-    this.message="File "+this.selectedFile+" is loading " ;
-    this.fullPath=this.load;
-    this.openModal();
     if (newFile.length > 0)
     {
+        this.message="File "+this.selectedTagFile+" is loading " ;
+        this.fullPath=this.load;
+        this.openModal();
         this.tagService.getTagFileContent(this.selectedTagFile)
             .subscribe(vars => {
                 this.contentTagFile = vars.data;
                 document.getElementById("textArea").value=this.contentTagFile;
-            });
+                this.message = 'File has fully loaded';
+                this.fullPath=this.finalTask;
+                setTimeout(() => 
+                {
+                    this.closeModal();
+                },
+                2000);
+                });
     }
     else
     {
-    this.contentTagFile = '';
+    this.contentTagFile = ' ';
     }
-    this.message = 'File has fully loaded';
-    this.fullPath=this.finalTask;
-    setTimeout(() => 
-          {
-          this.closeModal();
-          },
-          2000);
+    
            
     }
 
 
     reloadTagFile(newFile)
     {
-    this.message="File "+this.selectedFile+" is loading " ;
+    this.message="File "+this.selectedTagFile+" is loading " ;
     this.fullPath=this.load;
     this.openModal();
         if (newFile.length > 0)
@@ -95,7 +96,7 @@ export class TagsComponent {
 
     saveTagFile()
     {
-        this.message="File "+this.selectedFile+" is loading " ;
+        this.message="File "+this.selectedTagFile+" is loading " ;
         this.fullPath=this.load;
         this.openModal();
         var content = (<HTMLInputElement>document.getElementById("textArea")).value;

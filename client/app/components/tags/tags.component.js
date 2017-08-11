@@ -27,28 +27,28 @@ var TagsComponent = (function () {
     }
     TagsComponent.prototype.onSelectTagFile = function (newFile) {
         var _this = this;
-        this.message = "File " + this.selectedFile + " is loading ";
-        this.fullPath = this.load;
-        this.openModal();
         if (newFile.length > 0) {
+            this.message = "File " + this.selectedTagFile + " is loading ";
+            this.fullPath = this.load;
+            this.openModal();
             this.tagService.getTagFileContent(this.selectedTagFile)
                 .subscribe(function (vars) {
                 _this.contentTagFile = vars.data;
                 document.getElementById("textArea").value = _this.contentTagFile;
+                _this.message = 'File has fully loaded';
+                _this.fullPath = _this.finalTask;
+                setTimeout(function () {
+                    _this.closeModal();
+                }, 2000);
             });
         }
         else {
-            this.contentTagFile = '';
+            this.contentTagFile = ' ';
         }
-        this.message = 'File has fully loaded';
-        this.fullPath = this.finalTask;
-        setTimeout(function () {
-            _this.closeModal();
-        }, 2000);
     };
     TagsComponent.prototype.reloadTagFile = function (newFile) {
         var _this = this;
-        this.message = "File " + this.selectedFile + " is loading ";
+        this.message = "File " + this.selectedTagFile + " is loading ";
         this.fullPath = this.load;
         this.openModal();
         if (newFile.length > 0) {
@@ -69,7 +69,7 @@ var TagsComponent = (function () {
     };
     TagsComponent.prototype.saveTagFile = function () {
         var _this = this;
-        this.message = "File " + this.selectedFile + " is loading ";
+        this.message = "File " + this.selectedTagFile + " is loading ";
         this.fullPath = this.load;
         this.openModal();
         var content = document.getElementById("textArea").value;

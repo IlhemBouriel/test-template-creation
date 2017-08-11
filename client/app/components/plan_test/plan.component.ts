@@ -175,7 +175,6 @@ export class PlanTestComponent {
       this.fullPath = this.load;
       this.message = 'Saving is in progress';
       this.openModal();
-      console.log('push called');
      var content = "'"+this.contentTestPlan+"'";
       content = content.replace(/\n/g, '\r');
       this.planService.saveTestPlan(this.evol,content)

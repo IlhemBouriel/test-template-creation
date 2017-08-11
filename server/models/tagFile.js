@@ -6,13 +6,14 @@ var fs = require('fs');
 //Fro executing script shell from nodejs
 var exec = require('child_process').exec;
 //To modify with the real path of TAG files
-var path_pull_tag_files = "/home/ubuntu/Desktop/sofrecom_qualif/toRemove/script/script_tag_files.sh";
-var path_push_tag_files = "/home/ubuntu/Desktop/sofrecom_qualif/toRemove/script/script_push_tag_files.sh";
+var path_pull_tag_files = "/home/ubuntu/Desktop/sofrecom_qualif2/sofrecom_qualif/toRemove/script/script_tag_files.sh";
+var path_push_tag_files = "/home/ubuntu/Desktop/sofrecom_qualif2/sofrecom_qualif/toRemove/script/script_push_tag_files.sh";
 var path_tag_files = "/home/ubuntu/Desktop/tagFilesGitLab/";
 
 class tagFile {
     getAllTagFiles(callback) {
-        async.waterfall([
+
+            async.waterfall([
             function(callback) {
                 var db_instance = new db();
                 db_instance.connectToDb(function(err, connection) {
@@ -39,6 +40,8 @@ class tagFile {
         ], function(err, data) {
             callback(err === null ? false : true, data);
         });
+
+        
     }
 
     execute(command, callback){

@@ -3,11 +3,9 @@ path='/home/ubuntu/Desktop/testPlanGitLab/';
 fileNmae=$1;
 content=$2;
 d=$(date +%H:%M-%d-%b);
-message="New TestPlan ${1} added ${d}";
-
-
+message="New TestPlan  ${1} added ${d}";
 newFile=$path$fileNmae;
-(cd /home/ubuntu/Desktop/testPlanGitLab/;git config --global credential.helper cache;git pull origin master);
+(cd /home/ubuntu/Desktop/testPlanGitLab/;git pull origin master);
 
 if [ ! -f $newFile ]; then
     echo "File not found!";

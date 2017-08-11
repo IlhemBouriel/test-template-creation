@@ -16,12 +16,23 @@ export class TestsComponent {
     stepNum:number;
     templateString:string;
     templateFile : string;
+    message: string;
+    load: string;
+    done: string;
+    fullPath: string;
+    finalTask: string;
+
 
 
     constructor(private testService:TestService){
         console.log('TestComponent created');
         this.stepNum = 1;
         this.templateString='';
+        this.message = '';
+        this.load= __dirname+'/../src/images/loading.gif';
+        this.done= __dirname+'/../src/images/spin.gif';
+        this.finalTask= __dirname+'/../src/images/check-animation.gif';
+        this.fullPath ='';
     }
 
     buildTemplate(step:any):void
@@ -36,6 +47,9 @@ export class TestsComponent {
 
     createTemplateFile(step:any):void
     {
+      this.fullPath = this.load;
+      this.message = 'Saving File is in progress';
+      this.openModal();
       if(this.stepNum == 1)
       {
       this.templateFile=step.doc+'.conf';
@@ -46,6 +60,13 @@ export class TestsComponent {
       this.testService.createTemplate(this.templateFile,content)
             .subscribe(res => {
             this.res = res;
+            this.message = 'ConfFile saved successfully';
+            this.fullPath=this.done;
+            setTimeout(() => 
+          {
+          this.closeModal();
+          },
+          1800);
 
          });
     }
@@ -76,5 +97,25 @@ export class TestsComponent {
     this.templateString = step.content;
     this.stepNum = 8 ;
     this.templateString=step.content;
+    }
+
+    openModal()
+    {
+      var modal = document.getElementById('myModal');
+
+      // Get the button that opens the modal
+      var btn = document.getElementById("myBtn");
+
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close")[0];
+
+      modal.style.display = "block";
+      }
+
+
+    closeModal()
+    {
+      var modal = document.getElementById('myModal');
+      modal.style.display = "none";
     }
 }

@@ -1,6 +1,4 @@
 #!/bin/bash
-path='/home/ubuntu/Desktop/tagFilesGitLab/';
-echo "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh":
-(cd $path;git pull origin master);
-echo "puull DONE ****************************";
+(cd /home/ubuntu/Desktop/tagFilesGitLab/;git pull origin master);
+
 exit 0

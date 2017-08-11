@@ -16,6 +16,11 @@ var TestsComponent = (function () {
         console.log('TestComponent created');
         this.stepNum = 1;
         this.templateString = '';
+        this.message = '';
+        this.load = __dirname + '/../src/images/loading.gif';
+        this.done = __dirname + '/../src/images/spin.gif';
+        this.finalTask = __dirname + '/../src/images/check-animation.gif';
+        this.fullPath = '';
     }
     TestsComponent.prototype.buildTemplate = function (step) {
         if (this.stepNum == 1) {
@@ -26,6 +31,9 @@ var TestsComponent = (function () {
     };
     TestsComponent.prototype.createTemplateFile = function (step) {
         var _this = this;
+        this.fullPath = this.load;
+        this.message = 'Saving File is in progress';
+        this.openModal();
         if (this.stepNum == 1) {
             this.templateFile = step.doc + '.conf';
         }
@@ -35,6 +43,11 @@ var TestsComponent = (function () {
         this.testService.createTemplate(this.templateFile, content)
             .subscribe(function (res) {
             _this.res = res;
+            _this.message = 'ConfFile saved successfully';
+            _this.fullPath = _this.done;
+            setTimeout(function () {
+                _this.closeModal();
+            }, 1800);
         });
     };
     TestsComponent.prototype.lauchTestScript = function (template) {
@@ -57,6 +70,18 @@ var TestsComponent = (function () {
         this.templateString = step.content;
         this.stepNum = 8;
         this.templateString = step.content;
+    };
+    TestsComponent.prototype.openModal = function () {
+        var modal = document.getElementById('myModal');
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+        modal.style.display = "block";
+    };
+    TestsComponent.prototype.closeModal = function () {
+        var modal = document.getElementById('myModal');
+        modal.style.display = "none";
     };
     TestsComponent = __decorate([
         core_1.Component({

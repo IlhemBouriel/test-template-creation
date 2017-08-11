@@ -4,8 +4,8 @@ var db = require('../utils/db')
 var async = require('async');
 //Fro executing script shell from nodejs
 var exec = require('child_process').exec;
-var script_path_create = "/home/ubuntu/Desktop/sofrecom_qualif/toRemove/script/script_create_template.sh";
-var script_path_launch = "/home/ubuntu/Desktop/sofrecom_qualif/toRemove/script/script_launch_test.sh";
+var script_path_create = "/home/ubuntu/Desktop/sofrecom_qualif2/sofrecom_qualif/toRemove/script/script_create_template.sh";
+var script_path_launch = "/home/ubuntu/Desktop/sofrecom_qualif2/sofrecom_qualif/toRemove/script/script_launch_test.sh";
 
 class defVar {
     addNewDef(varData, callback) {

@@ -42,14 +42,14 @@ module.exports.changeTagFileContent = function(req, res) {
     varsObject.changeTagContent(req.body,function(varResponse) {
 
         //push to git
-    //varsObject.pushTagContent(req.body,function(varResponse)
-    //{
+    varsObject.pushTagContent(req.body,function(varResponse)
+    {
          res.json({
             "responseCode": 200,
             "responseDesc": "Success",
             "data": varResponse
         });
-    // });
+   });
        
     });
 };

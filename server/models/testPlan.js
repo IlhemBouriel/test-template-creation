@@ -5,7 +5,7 @@ var async = require('async');
 var fs = require('fs');
 //Fro executing script shell from nodejs
 var exec = require('child_process').exec;
-var path_tag_files = "/home/ubuntu/Desktop/sofrecom_qualif/toRemove/script/testplan.sh";
+var path_tag_files = "/home/ubuntu/Desktop/sofrecom_qualif2/sofrecom_qualif/toRemove/script/testplan.sh";
 
 var nodemailer = require('nodemailer');
 var directTransport = require('nodemailer-direct-transport');
