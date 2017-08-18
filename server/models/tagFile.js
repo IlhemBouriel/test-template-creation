@@ -59,29 +59,22 @@ class tagFile {
     }
 
 
-    changeTagContent(data,callback)
-    {
-        var docName = data.fileName;
-        var content = data.content;
-
-        fs.writeFile(path_tag_files+docName, content, function(error) {
-            exec(path_push_tag_files, function(e, stdout)
-        {
-            fs.readFile(path_tag_files+data.fileName, 'utf8', function(err, data) {
-            callback(data);
-            });
-        });
-        });
-
-    }
-
-
     reloadFileTagContent(file,callback)
     {
         fs.readFile(path_tag_files+file, 'utf8', function(err, data) 
         {
             callback(data);
         });
+    }
+
+        changeTagContent(data,callback)
+    {
+        var docName = data.fileName;
+        var content = data.content;
+        fs.writeFile(path_tag_files+docName, content, function(error) {
+           callback(content);
+        });
+
     }
 
 

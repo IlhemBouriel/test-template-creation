@@ -8,8 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var tags_service_1 = require('../../services/tags.service');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var tags_service_1 = require("../../services/tags.service");
 var TagsComponent = (function () {
     function TagsComponent(tagService) {
         var _this = this;
@@ -34,7 +35,7 @@ var TagsComponent = (function () {
             this.tagService.getTagFileContent(this.selectedTagFile)
                 .subscribe(function (vars) {
                 _this.contentTagFile = vars.data;
-                document.getElementById("textArea").value = _this.contentTagFile;
+                document.getElementById("textAreaTag").value = _this.contentTagFile;
                 _this.message = 'File has fully loaded';
                 _this.fullPath = _this.finalTask;
                 setTimeout(function () {
@@ -55,7 +56,7 @@ var TagsComponent = (function () {
             this.tagService.reloadTagFileContent(this.selectedTagFile)
                 .subscribe(function (vars) {
                 _this.contentTagFile = vars.data;
-                document.getElementById("textArea").value = _this.contentTagFile;
+                document.getElementById("textAreaTag").value = _this.contentTagFile;
             });
         }
         else {
@@ -72,7 +73,7 @@ var TagsComponent = (function () {
         this.message = "File " + this.selectedTagFile + " is loading ";
         this.fullPath = this.load;
         this.openModal();
-        var content = document.getElementById("textArea").value;
+        var content = document.getElementById("textAreaTag").value;
         this.tagService.editTagFile(this.selectedTagFile, content)
             .subscribe(function (vars) {
             // console.log("object: %O", vars);
@@ -100,8 +101,8 @@ var TagsComponent = (function () {
             selector: 'tagFile',
             templateUrl: 'tags.component.html',
             styleUrls: ['tags.component.css'],
-        }), 
-        __metadata('design:paramtypes', [tags_service_1.TagService])
+        }),
+        __metadata("design:paramtypes", [tags_service_1.TagService])
     ], TagsComponent);
     return TagsComponent;
 }());

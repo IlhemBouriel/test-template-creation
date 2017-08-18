@@ -16,6 +16,7 @@ export class StepsComponent {
   	
     @Input() numStep:number;
     @Input() template:string;
+    @Input() stepsDefined:Object[];;
     @Output() onValidateStep: EventEmitter<any> = new EventEmitter<any>();
     @Output() onValidateTemplate: EventEmitter<any> = new EventEmitter<any>();
     @Output() onlaunchTest: EventEmitter<any> = new EventEmitter<any>();
@@ -108,7 +109,7 @@ export class StepsComponent {
 
     createTemplate()
     {
-    var content = (<HTMLInputElement>document.getElementById("textArea")).value;
+    var content = (<HTMLInputElement>document.getElementById("textAreaConf")).value;
     var res = {
         "content":content
     }
@@ -117,7 +118,7 @@ export class StepsComponent {
 
     getNextStep(doc)
     {
-    var content = (<HTMLInputElement>document.getElementById("textArea")).value;
+    var content = (<HTMLInputElement>document.getElementById("textAreaConf")).value;
     var res = {
         "doc":doc,
         "content":content
@@ -164,13 +165,14 @@ export class StepsComponent {
     if(this.qtd['ed'] != null && this.qtd['ed'] != '')
     {
     var index = this.qtd['ed'].indexOf( "+" );
+    if(index != -1)
     this.qtd['result'] = this.qtd['ed'].substring(0,index));
     }
     }
 
     launchTest()
     {
-    var content = (<HTMLInputElement>document.getElementById("textArea")).value;
+    var content = (<HTMLInputElement>document.getElementById("textAreaConf")).value;
     if (this.numStep == 1)
     {
         var res = {
@@ -189,7 +191,7 @@ export class StepsComponent {
 
     validateTemplate()
     {
-    var content = (<HTMLInputElement>document.getElementById("textArea")).value;
+    var content = (<HTMLInputElement>document.getElementById("textAreaConf")).value;
     if (this.numStep == 1)
     {
         var res = {

@@ -8,8 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var test_service_1 = require('../../services/test.service');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var test_service_1 = require("../../services/test.service");
 var TestsComponent = (function () {
     function TestsComponent(testService) {
         this.testService = testService;
@@ -38,7 +39,7 @@ var TestsComponent = (function () {
             this.templateFile = step.doc + '.conf';
         }
         this.templateString = step.content;
-        var content = "'" + this.templateString + "'";
+        var content = this.templateString;
         content = content.replace(/\n/g, '\r');
         this.testService.createTemplate(this.templateFile, content)
             .subscribe(function (res) {
@@ -72,7 +73,7 @@ var TestsComponent = (function () {
         this.templateString = step.content;
     };
     TestsComponent.prototype.openModal = function () {
-        var modal = document.getElementById('myModal');
+        var modal = document.getElementById('myModalConf');
         // Get the button that opens the modal
         var btn = document.getElementById("myBtn");
         // Get the <span> element that closes the modal
@@ -80,16 +81,20 @@ var TestsComponent = (function () {
         modal.style.display = "block";
     };
     TestsComponent.prototype.closeModal = function () {
-        var modal = document.getElementById('myModal');
+        var modal = document.getElementById('myModalConf');
         modal.style.display = "none";
     };
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Array)
+    ], TestsComponent.prototype, "definedSteps", void 0);
     TestsComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
             selector: 'tests',
             templateUrl: 'tests.component.html'
-        }), 
-        __metadata('design:paramtypes', [test_service_1.TestService])
+        }),
+        __metadata("design:paramtypes", [test_service_1.TestService])
     ], TestsComponent);
     return TestsComponent;
 }());

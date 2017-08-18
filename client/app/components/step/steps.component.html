@@ -35,7 +35,30 @@
     <input class="form-control" name="sn" readonly="readonly" [(ngModel)]="'Step'+numStep"/>
   </div>
 
-  <div class="form-group">
+  <div  *ngIf="stepsDefined != null && stepsDefined.length > 0 && stepsDefined[numStep - 1]">
+
+
+{{stepsDefined[0].sn}}
+{{stepsDefined[0].dn}}
+{{stepsDefined[0].ed}}
+
+      <div class="form-group">
+    <label for="dn">DN</label>
+     <input class="form-control" name="dn" placeholder="#DN#" [(ngModel)]="qtd['dn']=stepsDefined[numStep-1].dn" required/>
+    </div>
+
+    <div class="form-group">
+
+    <label for="ed">ED</label>
+    <input class="form-control" name="ed" placeholder="#ED#" [(ngModel)]="qtd['ed']=stepsDefined[numStep-1].ed" required (change)="createResult()"/>
+  </div>
+
+
+  </div>
+
+  <div  *ngIf="stepsDefined == null || ! stepsDefined[numStep - 1] ">
+    
+      <div class="form-group">
     <label for="dn">DN</label>
      <input list="dn" class="form-control" name="dn" placeholder="#DN#" [(ngModel)]="qtd['dn']" required/>
           <datalist id="dn">
@@ -43,9 +66,9 @@
               <option value="{{dn}}">
               </div>
           </datalist>
-  </div>
+    </div>
 
-  <div class="form-group">
+    <div class="form-group" >
     <label for="ed">ED</label>
     <input list="ed" class="form-control" name="ed" placeholder="#ED#" [(ngModel)]="qtd['ed']" required (change)="createResult()"/>
           <datalist id="ed">
@@ -54,6 +77,10 @@
               </div>
           </datalist>
   </div>
+
+
+  </div>
+
 
   <label>Request</label>
   <div class="row">
@@ -157,7 +184,7 @@
 
   <div class="col-md-5" *ngIf="numStep == 1">
 
-    <textarea class="form-control" id="textArea" rows="6" style="resize: none;height: 85%;">
+    <textarea class="form-control" id="textAreaConf" rows="6" style="resize: none;height: 85%;">
     {{template+
     '#############################################################################################
     #
@@ -181,7 +208,7 @@
 </textarea>
   </div>
 <div class="col-md-5" *ngIf="numStep > 1 && (qtd['serveur'] == null || qtd['serveur'] == '')">
-    <textarea class="form-control" id="textArea" rows="6" style="resize: none;height: 85%;">
+    <textarea class="form-control" id="textAreaConf" rows="6" style="resize: none;height: 85%;">
     {{template+
     '#############################################################################################
     #SN# '+'Step'+numStep+'
@@ -197,7 +224,7 @@
     </textarea>
 </div>
 <div class="col-md-5" *ngIf="numStep > 1 && qtd['serveur'] != null && qtd['serveur'] != ''">
-    <textarea class="form-control" id="textArea" rows="6" style="resize: none;height: 85%;">
+    <textarea class="form-control" id="textAreaConf" rows="6" style="resize: none;height: 85%;">
     {{template+
     '#############################################################################################
     #URLTEST '+qtd['serveur']+'
@@ -218,7 +245,7 @@
 </div>
 
 <div class="row" *ngIf="numStep == 8">
- <textarea class="form-control" id="textArea" rows="6" style="resize: none;height: 85%;">
+ <textarea class="form-control" id="textAreaConf" rows="6" style="resize: none;height: 85%;">
     {{template}}
   </textarea>
   <button type="submit" class="btn btn-warning" style="float: right;" (click)="launchTest()">

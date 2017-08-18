@@ -1,13 +1,15 @@
+  <br><br><br>
 <select class="form-control" [(ngModel)]="selectedTagFile" (ngModelChange)="onSelectTagFile($event)">
 <option></option>
   <option [value]="file.name" *ngFor="let file of tagFiles">{{file.name}}</option>
 </select>
 
 
- <textarea class="form-control" id="textArea" rows="6" style="resize: none;height: 80%;">
+ <textarea class="form-control" id="textAreaTag" rows="6" style="resize: none;height: 80%;">
     {{contentTagFile}}
  </textarea>
 
+  <br><br><br>
   <div *ngIf="selectedTagFile.length > 0">
   <!--
   <div innerHTML="{{ '<FSI_HOST_COM>=tb1n.orange.com
@@ -34,7 +36,7 @@
   <div class="modal-content" style="width: 50%;margin: 20% 20% 30%">
     <div class="modal-header">
       <span class="close" (click)="closeModal()">&times;</span>
-      <h2 style="color: black;">{{message}}</h2>
+      <h3 style="color: black;">{{message}}</h3>
     </div>
     <div class="modal-body">
       <img style="display: block;margin: 0 auto;height: 150px;" [src]="fullPath">

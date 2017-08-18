@@ -4,8 +4,12 @@ var db = require('../utils/db')
 var async = require('async');
 //Fro executing script shell from nodejs
 var exec = require('child_process').exec;
+var fs = require('fs');
 var script_path_create = "/home/ubuntu/Desktop/sofrecom_qualif2/sofrecom_qualif/toRemove/script/script_create_template.sh";
 var script_path_launch = "/home/ubuntu/Desktop/sofrecom_qualif2/sofrecom_qualif/toRemove/script/script_launch_test.sh";
+var script_pull_conf = "/home/ubuntu/Desktop/sofrecom_qualif2/sofrecom_qualif/toRemove/script/pull_conf_file.sh";
+
+var path_conf_files = "/home/ubuntu/Desktop/testConfGitLab/";
 
 class defVar {
     addNewDef(varData, callback) {
@@ -192,11 +196,23 @@ class defVar {
     {
         var docName = data.fileName;
         var content = data.content;
-                this.execute(script_path_create+' '+docName+' '+content, function(e, stdout){
-                     callback(stdout);
-      
-    });
+        this.execute(script_pull_conf, function(e, stdout)
+        {
+            fs.writeFile(path_conf_files+docName, content, function(error) {
+                callback(content);
+            });
+        });
+         
 
+    }
+
+    pushTemplate(data,callback)
+    {
+        var docName = data.fileName;
+        this.execute(script_path_create+' '+docName, function(e, stdout)
+        {
+            callback(stdout);
+        });
     }
 
     launchTemplate(data,callback)

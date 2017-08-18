@@ -1,0 +1,4 @@
+[user]
+	email = ilhem.bouriel94@gmail.com
+[core]
+	excludesfile = /home/ubuntu/.gitignore_global

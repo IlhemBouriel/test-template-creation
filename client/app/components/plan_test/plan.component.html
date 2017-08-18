@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" *ngIf="templateConf == 1">
 <div class="col-md-12" *ngIf="testCaseNum < 10">
 
 <h1>{{evol}}</h1>
@@ -107,12 +107,13 @@
       
   </table>
 
-<button type="button" style="float: right;" class="btn btn-warning" (click)="sendAndSaveTestPlan()"><span class="glyphicon glyphicon-send" aria-hidden="true" ></span><b>Save&Send</b></button>
+<button type="button" style="float: right;" class="btn btn-warning" (click)="sendAndSaveTestPlan()"><span class="glyphicon glyphicon-send" aria-hidden="true" ></span><b>Send</b></button>
 <button type="button" style="background-color: black;float: right;" class="btn btn-warning" (click)="pushFileToRep()"><span class="glyphicon glyphicon-floppy-saved" aria-hidden="true" ></span><b>Save</b></button>
 
+<button type="button" style="background-color: #2C3E50;float: right;" class="btn btn-warning" (click)="getConfFromPlan()"><span class="glyphicon glyphicon-download-alt" aria-hidden="true" ></span><b>Generate TestConf</b></button>
 
 
- <textarea class="form-control" id="textArea" rows="6" style="resize: none;height: 80%;">
+ <textarea class="form-control" id="textAreaPlan" rows="6" style="resize: none;height: 80%;display: none;">
     {{contentTestPlan}}
  </textarea>
 
@@ -124,6 +125,14 @@
  </div>
 
 
+<div *ngIf="templateConf == 2">
+
+    <tests [definedSteps]="testCases[0].steps" ></tests>
+
+</div>
+
+
+
 
 <!-- The Modal -->
 <div id="myModal" class="modal">
@@ -132,7 +141,7 @@
   <div class="modal-content" style="width: 50%;margin: 20% 20% 30%">
     <div class="modal-header">
       <span class="close" (click)="closeModal()">&times;</span>
-      <h2 style="color: black;">{{message}}</h2>
+      <h3 style="color: black;">{{message}}</h3>
     </div>
     <div class="modal-body">
       <img style="display: block;margin: 0 auto;height: 150px;" [src]="fullPath">
@@ -143,4 +152,5 @@
   </div>
 
 </div>
+
 

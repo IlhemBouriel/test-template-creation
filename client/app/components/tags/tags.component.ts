@@ -46,7 +46,7 @@ export class TagsComponent {
         this.tagService.getTagFileContent(this.selectedTagFile)
             .subscribe(vars => {
                 this.contentTagFile = vars.data;
-                document.getElementById("textArea").value=this.contentTagFile;
+                document.getElementById("textAreaTag").value=this.contentTagFile;
                 this.message = 'File has fully loaded';
                 this.fullPath=this.finalTask;
                 setTimeout(() => 
@@ -75,7 +75,7 @@ export class TagsComponent {
         this.tagService.reloadTagFileContent(this.selectedTagFile)
             .subscribe(vars => {
                 this.contentTagFile = vars.data;
-                document.getElementById("textArea").value=this.contentTagFile;
+                document.getElementById("textAreaTag").value=this.contentTagFile;
             });
     }
     else
@@ -99,7 +99,7 @@ export class TagsComponent {
         this.message="File "+this.selectedTagFile+" is loading " ;
         this.fullPath=this.load;
         this.openModal();
-        var content = (<HTMLInputElement>document.getElementById("textArea")).value;
+        var content = (<HTMLInputElement>document.getElementById("textAreaTag")).value;
         this.tagService.editTagFile(this.selectedTagFile,content)
             .subscribe(vars => {
            // console.log("object: %O", vars);

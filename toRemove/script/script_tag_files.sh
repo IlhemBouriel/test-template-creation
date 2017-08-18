@@ -1,4 +1,4 @@
 #!/bin/bash
-(cd /home/ubuntu/Desktop/tagFilesGitLab/;git pull origin master);
+(cd /home/ubuntu/Desktop/tagFilesGitLab/;git pull ssh_tag master);
 
 exit 0

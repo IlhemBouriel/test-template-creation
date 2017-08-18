@@ -8,8 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var plan_service_1 = require('../../services/plan.service');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var plan_service_1 = require("../../services/plan.service");
 var PlanTestComponent = (function () {
     function PlanTestComponent(planService) {
         this.planService = planService;
@@ -23,7 +24,8 @@ var PlanTestComponent = (function () {
             {
                 'dn': '',
                 'ed': ''
-            }];
+            }
+        ];
         this.testCases = [{
                 'name': '',
                 'description': '',
@@ -34,6 +36,7 @@ var PlanTestComponent = (function () {
         this.done = __dirname + '/../src/images/spin.gif';
         this.finalTask = __dirname + '/../src/images/check-animation.gif';
         this.fullPath = '';
+        this.templateConf = 1;
     }
     PlanTestComponent.prototype.removeTestCase = function () {
         this.testCaseNum--;
@@ -64,15 +67,15 @@ var PlanTestComponent = (function () {
             this.testCaseNum = 11;
             this.contentTestPlan = '';
             var sum = 0;
+            this.contentTestPlan = "TestPlan=\t" + this.evol;
             for (var _i = 0, _a = this.testCases; _i < _a.length; _i++) {
                 var testCase = _a[_i];
-                this.contentTestPlan = this.contentTestPlan + "TestPlan:\t" + this.evol + "\n#####################################################################################################################\nTestCase:\t" + testCase.name + "\n Description:\t" + testCase.description + "\n";
+                this.contentTestPlan = this.contentTestPlan + "\n#####################################################################################################################\nTestCase=\t" + testCase.name + "\n Description=\t" + testCase.description + "\n";
                 for (var _b = 0, _c = testCase.steps; _b < _c.length; _b++) {
                     var step = _c[_b];
                     sum = testCase.steps.indexOf(step) + 1;
-                    this.contentTestPlan = this.contentTestPlan + "\t\tStep" + sum + "\t\t" + step.dn + "\t\t" + step.ed + "\n";
+                    this.contentTestPlan = this.contentTestPlan + "Step" + sum + "==" + step.dn + "==" + step.ed + "\n";
                 }
-                this.contentTestPlan = this.contentTestPlan + "#####################################################################################################################\n";
             }
         }
     };
@@ -89,7 +92,8 @@ var PlanTestComponent = (function () {
                             'num': 1,
                             'dn': '',
                             'ed': ''
-                        }];
+                        }
+                    ];
                     this.testCases.push({
                         'name': '',
                         'description': '',
@@ -160,14 +164,17 @@ var PlanTestComponent = (function () {
         var modal = document.getElementById('myModal');
         modal.style.display = "none";
     };
+    PlanTestComponent.prototype.getConfFromPlan = function () {
+        this.templateConf = 2;
+    };
     PlanTestComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
             selector: 'plan',
             templateUrl: 'plan.component.html',
             styleUrls: ['plan.component.css'],
-        }), 
-        __metadata('design:paramtypes', [plan_service_1.PlanService])
+        }),
+        __metadata("design:paramtypes", [plan_service_1.PlanService])
     ], PlanTestComponent);
     return PlanTestComponent;
 }());

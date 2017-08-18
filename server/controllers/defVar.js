@@ -116,20 +116,20 @@ module.exports.getByName = function(req, res) {
 
 
 module.exports.createTemplate = function(req, res) {
-    var varsObject = new varModel();
+     var varsObject = new varModel();
    
-    varsObject.createTemplate(req.body,function(err, varResponse) {
-        if (err) {
-            return res.json({
-                "responseCode": 500,
-                "responseDesc": varResponse
-            });
-        }
-        res.json({
+    varsObject.createTemplate(req.body,function(varResponse) {
+
+        //push to git
+    varsObject.pushTemplate(req.body,function(varResponse)
+    {
+         res.json({
             "responseCode": 200,
             "responseDesc": "Success",
             "data": varResponse
         });
+   });
+       
     });
 
 };

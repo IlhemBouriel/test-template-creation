@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,Input ,Output  } from '@angular/core';
 import {StepsComponent}from '../step/steps.component';
 import {TestService} from '../../services/test.service';
 
@@ -21,6 +21,8 @@ export class TestsComponent {
     done: string;
     fullPath: string;
     finalTask: string;
+    @Input() definedSteps:Object[];
+
 
 
 
@@ -33,6 +35,7 @@ export class TestsComponent {
         this.done= __dirname+'/../src/images/spin.gif';
         this.finalTask= __dirname+'/../src/images/check-animation.gif';
         this.fullPath ='';
+        
     }
 
     buildTemplate(step:any):void
@@ -42,6 +45,8 @@ export class TestsComponent {
       this.templateFile=step.doc+'.conf';
     }
     this.stepNum ++ ;
+
+
     this.templateString=step.content;
     }
 
@@ -55,7 +60,7 @@ export class TestsComponent {
       this.templateFile=step.doc+'.conf';
       }
       this.templateString=step.content;
-      var content = "'"+this.templateString+"'";
+      var content = this.templateString;
       content = content.replace(/\n/g, '\r');
       this.testService.createTemplate(this.templateFile,content)
             .subscribe(res => {
@@ -101,7 +106,7 @@ export class TestsComponent {
 
     openModal()
     {
-      var modal = document.getElementById('myModal');
+      var modal = document.getElementById('myModalConf');
 
       // Get the button that opens the modal
       var btn = document.getElementById("myBtn");
@@ -110,12 +115,12 @@ export class TestsComponent {
       var span = document.getElementsByClassName("close")[0];
 
       modal.style.display = "block";
-      }
+    }
 
 
     closeModal()
     {
-      var modal = document.getElementById('myModal');
+      var modal = document.getElementById('myModalConf');
       modal.style.display = "none";
     }
 }

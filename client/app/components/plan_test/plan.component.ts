@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import {StepsComponent}from '../step/steps.component';
+import {TestsComponent}from '../test_template/tests.component';
 import {TestService} from '../../services/test.service';
 import {PlanService} from '../../services/plan.service';
+
+
 
 @Component({
   moduleId: module.id,
@@ -27,6 +29,7 @@ export class PlanTestComponent {
     done: string;
     fullPath: string;
     finalTask: string;
+    templateConf:number;
 
 
     constructor(private planService:PlanService){
@@ -50,6 +53,7 @@ export class PlanTestComponent {
         this.done= __dirname+'/../src/images/spin.gif';
         this.finalTask= __dirname+'/../src/images/check-animation.gif';
         this.fullPath ='';
+        this.templateConf=1;
       
    }
 
@@ -78,6 +82,7 @@ export class PlanTestComponent {
                 'dn': "",
                 'ed': "",
             });
+
       if (this.testCases[this.currentTestCase].stepNum == 8)
       {
         this.nextTestCase();
@@ -100,15 +105,16 @@ export class PlanTestComponent {
         this.testCaseNum = 11;
         this.contentTestPlan='';
         let sum = 0;
+        this.contentTestPlan ="TestPlan=\t"+this.evol;
         for (let testCase of this.testCases) 
         {
-        this.contentTestPlan =this.contentTestPlan+"TestPlan:\t"+this.evol+ "\n#####################################################################################################################\nTestCase:\t"+testCase.name+"\n Description:\t"+testCase.description+"\n";
+        this.contentTestPlan =this.contentTestPlan+"\n#####################################################################################################################\nTestCase=\t"+testCase.name+"\n Description=\t"+testCase.description+"\n";
         for(let step of testCase.steps)
         {
         sum = testCase.steps.indexOf(step)+1;
-          this.contentTestPlan = this.contentTestPlan + "\t\tStep"+sum+"\t\t"+step.dn+"\t\t"+step.ed+"\n";
+          this.contentTestPlan = this.contentTestPlan + "Step"+sum+"=="+step.dn+"=="+step.ed+"\n";
         }
-        this.contentTestPlan=this.contentTestPlan + "#####################################################################################################################\n";
+       
         }
 
       }
@@ -126,6 +132,7 @@ export class PlanTestComponent {
       }
       else
       {
+
         if (this.evol != null && this.testCases[this.currentTestCase].steps[0].ed != "" &&  this.testCases[this.currentTestCase].steps[0].dn != "" && this.testCases[this.currentTestCase].name != "")
       {
         if (this.currentTestCase + 1 == this.testCases.length)
@@ -226,7 +233,7 @@ export class PlanTestComponent {
       var span = document.getElementsByClassName("close")[0];
 
       modal.style.display = "block";
-      }
+    }
 
 
     closeModal()
@@ -235,6 +242,11 @@ export class PlanTestComponent {
       modal.style.display = "none";
     }
 
+    getConfFromPlan()
+    {
+        this.templateConf = 2;
+
+    }
 
    
 }
