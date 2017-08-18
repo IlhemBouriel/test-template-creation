@@ -219,10 +219,11 @@ class defVar {
     {
         var docName = data.fileName;
         var content = data.content;
-                this.execute(script_path_launch+' '+docName+' '+content, function(stdout){
+        callback("done");
+              /*  this.execute(script_path_launch+' '+docName+' '+content, function(stdout){
                      callback(stdout);
       
-    });
+    });*/
     }
 
 

@@ -13,13 +13,12 @@ import {PlanConfService} from '../../services/plan-conf.service';
 export class ConfPlanComponent { 
 filesToUpload: Array<File> = [];
 uploadStatus: string;
-contentParsing: [];
-
+content: :any[] = [{}];
 
   constructor(private planConfService : PlanConfService) 
   {
   this.uploadStatus= 'empty';
-  this.contentParsing = [];
+  this.content = [];
   }
 
 
@@ -38,7 +37,7 @@ contentParsing: [];
     
   fileChangeEvent(fileInput: any) {
     this.filesToUpload = <Array<File>>fileInput.target.files;
-    this.contentParsing = [];
+    this.content = [];
     this.uploadStatus = "empty";
   }
 
@@ -47,27 +46,34 @@ contentParsing: [];
   {
     this.filesToUpload = [];
     this.uploadStatus = "empty";
-    this.contentParsing =[];
+    this.content =[];
   }
 
   getUploadedFileContent(fileName)
   {
-    this.planConfService.getFileContent(fileName)
+
+       this.planConfService.getFileContent(fileName)
             .subscribe(res => {
             if (res.data)
             {
-              this.contentParsing = res.data;
+
+  setTimeout(()=>{
+              this.content = JSON.parse(res.data);
+  });
               this.uploadStatus = 'done';
-              console.log("object: %O", this.contentParsing);
+
+              console.log("object: %O", this.content);
               
             }
             else
             {
-              this.contentParsing = [];
-            }         
+              this.content = [];
+            }    
+
   });
   }
 
-}
 
+
+}
 

@@ -52,7 +52,7 @@ export class TestsComponent {
 
     createTemplateFile(step:any):void
     {
-      this.fullPath = this.load;
+      this.fullPath = this.done;
       this.message = 'Saving File is in progress';
       this.openModal();
       if(this.stepNum == 1)
@@ -79,6 +79,17 @@ export class TestsComponent {
 
     lauchTestScript(template:any):void
     {
+      console.log('test executed');
+      this.fullPath = this.load;
+      this.message = '';
+      this.openModal();
+      this.message = 'Test was executed';
+            this.fullPath=this.done;
+            setTimeout(() => 
+          {
+          this.closeModal();
+          },
+          4000);
     if(this.stepNum == 1)
     {
       this.templateFile=step.doc+'.conf';
@@ -89,6 +100,13 @@ export class TestsComponent {
     this.testService.launchTemplateTest(this.templateFile,content)
             .subscribe(res => {
             this.res = res.data;
+            this.message = 'Test was executed';
+            this.fullPath=this.done;
+            setTimeout(() => 
+          {
+          this.closeModal();
+          },
+          1800);
 
          });
     }

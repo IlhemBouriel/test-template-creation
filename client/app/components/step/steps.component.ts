@@ -172,6 +172,7 @@ export class StepsComponent {
 
     launchTest()
     {
+    
     var content = (<HTMLInputElement>document.getElementById("textAreaConf")).value;
     if (this.numStep == 1)
     {

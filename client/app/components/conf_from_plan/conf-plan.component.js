@@ -15,9 +15,9 @@ var ConfPlanComponent = (function () {
     function ConfPlanComponent(planConfService) {
         this.planConfService = planConfService;
         this.filesToUpload = [];
-        this.content = [{}];
+        this.any = [{}];
         this.uploadStatus = 'empty';
-        this.content = null;
+        this.content = [];
     }
     ConfPlanComponent.prototype.upload = function () {
         var _this = this;
@@ -27,31 +27,32 @@ var ConfPlanComponent = (function () {
         this.planConfService.uploadTestPlan(formData)
             .subscribe(function (res) {
             _this.res = res;
-            _this.uploadStatus = 'done';
             _this.getUploadedFileContent(files[0]['name']);
         });
     };
     ConfPlanComponent.prototype.fileChangeEvent = function (fileInput) {
         this.filesToUpload = fileInput.target.files;
-        this.content = '';
+        this.content = [];
         this.uploadStatus = "empty";
     };
     ConfPlanComponent.prototype.remove = function () {
         this.filesToUpload = [];
         this.uploadStatus = "empty";
-        this.content = null;
+        this.content = [];
     };
     ConfPlanComponent.prototype.getUploadedFileContent = function (fileName) {
         var _this = this;
         this.planConfService.getFileContent(fileName)
             .subscribe(function (res) {
-            console.log("object: %O", res.data);
             if (res.data) {
-                console.log("object: %O", res.data);
-                _this.content = res.data;
+                setTimeout(function () {
+                    _this.content = JSON.parse(res.data);
+                });
+                _this.uploadStatus = 'done';
+                console.log("object: %O", _this.content);
             }
             else {
-                _this.content = null;
+                _this.content = [];
             }
         });
     };

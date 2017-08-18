@@ -1,7 +1,7 @@
 <br><br>
-<br>
+
 <input type="file" (change)="fileChangeEvent($event)" accept=".txt" name="file" id="file" class="inputfile" />
-<label for="file">Choose a file</label>
+<label for="file"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></label>
 <table class="table">
                 <thead>
                 <tr>
@@ -32,11 +32,9 @@
                 </tr>
                 </tbody>
 </table>
- 
 
- <div *ngIf="contentParsing && contentParsing.length > 0">
- {{contentParsing.length}}
-<tests [definedSteps]="contentParsing" ></tests>
+ <div *ngIf="uploadStatus == 'done'">
+<tests [definedSteps]="content" ></tests>
  </div>
-
+<br><br><br><br>
 

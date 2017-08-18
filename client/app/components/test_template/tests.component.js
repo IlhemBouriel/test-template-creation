@@ -32,7 +32,7 @@ var TestsComponent = (function () {
     };
     TestsComponent.prototype.createTemplateFile = function (step) {
         var _this = this;
-        this.fullPath = this.load;
+        this.fullPath = this.done;
         this.message = 'Saving File is in progress';
         this.openModal();
         if (this.stepNum == 1) {
@@ -53,6 +53,15 @@ var TestsComponent = (function () {
     };
     TestsComponent.prototype.lauchTestScript = function (template) {
         var _this = this;
+        console.log('test executed');
+        this.fullPath = this.load;
+        this.message = '';
+        this.openModal();
+        this.message = 'Test was executed';
+        this.fullPath = this.done;
+        setTimeout(function () {
+            _this.closeModal();
+        }, 4000);
         if (this.stepNum == 1) {
             this.templateFile = step.doc + '.conf';
         }
@@ -62,6 +71,11 @@ var TestsComponent = (function () {
         this.testService.launchTemplateTest(this.templateFile, content)
             .subscribe(function (res) {
             _this.res = res.data;
+            _this.message = 'Test was executed';
+            _this.fullPath = _this.done;
+            setTimeout(function () {
+                _this.closeModal();
+            }, 1800);
         });
     };
     TestsComponent.prototype.validateSteps = function (step) {
