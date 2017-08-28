@@ -19,3 +19,8 @@ node_modules
 /client/node_modules
 rethinkdb_data
 npm-debug.log
+*.js.map
+client/*.js
+client/*.js.map
+client/app/**/*.js
+client/app/**/.js.map
