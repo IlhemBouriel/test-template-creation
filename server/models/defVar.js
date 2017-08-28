@@ -5,11 +5,9 @@ var async = require('async');
 //Fro executing script shell from nodejs
 var exec = require('child_process').exec;
 var fs = require('fs');
-var script_path_create = "/home/ubuntu/Desktop/sofrecom_qualif2/sofrecom_qualif/toRemove/script/script_create_template.sh";
-var script_path_launch = "/home/ubuntu/Desktop/sofrecom_qualif2/sofrecom_qualif/toRemove/script/script_launch_test.sh";
-var script_pull_conf = "/home/ubuntu/Desktop/sofrecom_qualif2/sofrecom_qualif/toRemove/script/pull_conf_file.sh";
 
-var path_conf_files = "/home/ubuntu/Desktop/testConfGitLab/";
+
+var config = require('../config.json');
 
 class defVar {
     addNewDef(varData, callback) {
@@ -196,9 +194,9 @@ class defVar {
     {
         var docName = data.fileName;
         var content = data.content;
-        this.execute(script_pull_conf, function(e, stdout)
+        this.execute(config[3].pullConfFileScript+' '+config[3].folderConfFiles, function(e, stdout)
         {
-            fs.writeFile(path_conf_files+docName, content, function(error) {
+            fs.writeFile(config[3].folderConfFiles+docName, content, function(error) {
                 callback(content);
             });
         });
@@ -209,7 +207,7 @@ class defVar {
     pushTemplate(data,callback)
     {
         var docName = data.fileName;
-        this.execute(script_path_create+' '+docName, function(e, stdout)
+        this.execute(config[3].pushConfFileScript+' '+docName+' '+config[3].folderConfFiles, function(e, stdout)
         {
             callback(stdout);
         });
@@ -220,7 +218,7 @@ class defVar {
         var docName = data.fileName;
         var content = data.content;
         callback("done");
-              /*  this.execute(script_path_launch+' '+docName+' '+content, function(stdout){
+              /*  this.execute(config[3].launchConfFileTestScript+' '+docName+' '+content+' '+config[3].folderConfFiles, function(stdout){
                      callback(stdout);
       
     });*/

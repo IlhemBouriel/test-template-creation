@@ -7,8 +7,8 @@ var fs = require('fs');
 //Fro executing script shell from nodejs
 var exec = require('child_process').exec;
 
-var path_files = "/home/ubuntu/Desktop/sofrecom_qualif2/sofrecom_qualif/uploads/";
 
+var config = require('../config.json');
 class planForConf {
 
     
@@ -20,7 +20,7 @@ class planForConf {
             'name':'',
             'testCases':[]
         };
-        var array = fs.readFileSync(path_files+file).toString().split('\r');
+        var array = fs.readFileSync(config[4].uploadTestPlanForConf+file).toString().split('\r');
         var testPlanName = array[0].split('=')[1];
         console.log("testPlanName = "+testPlanName);
         testPlan.name=testPlanName;

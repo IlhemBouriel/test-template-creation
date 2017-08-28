@@ -5,10 +5,11 @@ var async = require('async');
 var fs = require('fs');
 //Fro executing script shell from nodejs
 var exec = require('child_process').exec;
-var path_tag_files = "/home/ubuntu/Desktop/sofrecom_qualif2/sofrecom_qualif/toRemove/script/testplan.sh";
 
 var nodemailer = require('nodemailer');
 var directTransport = require('nodemailer-direct-transport');
+var config = require('../config.json');
+
 
 class testPlan {
     
@@ -24,7 +25,7 @@ class testPlan {
 
     var docName = data.fileName;
     var content = data.content;
-    this.execute(path_tag_files+' '+docName+'.txt '+content, function(e, stdout)
+    this.execute(config[0].scriptTestPlan+' '+docName+'.txt '+content+' '+config[0].folderTestPlan, function(e, stdout)
           {
             callback(stdout);
           });
@@ -44,16 +45,14 @@ class testPlan {
         rejectUnauthorized: false
     },
     auth: {
-       // user: 'ilhem.bouriel@sofrecom.com',
-       // pass: 'yguK8exAFj'
-        user: 'stage.sofr@gmail.com',
-        pass: 'Sofrecom123'
+        user: config[1].senderTestPlan,
+        pass: config[1].senderPassword
     }
     });
     
     let mailOptions = {
     from: 'testPlan@gmail.com',
-    to: 'bouriel.ilh@gmail.com', // list of receivers
+    to: config[1].receiverTestPlan, // list of receivers
     subject: 'TestPlan : '+docName, // Subject line
     text: 'vous trouverez ci-joint le testplan '+docName, // plain text body
      attachments: [{'filename': docName+'.txt', 'content': content}] // html body

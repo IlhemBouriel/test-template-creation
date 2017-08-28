@@ -1,0 +1,34 @@
+Bonjour,
+----- 1 -----
+il faut créer 3 dossiers : tagFilesGitLab testConfGitLab testPlanGitLab n'importe ou
+
+----- 2 -----
+puis changer les paths dans config.json (folderTestPlan folderTagFiles folderConfFiles)
+
+----- 3 -----
+connecter au compte gitLab : 
+login : stage.sofr@gmail.com
+password : Sofrecom123
+puis ajouter la clé ssh
+
+----- 4 -----
+dans chaque dossier créé il faut faire un git init ensuite add remote :
+=> dans testConfGitLab : git remote add ssh_conf sshURL
+=> dans testPlanGitLab : git remote add ssh_plan sshURL
+=> dans tagFilesGitLab : git remote add ssh_tag sshURL
+
+----- 5 -----
+faire un git pull dans chaque dossier avec le remote correspondant
+Exp: git pull ssh_tag master dans  "tagFilesGitLab"
+
+----- 6 -----
+pour l'envoi d'email , il faut le configurer dans config.json (2 éme objet: senderTestPlan,senderPassword et receiverTestPlan)
+
+----- 7 -----
+Les chemins des SCRIPTS dans config.json doivent etre mofidifés par le path exacte dans le serveur
+
+----- 8 -----
+Enfin , il faut faire un "npm install" suivi par "npm start" dans le client
+et "npm install" puis "nodemon" dans la racine "projet sofrecom_qualif"
+
+Bon travail et a bientôt ;)

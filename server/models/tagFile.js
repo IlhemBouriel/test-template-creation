@@ -5,10 +5,9 @@ var async = require('async');
 var fs = require('fs');
 //Fro executing script shell from nodejs
 var exec = require('child_process').exec;
-//To modify with the real path of TAG files
-var path_pull_tag_files = "/home/ubuntu/Desktop/sofrecom_qualif2/sofrecom_qualif/toRemove/script/script_tag_files.sh";
-var path_push_tag_files = "/home/ubuntu/Desktop/sofrecom_qualif2/sofrecom_qualif/toRemove/script/script_push_tag_files.sh";
-var path_tag_files = "/home/ubuntu/Desktop/tagFilesGitLab/";
+
+
+var config = require('../config.json');
 
 class tagFile {
     getAllTagFiles(callback) {
@@ -50,18 +49,20 @@ class tagFile {
 
     getFileTagContent(file,callback)
     {
-        this.execute(path_pull_tag_files, function(e, stdout)
+        console.log(config[2].pullTagFileScript);
+        console.log(config[2].folderTagFiles);
+        this.execute(config[2].pullTagFileScript+' '+config[2].folderTagFiles, function(e, stdout)
         {
-            fs.readFile(path_tag_files+file, 'utf8', function(err, data) {
+            fs.readFile(config[2].folderTagFiles+file, 'utf8', function(err, data) {
             callback(data);
             });
         });
     }
 
 
-    reloadFileTagContent(file,callback)
+   reloadFileTagContent(file,callback)
     {
-        fs.readFile(path_tag_files+file, 'utf8', function(err, data) 
+        fs.readFile(config[2].folderTagFiles+file, 'utf8', function(err, data) 
         {
             callback(data);
         });
@@ -71,7 +72,7 @@ class tagFile {
     {
         var docName = data.fileName;
         var content = data.content;
-        fs.writeFile(path_tag_files+docName, content, function(error) {
+        fs.writeFile(config[2].folderTagFiles+docName, content, function(error) {
            callback(content);
         });
 
@@ -80,9 +81,9 @@ class tagFile {
 
     pushTagContent(data,callback)
     {
-        this.execute(path_push_tag_files, function(e, stdout)
+        this.execute(config[2].pushTagFileScript+' '+config[2].folderTagFiles, function(e, stdout)
         {
-            fs.readFile(path_tag_files+data.fileName, 'utf8', function(err, data) {
+            fs.readFile(config[2].folderTagFiles+data.fileName, 'utf8', function(err, data) {
             callback(data);
             });
         });

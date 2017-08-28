@@ -1,0 +1,25 @@
+[
+  {
+    "scriptTestPlan": "/home/ilhem/Desktop/code/sofrecom_qualif/toRemove/script/testplan.sh",
+    "folderTestPlan": "/home/ilhem/Desktop/testPlanGitLab/"
+  },
+  {
+    "senderTestPlan": "stage.sofr@gmail.com",
+    "senderPassword": "Sofrecom123",
+    "receiverTestPlan": "bouriel.ilh@gmail.com"
+  },
+  {
+    "pullTagFileScript": "/home/ilhem/Desktop/code/sofrecom_qualif/toRemove/script/script_tag_files.sh",
+    "pushTagFileScript": "/home/ilhem/Desktop/code/sofrecom_qualif/toRemove/script/script_push_tag_files.sh",
+    "folderTagFiles": "/home/ilhem/Desktop/tagFilesGitLab/"
+  },
+  {
+    "pullConfFileScript": "/home/ilhem/Desktop/code/sofrecom_qualif/toRemove/script/pull_conf_file.sh",
+    "pushConfFileScript": "/home/ilhem/Desktop/code/sofrecom_qualif/toRemove/script/script_create_template.sh",
+    "launchConfFileTestScript": "/home/ilhem/Desktop/code/sofrecom_qualif/toRemove/script/script_launch_test.sh",
+    "folderConfFiles": "/home/ilhem/Desktop/testConfGitLab/"
+  },
+  {
+    "uploadTestPlanForConf": "/home/ilhem/Desktop/code/sofrecom_qualif/uploads/"
+  }
+]
